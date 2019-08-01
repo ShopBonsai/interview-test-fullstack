@@ -1,0 +1,13 @@
+.site-wrapper.phone {
+	position: relative;
+	width: 375px;
+	height: 734px;
+	background: var(--color__system-white);
+	border-radius: 10px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+main {
+	padding: 1rem;
+}

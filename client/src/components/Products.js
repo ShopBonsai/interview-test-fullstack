@@ -3,7 +3,7 @@ import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media, FormGroup, 
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 // import { Quantity } from './Product/Quantity';
-import './styles.css';
+// import './styles.css';
 
 const GET_PRODUCTS = gql`
   {
@@ -126,7 +126,7 @@ class ProductsList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="products-feed">
         {this.showProducts()}
       </div>
     );

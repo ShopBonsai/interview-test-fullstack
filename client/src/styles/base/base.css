@@ -1,0 +1,47 @@
+:root {
+	--color__brand-primary:			#0068FF;
+	--color__brand-secondary:		#2B2B39;
+	--color__brand-tertiary:		#46C8FF; 
+	--color__brand-shade:			#F4F5F7;
+
+	--color__system-black: 			#0a0a0a;
+	--color__system-white: 			#fafafa;
+	--color__system-light_grey: 	#EBEBEB;
+	--color__system-medium_grey: 	#D6D6D6;
+	--color__system-dark_grey: 		#BDBDBD;
+	--color__system-pink: 			#cc81aa;
+	--color__system-red: 			#BD2A45;
+	--color__system-orange: 		#FABF74;
+	--color__system-yellow: 		#DED092;
+	--color__system-green:			#2eec96;
+	--color__system-blue: 			#00acd7;
+	--color__system-purple:			#703994;
+
+	--font__primary: 				'neue-haas-grotesk-text,sans-serif', sans-serif;
+	--font__secondary: 				'neue-haas-grotesk-text,sans-serif', sans-serif;
+}
+
+html, body {
+	height: 100%;
+}
+
+#root {	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: var(--font__primary);
+	font-size: 16px;
+	background: var(--color__system-black);
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--font__secondary);
+}
