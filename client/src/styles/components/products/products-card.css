@@ -1,0 +1,5 @@
+.products__card {
+	/* border-radius: 10px; */
+	border: 2px solid var(--color__system-black);
+	width: 50%;
+}

@@ -1,0 +1,7 @@
+.products__feed {
+	display: flex;
+	justify-content: flex-start;
+	align-items: stretch;
+	flex-flow: row wrap;
+}
+
