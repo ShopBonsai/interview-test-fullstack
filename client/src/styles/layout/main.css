@@ -1,4 +1,4 @@
-.site-wrapper.phone {
+.site-wrapper {
 	position: relative;
 	width: 375px;
 	height: 734px;
@@ -9,5 +9,5 @@
 }
 
 main {
-	padding: 1rem;
+	/* padding: 1rem; */
 }

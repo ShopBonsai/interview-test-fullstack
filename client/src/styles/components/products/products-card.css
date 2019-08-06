@@ -1,5 +1,78 @@
 .products__card {
-	/* border-radius: 10px; */
-	border: 2px solid var(--color__system-black);
+	flex-direction: column;
+	width: calc(50% - 1px);
+	border-bottom: 2px solid var(--color__brand-shade);
+	background: var(--color__system-white);
+}
+
+.products__card:nth-of-type(2n) {
+	
+}
+
+.products__card:nth-of-type(2n) {
+	border-right: 2px solid var(--color__brand-shade);
+	width: calc(50% + 1px);
+}
+
+.products__card:first-of-type {
+	
+}
+
+.products__card .card-body {
+	display: flex;
+	flex-flow: row wrap;
+	flex-direction: row;
+	padding: 0.5rem;
+}
+
+.products__card .media {
+	width: 100%;
+}
+
+.products__card .product__title {
+	width: 100%;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+	line-height: 1rem;
+}
+
+.products__card .product__price,
+.products__card .product__qty {
+	display: block;
 	width: 50%;
+	font-size: 0.8rem;
+	font-weight: 300;
+	letter-spacing: 1px;
+	line-height: 1.6rem;
+}
+
+.products__card .product__price {
+	
+}
+
+.products__card .product__qty {
+	text-align: right;
+}
+
+.products__card .product__qty span {
+	display: block;
+	letter-spacing: 0;
+}
+
+.products__card .product__qty label {
+	display: none;
+}
+
+.products__card .product__qty input {
+	padding: 0 0 0 0.5rem;
+	height: auto;
+	text-align: center;
+}
+
+.products__card .btn {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--color__brand-primary);
 }

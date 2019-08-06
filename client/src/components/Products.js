@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import Filters from './Filters';
+import ProductCard from './ProductCard';
 
 import './../styles/components/products/products-feed.css';
 import './../styles/components/products/products-card.css';
-
-
-// import { Quantity } from './Product/Quantity';
-// import './styles.css';
 
 const GET_PRODUCTS = gql`
 	{
@@ -45,62 +41,15 @@ const withProducts = Component => props => {
 	);
 };
 
-class Quantity extends Component {
-	constructor(props) {
-		super(props)
-		const qty = this.props.quantity;
-		const stock = qty > 0 ? true : false 
-
-		this.state = {
-			value: 1,
-			quantity: qty,
-			inStock: stock
-		}
-
-		this.qtyCounter = this.qtyCounter.bind(this);
-	}
-
-	qtyCounter(e){
-		const qty = this.state.quantity;
-
-		if ( !isNaN(Number(e.currentTarget.value)) && (e.currentTarget.value <= qty) && e.currentTarget.value >= 1) {
-			this.setState({
-				value: e.currentTarget.value
-			})
-		}
-	}
-
-	render(){
-		const { value, qty, inStock } = this.state;
-
-		return(
-			<FormGroup>
-				<Label for="quantity">Quantity</Label>
-				{
-					inStock === true 
-						? <Input
-							type="number"
-							name="quantity"
-							id="quantity"
-							value={value}
-							max={qty}
-							onChange={this.qtyCounter}
-						/>
-						: <Alert color="warning">Out of stock!</Alert>
-				}
-			</FormGroup>
-		)
-	}
-}
-
 class ProductsList extends Component {
 	constructor(props) {
 		super(props)
 		
 		this.state = {
 			activeFilters: {
-				brands: []
-			}
+				brands: ['All Brands']
+			},
+			displayProduct: false
 		}
 
 		this.updateByFilters = this.updateByFilters.bind(this);
@@ -109,6 +58,7 @@ class ProductsList extends Component {
 	updateByFilters(e) {
 		this.setState({
 			activeFilters: { 
+				// Filter the selected options from the rest and place their base value in an array.
 				brands: [...e.target.options].filter(o => o.selected).map(o => o.value) 
 			}
 		});
@@ -116,19 +66,25 @@ class ProductsList extends Component {
 
 	showProducts() {
 		const { merchants, merchantsLoading } = this.props;
-		const { activeFilters } = this.state;
+		const { activeFilters, displayProduct } = this.state;
 		let merchantsFiltered = [];
 
+		// Once merchants are loaded and if there's actually merchants to do stuff 
+		// with, do stuff.
 		if (!merchantsLoading && merchants && merchants.length > 0) {
 
+			// Remove any non-active brands from the merchants.
 			if ( activeFilters.brands.length > 0 ) {
 				merchantsFiltered = merchants.filter( merchant => {
 					return merchant.brands.some(r => activeFilters.brands.indexOf(r) >= 0);
 				})
 			} else {
+				// If there aren't any active brands, use all merchants.
 				merchantsFiltered = merchants;
 			}
-
+			
+			// If a filter list has "All Brands" within it, override any previous 
+			// filtering and include all brands.
 			if (activeFilters.brands[0] === "All Brands") {
 				merchantsFiltered = merchants;
 			}
@@ -136,43 +92,21 @@ class ProductsList extends Component {
 			return merchantsFiltered.map(merchant => {
 				const { products } = merchant;
 
+				// Only display public merchants. Maybe disabled product display 
+				// for non-active merchants? Not 100% sure on what this field is 
+				// for.
 				if ( merchant.publishedState ) {
 					return products && products.length > 0 && products.map(product => {
 						const { color, description, image, name, price, size, quantity, id, belongsToBrand } = product;
 
-						if (activeFilters.brands.length > 0 && activeFilters.brands.includes(merchant.brands[belongsToBrand])) {
+						// Display a product card for products who match the 
+						// active filtered brands. If "All Brands" is selected, display everything.
+						if (activeFilters.brands.length > 0 && activeFilters.brands.includes(merchant.brands[belongsToBrand]) || activeFilters.brands[0] === "All Brands") {
 							return (
-								<Media key={product.id} className="products__card" data-brand={id}>
-								<Media left href="#">
-									<Media object src={image} alt="Product image cap" /></Media>
-									<CardBody>
-										<CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
-										<CardTitle>Price: ${price.toFixed(2)}</CardTitle>
-										<CardSubtitle>Color: {color}</CardSubtitle>
-										<CardSubtitle>Size: {size}</CardSubtitle>
-										<Quantity quantity={quantity} />
-										<CardText>Details: {description}</CardText>
-										<Button color="primary" size="lg" block onClick={ () => this.buyProduct(id) }>Buy</Button>
-									</CardBody>
-								</Media>
+								<ProductCard product={product} key={id} />
 							);
-						} else if (activeFilters.brands[0] === "All Brands") {
-							return (
-								<Media key={product.id} className="products__card" data-brand={id}>
-								<Media left href="#">
-									<Media object src={image} alt="Product image cap" /></Media>
-									<CardBody>
-										<CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
-										<CardTitle>Price: ${price.toFixed(2)}</CardTitle>
-										<CardSubtitle>Color: {color}</CardSubtitle>
-										<CardSubtitle>Size: {size}</CardSubtitle>
-										<Quantity quantity={quantity} />
-										<CardText>Details: {description}</CardText>
-										<Button color="primary" size="lg" block onClick={ () => this.buyProduct(id) }>Buy</Button>
-									</CardBody>
-								</Media>
-							);
-						}
+						// If "All Brands" is selected, display everything.
+						} 
 					})
 				} 
 			});

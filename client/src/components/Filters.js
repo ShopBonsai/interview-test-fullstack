@@ -3,6 +3,8 @@ import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media, FormGroup, 
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 
+import './../styles/components/filters/filters.css';
+
 const GET_MERCHANTS = gql`
 	{
 		merchants {
@@ -39,12 +41,12 @@ class Filters extends Component {
 		const { merchants, merchantsLoading } = this.props;
 		
 		if (!merchantsLoading && merchants && merchants.length > 0) {
-			let sortedMerchants = merchants.filter(merchant => merchant.publishedState === true)
+			let sortedMerchants = merchants.filter(merchant => merchant.publishedState === true);
 			sortedMerchants = sortedMerchants.sort(function(a,b){ return a.merchant.localeCompare(b.merchant) });
 
 			return (
 				<React.Fragment>
-					<div className="filters__brand">
+					<div className="filter filters__brand">
 						<label htmlFor="filters-brand">Brand</label>
 						<select 
 							name="filters-brand" 
@@ -69,7 +71,7 @@ class Filters extends Component {
 							}
 						</select>
 					</div>
-					<div className="filters__price">
+					{/* <div className="filter filters__price">
 						<label htmlFor="filters-price">Price</label>
 						<select name="filters-price" id="filters-price">
 							<option value="0_24">$24.99 & Under</option>
@@ -82,7 +84,7 @@ class Filters extends Component {
 					</div>
 					<div className="filters__results-count">
 						
-					</div>
+					</div> */}
 				</React.Fragment>
 			)
 		} else {

@@ -1,0 +1,39 @@
+.filters {
+	width: 100%;
+	background: var(--color__brand-secondary);
+	color: var(--color__system-white);
+	padding-top: 0.5rem;
+}
+
+.filters .filter {
+	padding: 0 0.5rem 0.5rem;
+}
+
+.filters label {
+	width: 35%;
+	margin-bottom: 0;
+}
+
+.filters input,
+.filters select {
+	width: 65%;
+	height: 2.6rem;
+	line-height: 1rem;
+	padding: 0;
+	border-radius: 0.25rem;
+	/* background: var(--color__brand-shade); */
+	color: var(--color__brand-secondary);
+}
+
+.filters select[multiple] {
+	-webkit-appearance: none;
+}
+
+.filters__brand optgroup, 
+.filters__brand option {
+	width: 100%;
+}
+
+.filter option {
+	padding: 0 0.5rem;
+}
