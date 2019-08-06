@@ -48,6 +48,11 @@ class Filters extends Component {
 				<React.Fragment>
 					<div className="filter filters__brand">
 						<label htmlFor="filters-brand">Brand</label>
+
+						{/* Use select[multiple] field for mobile. Went with the 
+						assumption that this is mobile only from verbiage. Would 
+						use a different type of field for desktop since it 
+						requires a ctrl/cmd click to select multiple options. */}
 						<select 
 							name="filters-brand" 
 							id="filters-brand" 
@@ -71,20 +76,6 @@ class Filters extends Component {
 							}
 						</select>
 					</div>
-					{/* <div className="filter filters__price">
-						<label htmlFor="filters-price">Price</label>
-						<select name="filters-price" id="filters-price">
-							<option value="0_24">$24.99 & Under</option>
-							<option value="25_49">$25.00 - $49.99</option>
-							<option value="50_74">$50.00 - $79.99</option>
-							<option value="75_99">$75.00 - $99.99</option>
-							<option value="100_149">$100.00 - $149.99</option>
-							<option value="150_max">$150.00 & Over</option>
-						</select>
-					</div>
-					<div className="filters__results-count">
-						
-					</div> */}
 				</React.Fragment>
 			)
 		} else {

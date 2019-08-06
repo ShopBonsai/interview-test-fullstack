@@ -8,14 +8,17 @@ export default class Product extends Component {
 		super(props) 
 	}
 
+	// Close the detailed view.
 	closeProduct() {
 		this.props.viewProduct();
 	}
 
+	// Add to cart button effect from the parent.
 	addToCartParent() {
 		this.props.addToCart();
 	}
 
+	// Just make a random colour to display for the product page.
 	randomColor() {
 		return '#' + (0x1000000 + Math.random() * 0xFFFFFF).toString(16).substr(1,6);
 	}
@@ -27,6 +30,7 @@ export default class Product extends Component {
 		return (
 			<div className="products__inner-wrapper">
 				<div className="products__inner" style={{
+					// Set product view to equal container size.
 					width: document.querySelector(".site-wrapper").clientWidth, 
 					height: document.querySelector(".site-wrapper").clientHeight, 
 				}}>
@@ -45,10 +49,12 @@ export default class Product extends Component {
 							<CardText className="product__description">{description}</CardText>
 						</div>
 						{
+							// Don't display the Add to Cart button if the quantity is 0.
 							quantity !== 0 
 								? <Button color="primary" size="lg" block onClick={ () => this.addToCartParent(product) }>
 									Add to Cart
 									{
+										// Show onClick response when user adds to cart.
 										cartPopup === true
 											? <Popup product={product.name} selectedQty={this.props.selectedQty} qtyVal={this.props.qtyVal} /> 
 											: null
