@@ -6,3 +6,8 @@
 	flex-flow: row wrap;
 }
 
+.products__none {
+	width: 100%;
+	text-align: center;
+	padding: 1rem;
+}

@@ -7,17 +7,17 @@ import './styles/base/base.css';
 import './styles/layout/main.css';
 
 class App extends Component {
-  render() {
-    return (
-      <ApolloProvider client={apolloClient}>
-         <div className="site-wrapper">
-          <main>
-            <Products />
-          </main>
-         </div>
-      </ApolloProvider>
-    )
-  }
+	render() {
+		return (
+			<ApolloProvider client={apolloClient}>
+				<div className="site-wrapper">
+					<main>
+						<Products />
+					</main>
+				</div>
+			</ApolloProvider>
+		)
+	}
 }
 
 export default App;

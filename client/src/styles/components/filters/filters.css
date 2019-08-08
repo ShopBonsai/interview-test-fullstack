@@ -17,7 +17,7 @@
 .filters input,
 .filters select {
 	width: 65%;
-	height: 2.6rem;
+	/* height: 2.6rem; */
 	line-height: 1rem;
 	padding: 0;
 	border-radius: 0.25rem;

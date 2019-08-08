@@ -6,16 +6,8 @@
 }
 
 .products__card:nth-of-type(2n) {
-	
-}
-
-.products__card:nth-of-type(2n) {
 	border-right: 2px solid var(--color__brand-shade);
 	width: calc(50% + 1px);
-}
-
-.products__card:first-of-type {
-	
 }
 
 .products__card .card-body {
@@ -44,10 +36,6 @@
 	font-weight: 300;
 	letter-spacing: 1px;
 	line-height: 1.6rem;
-}
-
-.products__card .product__price {
-	
 }
 
 .products__card .product__qty {
