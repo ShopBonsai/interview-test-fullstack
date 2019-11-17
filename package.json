@@ -12,7 +12,9 @@
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
-    "reactstrap": "^8.0.1"
+    "react-router-dom": "^5.1.2",
+    "reactstrap": "^8.0.1",
+    "styled-components": "^4.4.1"
   },
   "scripts": {
     "server": "nodemon ./server/server.js",
