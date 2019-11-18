@@ -12,7 +12,7 @@ export const HeaderContainer = styled.div`
 
 export const LogoContainer = styled(Link)`
   height: 100%;
-  width: 80px;
+  width: 85px;
   padding: 25px;
 `;
 
@@ -24,7 +24,11 @@ export const OptionsContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const OptionLink = styled.div`
+export const OptionLink = styled(Link)`
   padding: 10px 15px;
+  color: black;
   cursor: pointer;
+  :hover {
+    color: grey
+  }
 `;

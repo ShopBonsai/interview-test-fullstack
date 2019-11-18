@@ -12,8 +12,13 @@ export const CartContainer = styled.div`
 `;
 
 export const ShoppingIcon = styled(CartLogo)`
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 `;
 
-// export const ItemCountContainer = styled.span`
+export const ItemCountContainer = styled.span`
+  position: absolute;
+  font-size: 10px;
+  font-weight: bold;
+  bottom: 12px;
+`;
