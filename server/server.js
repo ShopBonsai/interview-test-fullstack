@@ -25,7 +25,7 @@ server.applyMiddleware({ app });
 
 // Use the same Promise as NodeJS
 Mongoose.Promise = global.Promise;
-Mongoose.connect('mongodb://localhost/react-interview-test', { useUnifiedTopology: true, useNewUrlParser: true },(err) => {
+Mongoose.connect('mongodb://localhost/react-interview-test', { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },(err) => {
   if (err) {
     return err;
   }
@@ -38,3 +38,11 @@ seed();
 app.listen({ port: 3000 }, () => {
   console.log(`Server running on http://localhost:3000${server.graphqlPath}`);
 });
+
+// process
+// // Handle normal exits
+// .on('exit', (code) => {
+// nodemon.emit('quit');
+// process.exit(code);
+// })
+// process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); })

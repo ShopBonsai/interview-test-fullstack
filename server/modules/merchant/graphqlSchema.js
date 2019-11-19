@@ -31,12 +31,15 @@ const typeDefs = gql`
   }
   type User {
     userId: String
+    name: String
+    email: String
   }
   type Query {
     merchants: [Merchant!]!
   }
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
+    likeProduct(userId: String!, productId: String!): User
   }
 `;
 

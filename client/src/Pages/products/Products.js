@@ -1,12 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { CardTitle, CardSubtitle, CardText, CardBody, Media } from "reactstrap";
 import { gql } from "apollo-boost";
-import { Query } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 
 import { onAddedItem } from "../../redux/shopCart/cart-actions";
 
 import { ProductCard, AddButton } from "./products-styles.js";
+
+const LIKE_PRODUCT = gql`
+  mutation LikeProduct($userId: String!, $productId: String!) {
+    likeProduct(userId: $userId, productId: $productId) {
+      userId
+    }
+  }
+`;
 
 const GET_PRODUCTS = gql`
   {
@@ -27,6 +35,21 @@ const GET_PRODUCTS = gql`
   }
 `;
 
+const withLike = Component => props => {
+  return (
+    <Mutation mutation={LIKE_PRODUCT}>
+      {like => (
+        <Component
+          onLike={(userId, productId) =>
+            like({ variables: { userId, productId } })
+          }
+          {...props}
+        />
+      )}
+    </Mutation>
+  );
+};
+
 const withProducts = Component => props => {
   return (
     <Query query={GET_PRODUCTS}>
@@ -43,7 +66,7 @@ const withProducts = Component => props => {
   );
 };
 
-const ProductsList = ({ merchants, merchantsLoading, onAddedItem }) => {
+const ProductsList = ({ merchants, merchantsLoading, onAddedItem, onLike }) => {
   if (!merchantsLoading && merchants && merchants.length > 0) {
     return merchants.map(({ products }) => {
       return (
@@ -62,7 +85,13 @@ const ProductsList = ({ merchants, merchantsLoading, onAddedItem }) => {
                 <CardSubtitle>Color: {color}</CardSubtitle>
                 <CardSubtitle>Size: {size}</CardSubtitle>
                 <CardText>Details: {description}</CardText>
-                <AddButton onClick={()=>onAddedItem(product)}> Add to cart </AddButton>
+                <AddButton onClick={() => onAddedItem(product)}>
+                  {" "}
+                  Add to cart{" "}
+                </AddButton>
+                <AddButton onClick={() => onLike("143aklsfj2jfsf", product.id)}>
+                  ❤️
+                </AddButton>
               </CardBody>
             </ProductCard>
           );
@@ -74,5 +103,6 @@ const ProductsList = ({ merchants, merchantsLoading, onAddedItem }) => {
   }
 };
 
-
-export default connect(null, {onAddedItem})(withProducts(ProductsList));
+export default connect(null, { onAddedItem })(
+  withProducts(withLike(ProductsList))
+);

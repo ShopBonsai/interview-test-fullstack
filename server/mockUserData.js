@@ -1,13 +1,13 @@
 const users = [
   {
-    id: "143aklsfj2jfsf",
+    userId: "143aklsfj2jfsf",
     name: "Jackie Moon",
-    email: "jackie.moon@gmail.com"
+    email: "jackie.moon@gmail.com",
   },
   {
-    id: "123fv2v343dsf",
+    userId: "123fv2v343dsf",
     name: "Jet Li",
-    email: "jet.li@gmail.com"
+    email: "jet.li@gmail.com",
   }
 ];
 
