@@ -1,21 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import React from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
-import CheckoutItem from "../../components/check-out-item/check-out-item"
+import CheckoutItem from "../../components/check-out-item/check-out-item";
 
 import {
   selectCartItems,
   selectCartTotal
-} from '../../redux/shopCart/cart-selectors';
+} from "../../redux/shopCart/cart-selectors";
 
 import {
   CheckoutPageContainer,
   CheckoutHeaderContainer,
   HeaderBlockContainer,
   TotalContainer,
-  WarningContainer
-} from './checkoutpage-styles';
+  EmptyCartHeader
+} from "./checkoutpage-styles";
 
 const CheckoutPage = ({ cartItems, total }) => (
   <CheckoutPageContainer>
@@ -39,6 +39,7 @@ const CheckoutPage = ({ cartItems, total }) => (
     {cartItems.map(cartItem => (
       <CheckoutItem key={cartItem.id} cartItem={cartItem} />
     ))}
+    {cartItems.length === 0 && <EmptyCartHeader>NO ITEMS</EmptyCartHeader>}
     <TotalContainer>TOTAL: ${total}</TotalContainer>
   </CheckoutPageContainer>
 );

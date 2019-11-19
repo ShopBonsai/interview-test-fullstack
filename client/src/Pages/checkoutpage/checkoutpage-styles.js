@@ -37,7 +37,7 @@ export const TotalContainer = styled.div`
   font-size: 36px;
 `;
 
-export const WarningContainer = styled.div`
+export const EmptyCartHeader = styled.div`
   text-align: center;
   margin-top: 40px;
   font-size: 24px;
