@@ -1,9 +1,11 @@
 import React from "react"
+import MenuItem from "../../components/Homepage-enter/homepage-enter"
+import {HomePageContainer} from "./homepage-styles"
 
 const HomePage = () => (
-  <div>
-    <h1>Welcome</h1>
-  </div>
+  <HomePageContainer>
+    <MenuItem/>
+  </HomePageContainer>
 )
 
 export default HomePage

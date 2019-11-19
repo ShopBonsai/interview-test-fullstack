@@ -39,8 +39,6 @@ const Header = () => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
+export default connect(createStructuredSelector({
   hidden: selectCartHidden
-});
-
-export default connect(mapStateToProps)(Header);
+}))(Header);
