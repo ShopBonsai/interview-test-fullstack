@@ -30,5 +30,5 @@ export const selectCartTotal = createSelector(
       (accumalatedQuantity, cartItem) =>
         accumalatedQuantity + cartItem.quantity * cartItem.price,
       0
-    )
+    ).toFixed(2)
 );

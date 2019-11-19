@@ -4,18 +4,23 @@ export const toggleCartHidden = () => ({
   type: CartActionTypes.TOGGLE_CART_HIDDEN
 });
 
-export const addItem = item => ({
-  type: CartActionTypes.ADD_ITEM,
+export const onAddedItem = item => ({
+  type: CartActionTypes.ADDED_ITEM,
   payload: item
 });
 
-export const removeItem = item => ({
-  type: CartActionTypes.REMOVE_ITEM,
+export const onRemovedItem = item => ({
+  type: CartActionTypes.REMOVED_ITEM,
   payload: item
 });
 
-export const clearItemFromCart = item => ({
-  type: CartActionTypes.CLEAR_ITEM_FROM_CART,
+export const onIncrementedItemQuantity = item => ({
+  type: CartActionTypes.INCREMENTED_ITEM_QUANTITY,
+  payload: item
+});
+
+export const onDecrementedItemQuantity = item => ({
+  type: CartActionTypes.DECREMENTED_ITEM_QUANTITY,
   payload: item
 });
 
