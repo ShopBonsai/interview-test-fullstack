@@ -38,11 +38,3 @@ seed();
 app.listen({ port: 3000 }, () => {
   console.log(`Server running on http://localhost:3000${server.graphqlPath}`);
 });
-
-// process
-// // Handle normal exits
-// .on('exit', (code) => {
-// nodemon.emit('quit');
-// process.exit(code);
-// })
-// process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); })

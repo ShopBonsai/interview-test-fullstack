@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import img from "../../assets/Emily.jpg";
 
 export const MainMenuContainer = styled(Link)`
-  min-width: 35%;
+  min-width: 40%;
   height: 700px;
   flex: 1 1 auto;
   display: flex;
@@ -17,6 +17,12 @@ export const MainMenuContainer = styled(Link)`
     & .content {
       opacity: 0.9;
     }
+  }
+
+
+  @media screen and (max-width: 700px) {
+    height: 500px;
+    min-width: 100%;
   }
 `;
 
@@ -39,6 +45,10 @@ export const ContentContainer = styled.div`
   background-color: white;
   opacity: 0.7;
   position: absolute;
+
+  @media screen and (max-width: 700px) {
+    padding: 0;
+  }
 `;
 
 export const ContentTitle = styled.span`
@@ -46,4 +56,8 @@ export const ContentTitle = styled.span`
   margin-bottom: 6px;
   font-size: 22px;
   color: #4a4a4a;
+
+  @media screen and (max-width: 700px) {
+    font-size: 18px;
+  }
 `;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const CheckoutPageContainer = styled.div`
   width: 55%;
@@ -12,6 +12,10 @@ export const CheckoutPageContainer = styled.div`
     margin-left: auto;
     margin-top: 50px;
   }
+
+  @media screen and (max-width: 700px) {
+    width: 90%;
+  }
 `;
 
 export const CheckoutHeaderContainer = styled.div`
@@ -20,6 +24,10 @@ export const CheckoutHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid darkgrey;
+
+  @media screen and (max-width: 700px) {
+    height: 40px;
+  }
 `;
 
 export const HeaderBlockContainer = styled.div`
@@ -29,12 +37,26 @@ export const HeaderBlockContainer = styled.div`
   &:last-child {
     width: 8%;
   }
+
+  @media screen and (max-width: 700px) {
+    width: 20%;
+
+    &:last-child {
+      width: 12%;
+    }
+  }
 `;
 
 export const TotalContainer = styled.div`
   margin-top: 30px;
   margin-left: auto;
   font-size: 36px;
+
+  @media screen and (max-width: 700px) {
+    margin: 0;
+    margin-top: 50px;
+    font-size: 20px;
+  }
 `;
 
 export const EmptyCartHeader = styled.div`
@@ -42,4 +64,14 @@ export const EmptyCartHeader = styled.div`
   margin-top: 40px;
   font-size: 24px;
   color: red;
+`;
+
+export const SpanContainer = styled.div`
+  display: flex;
+
+  @media screen and (max-width: 700px) {
+    justify-content: space-evenly;
+    margin-top: 15px;
+    font-size: 14px;
+  }
 `;

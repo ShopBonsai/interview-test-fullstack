@@ -6,7 +6,7 @@ import { Query, Mutation } from "react-apollo";
 
 import { onAddedItem } from "../../redux/shopCart/cart-actions";
 
-import { ProductCard, AddButton } from "./products-styles.js";
+import { ProductCard, AddButton, LoadingProduct, ProductContainer } from "./products-styles.js";
 
 const LIKE_PRODUCT = gql`
   mutation LikeProduct($userId: String!, $productId: String!) {
@@ -75,6 +75,7 @@ const ProductsList = ({ merchants, merchantsLoading, onAddedItem, onLike }) => {
         products.map(product => {
           const { color, description, image, name, price, size } = product;
           return (
+            <ProductContainer>
             <ProductCard key={product.id}>
               <Media left href="#">
                 <Media object src={image} alt="Product image cap" />
@@ -86,20 +87,20 @@ const ProductsList = ({ merchants, merchantsLoading, onAddedItem, onLike }) => {
                 <CardSubtitle>Size: {size}</CardSubtitle>
                 <CardText>Details: {description}</CardText>
                 <AddButton onClick={() => onAddedItem(product)}>
-                  {" "}
-                  Add to cart{" "}
+                  Add to cart
                 </AddButton>
                 <AddButton onClick={() => onLike("143aklsfj2jfsf", product.id)}>
                   ❤️
                 </AddButton>
               </CardBody>
             </ProductCard>
+            </ProductContainer>
           );
         })
       );
     });
   } else {
-    return <h3>No products available</h3>;
+    return <LoadingProduct>Product Loading</LoadingProduct>;
   }
 };
 

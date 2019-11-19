@@ -14,26 +14,27 @@ import {
   CheckoutHeaderContainer,
   HeaderBlockContainer,
   TotalContainer,
-  EmptyCartHeader
+  EmptyCartHeader,
+  SpanContainer,
 } from "./checkoutpage-styles";
 
 const CheckoutPage = ({ cartItems, total }) => (
   <CheckoutPageContainer>
     <CheckoutHeaderContainer>
       <HeaderBlockContainer>
-        <span>Product</span>
+        <SpanContainer>Product</SpanContainer>
       </HeaderBlockContainer>
       <HeaderBlockContainer>
-        <span>Description</span>
+        <SpanContainer>Description</SpanContainer>
       </HeaderBlockContainer>
       <HeaderBlockContainer>
-        <span>Quantity</span>
+        <SpanContainer>Quantity</SpanContainer>
       </HeaderBlockContainer>
       <HeaderBlockContainer>
-        <span>Price</span>
+        <SpanContainer>Price</SpanContainer>
       </HeaderBlockContainer>
       <HeaderBlockContainer>
-        <span>Remove</span>
+        <SpanContainer>Remove</SpanContainer>
       </HeaderBlockContainer>
     </CheckoutHeaderContainer>
     {cartItems.map(cartItem => (
