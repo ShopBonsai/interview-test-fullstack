@@ -1,20 +1,19 @@
-import React from "react"
-// import { withRouter } from "react-router-dom"
+import React from "react";
 
 import {
   MainMenuContainer,
   BackgroundImageContainer,
   ContentContainer,
-  ContentTitle,
-} from "./homepage-center-styles"
+  ContentTitle
+} from "./homepage-center-styles";
 
 const MenuItem = () => (
-  <MainMenuContainer>
-    <BackgroundImageContainer className="background-image" imageUrl={url}/>
+  <MainMenuContainer to="/products">
+    <BackgroundImageContainer />
     <ContentContainer className="content">
-      <ContentTitle>ShopBonsai</ContentTitle>
+      <ContentTitle>shopbonsai</ContentTitle>
     </ContentContainer>
   </MainMenuContainer>
-)
+);
 
-export default MenuItem
+export default MenuItem;
