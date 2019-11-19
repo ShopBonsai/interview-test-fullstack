@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.div`
   height: 50px;
@@ -7,7 +7,10 @@ export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
-  /* position: fixed; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 `;
 
 export const LogoContainer = styled(Link)`
@@ -29,6 +32,6 @@ export const OptionLink = styled(Link)`
   color: black;
   cursor: pointer;
   :hover {
-    color: grey
+    color: grey;
   }
 `;

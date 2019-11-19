@@ -1,4 +1,4 @@
-const { merchants } = require("../../../mockMerchantData")
+const { merchants } = require("../../mockMerchantData")
 
 const resolvers = {
   Query: {
