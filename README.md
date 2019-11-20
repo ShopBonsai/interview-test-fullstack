@@ -1,56 +1,36 @@
-# Bonsai React Interview Test
+# Jiaqi's React Interview Task submission
 
-Welcome to the creative interview test at Shop Bonsai.
-
-This interview test simulates an environment that is similar to working at Shop Bonsai (very similar tech stack we run today). 
-
-Scenario:
-You joined as the new member of a small start-up team. Together we are building a new app to sell cool 3rd party products! So far, the sales team worked tirelessly and managed to acquire over 50 merchants who each have different brands and products offerings. The developers have also been working hard and have created a home page and shop page to welcome the users and display the products of the newly acquired merchants.
-
-Goal:
-Your task is to add a new complete working feature that you feel will best demonstrate your capabilities as a team-member and have the largest positive impact on our customer. This implies that JUST updating the es-lint rules to include trailing commas, switching all space-characters in the code-base to tab-characters, and/or updating the .gitignore will score low. However, non-customer facing features such as validating data, unit-testing, creating a automatic-backups of the database, can score very high if done well.
-
-Here are some ideas for features that are missing from the app (you can use your own database or consider mockMerchantData.js as a database):
- - Clicking Buy does SOMETHING! This should add data to the database in a meaningful way and communicate to the user that such an action took place.
- - Ability to select a quantity to buy. The quantity should be stored in the database in a meaningful way, this data should be retrieved and displayed somewhere for the user.
- - Add a profile page to display user-related data. This data should be stored in the database and retrieved.
- - Allow users to login using social media. A record of the user being logged in should be stored in the database, retrieved and displayed (perhaps on a special admin-only page).
- - Select multiple items to buy together. Which items get selected/submitted should be stored meaningfully in the database.
- - Add a cart object to display selected items the user wants to buy. Store this information meaningfully in the database.
- - Organize the shop page for better browsing experience, adding filters for brands/merchants/products.
- - Ability to 'like' an item. Store which items got liked in the database, retrieve this information.
- - Searching for product by name/brand/merchant. Store searches meaningfully in the database.
- - Add loading-images so the screen isn't empty while data is loading. Add page visits and loading times to the database in a meaningful way.
- - Add a react testing-framework and create a test. Record the results in separate database for the QA team!
+Features included in the submission:
+ -Header feature. User able to click the following route that direct user to its respective page/component: Home, products, contact, shopping cart.
+ -Shopping cart Icon feature. The quantity of the items added is displayed in the cart icon, as well in the checkout page. 
+ -Shopping Cart dropdown feature. User able to add multiple items to the shopping cart which will also display it in the checkout page. User is able to see the picture, quantity and price of the items added. This feature has toggle feature.
+ -Shopping Checkout feature. User is able to add and delete the any items as well select the quantity on this page. User is able to see the overall cost of all the selected items combined.
+ -Stripe button. user able to enter a test credit card information and use stripe to 'purchase'.
+ -Like item feature. User able to click the heart button to like the items. The liked items are stroed into the database
+ -Many more small features.
+ -This project is mobile responsive
 
 The following should be noted:
-1. Assume that if a piece of code/function is not working, it is a bug in the app (oh no!)
-2. Work with the data as if it were real. (Do not manipulate/transform the mockData files)
-3. You can make additional assumptions, please note them if they are critical to understanding the way a feature is implemented
-4. You can add multiple small features or one large feature
-5. Please document your changes well and make as many atomic commits as you feel are necessary for someone to track your changes
+1. The backend is set up to seed the mock data into local MongoDB
+2. The information regard shopping carts, for example, items added to cart are all stored in redux state. Redux-persis were leveraged to store the cart data locally. 
+3. State management is mainly handled by Redux.  API versus redux for handling local state and the pros and cons of both because they do kind of both solve the same problem and it's rare that you'll want to use an application that has two ways of storing a local state because this kind of removes the idea of a single direction of data flow and one single source of truth. When the application is going to be large, redux is recommanded because the ecosystem is fleshed out and it provides so much more power and flexibility including all of the asynchronous. Redux also has redux-persist where as context-api requires persists to be written manually, however, context API requires less code, less folder than redux. That being said in this test context api and reat hooks are used in one component to demonstrate the alternative way to handling state, although it is not nessesary but for the purpose of the test.
+4. This error might occur `Error: listen EADDRINUSE: address already in use :::3000`, if that's the case , kill the node and `yarn dev` again.
+5. Currently, when the user click like an item, it will be stored into the database into a user collection with the productId.  UI feedbacks need to be added. For the purpose of the test, the likes are coded to store into the mongoDB database, however, that can take up alot of database over time, which is why Dgraph is currently being implemented.
+6. There is only one package.json file. Normally, both client and server folder should each have one package.json for a Monorepo. For the purpose of this test, only one package.json is sufficient.
 
-Of your submission, the following will be evaluated:
-- Ability to work in a pre-existing React environment (front-end)
-- Ability to use existing data in the database (back-end)
-- Ability add/store/retrieve new data in the database (back-end)
-- Completeness of feature, works as a user would expect such a feature to work
-- Adopting and using best practices
-- Coding style
-- Attention to detail
-- Clarity in communicating the feature implemented (I highly recommend taking pictures and gifs)
 
-High scorers will be contacted via email within a week of acknowledgement of PR submission.
-Thank you and good luck for everyone who applied and submitted a PR.
 
 ## Install
-1. Ensure `yarn` is installed
+1. Ensure `yarn, `mongoDB`, `Robo3T` is installed
 
 
-## Run
-1. `yarn dev`
-2. View at `http://localhost:8080/`
-
-It should look like this initially:
-![Shop Page Default Look and browse](https://raw.githubusercontent.com/ShopBonsai/react-interview-test/master/docs/shopPage.gif)
+## Run & steps
+1. `mongod` 
+2. `yarn dev`
+3. Open `Robo3T`
+4. View at `http://localhost:8080/`
+5. Browse frontend, navigate in all pages, click add to cart, cart icon, then checkout, stripe, like
+6. Close the  browser and reopen, the cart items should be still there
+7. Click heart button to like an item. look for collection react-interview-test in Robo3T, then you should be able to see the product id of the liked items
+8. Use stripe.
 
