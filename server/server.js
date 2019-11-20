@@ -25,6 +25,8 @@ server.applyMiddleware({ app });
 
 // Use the same Promise as NodeJS
 Mongoose.Promise = global.Promise;
+
+// declare the deprecations
 Mongoose.connect('mongodb://localhost/react-interview-test', { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },(err) => {
   if (err) {
     return err;

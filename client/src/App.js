@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { ApolloProvider } from "react-apollo";
 import apolloClient from "./createApolloClient";
 
-import Products from "./Pages/productpage/Products";
+import ProductPage from "./Pages/productpage/productpage";
 import CheckOut from "./Pages/checkoutpage/checkoutpage";
 import Header from "../src/components/Header/header";
 import HomePage from "./Pages/homepage/homepage";
@@ -19,7 +19,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/products" component={Products} />
+          <Route path="/products" component={ProductPage} />
           <Route path="/contact" component={ContactPage} />
           <Route path="/checkout" component={CheckOut} />
         </Switch>

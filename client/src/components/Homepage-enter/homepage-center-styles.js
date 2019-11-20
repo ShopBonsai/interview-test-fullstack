@@ -19,7 +19,6 @@ export const MainMenuContainer = styled(Link)`
     }
   }
 
-
   @media screen and (max-width: 700px) {
     height: 500px;
     min-width: 100%;

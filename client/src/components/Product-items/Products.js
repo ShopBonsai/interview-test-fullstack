@@ -1,12 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { CardTitle, CardSubtitle, CardText, CardBody, Media } from "reactstrap";
 import { gql } from "apollo-boost";
 import { Query, Mutation } from "react-apollo";
 
 import { onAddedItem } from "../../redux/shopCart/cart-actions";
 
-import { ProductCard, AddButton, LoadingProduct, ProductContainer } from "./products-styles.js";
+import {
+  ProductContainer,
+  ProductCard,
+  MediaImage,
+  ProductFooterContainer,
+  ProductInfoContainer,
+  AddButton,
+  LoadingProduct
+} from "./products-styles.js";
 
 const LIKE_PRODUCT = gql`
   mutation LikeProduct($userId: String!, $productId: String!) {
@@ -76,24 +83,26 @@ const ProductsList = ({ merchants, merchantsLoading, onAddedItem, onLike }) => {
           const { color, description, image, name, price, size } = product;
           return (
             <ProductContainer>
-            <ProductCard key={product.id}>
-              <Media left href="#">
-                <Media object src={image} alt="Product image cap" />
-              </Media>
-              <CardBody>
-                <CardTitle style={{ fontWeight: 600 }}>{name}</CardTitle>
-                <CardTitle>Price: {price}</CardTitle>
-                <CardSubtitle>Color: {color}</CardSubtitle>
-                <CardSubtitle>Size: {size}</CardSubtitle>
-                <CardText>Details: {description}</CardText>
-                <AddButton onClick={() => onAddedItem(product)}>
-                  Add to cart
-                </AddButton>
-                <AddButton onClick={() => onLike("143aklsfj2jfsf", product.id)}>
-                  ❤️
-                </AddButton>
-              </CardBody>
-            </ProductCard>
+              <ProductCard key={product.id}>
+                <MediaImage image={image} alt="Product image cap" />
+                <ProductFooterContainer>
+                  <ProductInfoContainer>{name}</ProductInfoContainer>
+                  <ProductInfoContainer>Price: {price}</ProductInfoContainer>
+                  <ProductInfoContainer>Color: {color}</ProductInfoContainer>
+                  <ProductInfoContainer>Size: {size}</ProductInfoContainer>
+                  <ProductInfoContainer>
+                    Details: {description}
+                  </ProductInfoContainer>
+                  <AddButton onClick={() => onAddedItem(product)}>
+                    Add to cart
+                  </AddButton>
+                  <AddButton
+                    onClick={() => onLike("143aklsfj2jfsf", product.id)}
+                  >
+                    ❤️
+                  </AddButton>
+                </ProductFooterContainer>
+              </ProductCard>
             </ProductContainer>
           );
         })

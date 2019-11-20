@@ -7,15 +7,11 @@ const resolvers = {
   },
   Mutation: {
     likeProduct: async (_, { userId, productId }) => {
-      console.log(`likeProduct(${userId}, ${productId})`);
       const updatedUser = await User.findOneAndUpdate(
         { userId },
-        { $addToSet: { likedProducts: {id: productId}}},
+        { $addToSet: { likedProducts: { id: productId } } },
         { new: true }
       );
-      console.log("********************");
-      console.log(updatedUser);
-      console.log("********************");
       return updatedUser;
     }
   }
