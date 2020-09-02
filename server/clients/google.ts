@@ -36,7 +36,6 @@ export async function verifyGoogleToken(accessToken: string, res: any) {
       return tokenInfo;
     }
   } catch (e) {
-    console.log({ e });
     throw new Error("GOOGLE_TOKEN_VERIFICATION:FAILED");
   }
 }
