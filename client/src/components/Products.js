@@ -38,10 +38,10 @@ class ProductsList extends Component {
   
     showProducts() {
       const { merchants, merchantsLoading } = this.props;
-  
-      if (!merchantsLoading && merchants && merchants.length > 0) {
-        return merchants.map(({products}) => {
-          return products && products.length > 0 && products.map(product => {
+      if (merchantsLoading) return <div><h3>No products available</h3></div>
+      if (merchants?.length > 0) {
+        return merchants.map(({ products }) => {
+          return products?.map(product => {
             const { color, description, image, name, price, size } = product
             return (
               <Media key={product.id} className="product-card">
@@ -54,24 +54,18 @@ class ProductsList extends Component {
                   <CardSubtitle>Color: {color}</CardSubtitle>
                   <CardSubtitle>Size: {size}</CardSubtitle>
                   <CardText>Details: {description}</CardText>
-                  <Button color="primary" size="lg" block>Buy</Button>
+                  <Button className="buy" color="primary" size="lg" block>Buy</Button>
                 </CardBody>
               </Media>
             );
           })
         });
-      } else {
-        return (
-          <div>
-            <h3>No products available</h3>
-          </div>
-        );
       }
     }
   
     render() {
       return (
-        <div>
+        <div className="container">
           {this.showProducts()}
         </div>
       );
