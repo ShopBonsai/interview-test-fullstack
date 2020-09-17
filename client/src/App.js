@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
 import apolloClient from './createApolloClient';
 import Products from './components/Products';
 

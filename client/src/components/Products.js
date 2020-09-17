@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
-import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import './styles.css';
 
 const GET_PRODUCTS = gql`
@@ -22,53 +22,36 @@ const GET_PRODUCTS = gql`
   }
 `;
 
-const withProducts = Component => props => {
+const ProductsList = () => {
+  const { loading, data } = useQuery(GET_PRODUCTS);
+  let merchants
+  if (loading) return <div><h4>Hold your horses mate, we are loading awesome stuff here.</h4></div>
+  if (data) merchants = data.merchants;
   return (
-    <Query query={GET_PRODUCTS}>
-      {({ loading, data }) => {
-        return (
-          <Component merchantsLoading={loading} merchants={data && data.merchants} {...props} />
-        );
-      }}
-    </Query>
-  );
-};
-
-class ProductsList extends Component {
-  
-    showProducts() {
-      const { merchants, merchantsLoading } = this.props;
-      if (merchantsLoading) return <div><h3>No products available</h3></div>
-      if (merchants?.length > 0) {
-        return merchants.map(({ products }) => {
-          return products?.map(product => {
-            const { color, description, image, name, price, size } = product
-            return (
-              <Media key={product.id} className="product-card">
+    <div className="container">
+      {data ? (
+        merchants.map(({ products }) => (
+          products.map(({ id, color, description, image, name, price, size }) => (
+            <Media key={id} className="product-card">
               <Media left href="#">
                 <Media object src={image} alt="Product image cap" />
-                </Media>
-                <CardBody>
-                  <CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
-                  <CardTitle>Price: {price}</CardTitle>
-                  <CardSubtitle>Color: {color}</CardSubtitle>
-                  <CardSubtitle>Size: {size}</CardSubtitle>
-                  <CardText>Details: {description}</CardText>
-                  <Button className="buy" color="primary" size="lg" block>Buy</Button>
-                </CardBody>
               </Media>
-            );
-          })
-        });
-      }
-    }
-  
-    render() {
-      return (
-        <div className="container">
-          {this.showProducts()}
-        </div>
-      );
-    }
-  }
-  export default withProducts(ProductsList)
+              <CardBody>
+                <CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
+                <CardTitle>Price: {price}</CardTitle>
+                <CardSubtitle>Color: {color}</CardSubtitle>
+                <CardSubtitle>Size: {size}</CardSubtitle>
+                <CardText>Details: {description}</CardText>
+                <Button className="buy" color="primary" size="lg" block>Buy</Button>
+              </CardBody>
+            </Media>
+          ))
+        ))
+      ) : (
+        <p>something isn't quite right</p>
+      )}
+    </div>
+  )
+}
+
+export default ProductsList;
