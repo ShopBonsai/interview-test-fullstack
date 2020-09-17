@@ -2,6 +2,7 @@ import React from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import ProgressiveImage from './ProgressiveImage';
 import './styles.css';
 
 const GET_PRODUCTS = gql`
@@ -34,7 +35,7 @@ const ProductsList = () => {
           products.map(({ id, color, description, image, name, price, size }) => (
             <Media key={id} className="product-card">
               <Media left href="#">
-                <Media object src={image} alt="Product image cap" />
+                <ProgressiveImage src={image} />
               </Media>
               <CardBody>
                 <CardTitle style={{fontWeight: 600}}>{name}</CardTitle>

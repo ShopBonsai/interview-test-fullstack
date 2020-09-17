@@ -26,3 +26,10 @@ html, body {
   display: flex;
   flex-direction: column;
 }
+
+.media-left {
+  width: 300px;
+  height: 300px;
+  flex-shrink: 0;
+  position: relative;
+}
