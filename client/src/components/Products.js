@@ -3,6 +3,7 @@ import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reac
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import ProgressiveImage from './ProgressiveImage';
+import FancyInput from './FancyInput';
 import './styles.css';
 
 const GET_PRODUCTS = gql`
@@ -26,18 +27,17 @@ const GET_PRODUCTS = gql`
 const ProductsList = () => {
   const [productFilter, setProductFilter] = useState('');
   const { loading, data } = useQuery(GET_PRODUCTS);
-  let merchants
+  let merchants;
   if (loading) return <div><h4>Hold your horses mate, we are loading awesome stuff here.</h4></div>
   if (data) merchants = data.merchants;
   return (
     <>
       <div className="container">
-        <div>
-          <input placeholder="Filter by product name" onChange={({ target: { value }}) => setProductFilter(value)} />
-        </div>
-        <span></span>
-        {data ? (
-          merchants.map(({ products }) => (
+        <FancyInput placeholder="Filter by product name" onChange={({ target: { value }}) => setProductFilter(value)} />
+      </div>
+      {data ? (
+        <div className="container product-container">
+          {merchants.map(({ products }) => (
             products.filter(product =>
               product.name.toLowerCase().includes(productFilter.toLowerCase())).map(({ id, color, description, image, name, price, size }) => (
                 <Media key={id} className="product-card">
@@ -55,11 +55,11 @@ const ProductsList = () => {
                 </Media>
               )
             )
-          ))
-        ) : (
-          <p>something isn't quite right</p>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p>something isn't quite right</p>
+      )}
     </>
   )
 }

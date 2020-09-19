@@ -11,7 +11,7 @@ html, body {
   box-shadow: 1px 2px 3px rgba(136,10,142,0.3);
 }
 
-.container {
+.product-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(375px, 1fr));
   column-gap: 20px;
