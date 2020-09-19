@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
+import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media, Spinner } from 'reactstrap';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import ProgressiveImage from './ProgressiveImage';
@@ -28,7 +28,7 @@ const ProductsList = () => {
   const [productFilter, setProductFilter] = useState('');
   const { loading, data } = useQuery(GET_PRODUCTS);
   let merchants;
-  if (loading) return <div><h4>Hold your horses mate, we are loading awesome stuff here.</h4></div>
+  if (loading) return <div className="container"><h4> <Spinner />Hold your horses mate, we are loading awesome stuff here.</h4></div>
   if (data) merchants = data.merchants;
   return (
     <>

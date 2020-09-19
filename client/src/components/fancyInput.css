@@ -1,4 +1,4 @@
-:focus{outline: none;}
+.input-field:focus { outline: none; }
 
 .input-container{
   float: left; 
