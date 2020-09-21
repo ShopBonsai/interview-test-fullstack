@@ -1,7 +1,6 @@
-import React, { useReducer, useContext } from 'react';
+import React from 'react';
 import renderer from 'react-test-renderer';
 import Context from '../context';
-import reducer from '../reducer';
 import Cart from './Cart';
 
 describe('Cart', () => {
