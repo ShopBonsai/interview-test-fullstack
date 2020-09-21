@@ -18,7 +18,8 @@
   "scripts": {
     "server": "nodemon ./server/server.js",
     "client": "webpack-dev-server --mode development --open",
-    "dev": "concurrently \"yarn client\" \"yarn server\""
+    "dev": "concurrently \"yarn client\" \"yarn server\"",
+    "test": "jest"
   },
   "devDependencies": {
     "@apollo/react-hooks": "^4.0.0",

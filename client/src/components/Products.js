@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media, Spinner } from 'reactstrap';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Context from '../context';
 import ProgressiveImage from './ProgressiveImage';
 import FancyInput from './FancyInput';
+import Card from './Cart';
 import './styles.css';
 
 const GET_PRODUCTS = gql`
@@ -27,6 +29,8 @@ const GET_PRODUCTS = gql`
 const ProductsList = () => {
   const [productFilter, setProductFilter] = useState('');
   const { loading, data } = useQuery(GET_PRODUCTS);
+  const { state, dispatch } = useContext(Context);
+  const { productsInCart } = state;
   let merchants;
   if (loading) return <div className="container"><h4> <Spinner />Hold your horses mate, we are loading awesome stuff here.</h4></div>
   if (data) merchants = data.merchants;
@@ -35,6 +39,7 @@ const ProductsList = () => {
       <div className="container">
         <FancyInput placeholder="Filter by product name" onChange={({ target: { value }}) => setProductFilter(value)} />
       </div>
+      <Card />
       {data ? (
         <div className="container product-container">
           {merchants.map(({ products }) => (
@@ -50,7 +55,19 @@ const ProductsList = () => {
                     <CardSubtitle>Color: {color}</CardSubtitle>
                     <CardSubtitle>Size: {size}</CardSubtitle>
                     <CardText>Details: {description}</CardText>
-                    <Button className="buy" color="primary" size="lg" block>Buy</Button>
+                    <Button 
+                      id={id}
+                      name={name}
+                      image={image}
+                      className="buy" 
+                      color="primary" 
+                      size="lg" 
+                      block
+                      onClick={({ target: { id }}) => dispatch({ type: 'ADD_PRODUCT_TO_CART', payload: { id, name, image } })}
+                      disabled={productsInCart.some(product => product.id === id)}
+                    >
+                      Buy
+                    </Button>
                   </CardBody>
                 </Media>
               )
