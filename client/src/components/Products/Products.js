@@ -37,6 +37,8 @@ const ProductList = (props) => {
         products.length > 0 &&
         products
           .filter((product) =>
+            product.name
+              .toLowerCase()
               .includes(productNameFilter.toLowerCase()),
           )
           .map((product) => {
