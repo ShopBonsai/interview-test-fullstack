@@ -10,6 +10,8 @@ You joined as the new member of a small start-up team. Together we are building 
 Goal:
 Your task is to add a new complete working feature that you feel will best demonstrate your capabilities as a team-member and have the largest positive impact on our customer. This implies that JUST updating the es-lint rules to include trailing commas, switching all space-characters in the code-base to tab-characters, and/or updating the .gitignore will score low. However, non-customer facing features such as validating data, unit-testing, creating a automatic-backups of the database, can score very high if done well.
 
+**NOTE:** If you are interveiwing for a frontend role, you simply need to make a frontend feature!
+
 Here are some ideas for features that are missing from the app (you can use your own database or consider mockMerchantData.js as a database):
  - Clicking Buy does SOMETHING! This should add data to the database in a meaningful way and communicate to the user that such an action took place.
  - Ability to select a quantity to buy. The quantity should be stored in the database in a meaningful way, this data should be retrieved and displayed somewhere for the user.
