@@ -39,8 +39,7 @@ const ProductsList = ({ merchants, merchantsLoading }) => {
     const prevCartState = cartState;
     if (prevCartState.ids.some((id) => id === product.id)) return;
     const nextCartIds = [...prevCartState.ids, product.id];
-    const nextCardData = { ...prevCartState.data, [product.id]: product };
-    setCartState({ ids: nextCartIds, data: nextCardData });
+    setCartState({ ids: nextCartIds });
   };
   const showProducts = () => {
     if (!merchantsLoading && merchants && merchants.length > 0) {

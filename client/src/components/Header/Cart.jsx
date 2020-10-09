@@ -1,15 +1,34 @@
 import React from 'react';
 import {
-  DropdownMenu, DropdownItem, Dropdown, DropdownToggle, Media,
+  DropdownMenu, DropdownItem, Dropdown, DropdownToggle,
 } from 'reactstrap';
+
 import { CartContext } from '../../CartContextProvider';
 import './Cart.css';
+import CartItem from './CartItem';
 
 export const Cart = () => {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [cartState, setCartState] = React.useContext(CartContext);
   const toggleCart = () => setCartOpen((prevState) => !prevState);
-  let cartTotal = 0;
+  const removeFromCart = (itemId) => {
+    const prevCartIds = cartState.ids;
+    const idPosition = prevCartIds.indexOf(itemId);
+    if (idPosition < 0) return;
+    const nextCartIds = prevCartIds.filter((id) => id !== itemId);
+    setCartState({ ids: nextCartIds });
+  };
+  const [cartTotal, setCartTotal] = React.useState(0);
+  const adjustCartTotal = (itemTotal, operation) => {
+    let newTotal = cartTotal;
+    if (operation === 'add') {
+      newTotal = cartTotal + itemTotal;
+    }
+    if (operation === 'subtract') {
+      newTotal = cartTotal - itemTotal;
+    }
+    setCartTotal(newTotal);
+  };
   return (
     <Dropdown isOpen={cartOpen} toggle={toggleCart} inNavbar>
       <DropdownToggle caret nav>
@@ -21,32 +40,15 @@ export const Cart = () => {
           Shopping Cart
         </DropdownItem>
         <DropdownItem divider />
-        {cartState.ids.map((id) => {
-          if (!cartState.data[id]) return null;
-          const {
-            image, name, price,
-          } = cartState.data[id];
-          cartTotal += price;
-          return (
-            <>
-              <DropdownItem key={`cart-${id}`}>
-                <Media>
-                  <Media left>
-                    <Media className="cart-image" object src={image} alt="product image" />
-                  </Media>
-                  <Media body>
-                    <Media heading>
-                      {name}
-                    </Media>
-                    {`$${price.toFixed(2)}`}
-                  </Media>
-                </Media>
-              </DropdownItem>
-              <DropdownItem divider />
-            </>
-          );
-        })}
-        <DropdownItem>
+        {cartState.ids.map((id) => (
+          <CartItem
+            key={`cart-${id}`}
+            itemId={id}
+            adjustCartTotal={adjustCartTotal}
+            onRemoveClick={() => removeFromCart(id)}
+          />
+        ))}
+        <DropdownItem disabled>
           {`Cart Total: $ ${cartTotal.toFixed(2)}`}
         </DropdownItem>
       </DropdownMenu>
