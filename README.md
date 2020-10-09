@@ -47,6 +47,7 @@ Thank you and good luck for everyone who applied and submitted a PR.
 
 ## Install
 1. Ensure `yarn` is installed
+2. `yarn install`
 
 
 ## Run

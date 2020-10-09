@@ -1,7 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
-  template: './client/src/index.html'
+  template: './client/src/index.html',
 });
 
 module.exports = {
@@ -9,23 +9,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-react'],
             plugins: [
-              ["@babel/plugin-proposal-decorators", { "legacy": true }],
-            ]
-          }
-        }
+              ['@babel/plugin-proposal-decorators', { legacy: true }],
+            ],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
-  plugins: [htmlPlugin]
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  plugins: [htmlPlugin],
 };
