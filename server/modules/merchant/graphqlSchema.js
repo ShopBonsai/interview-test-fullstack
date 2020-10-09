@@ -34,6 +34,7 @@ const typeDefs = gql`
   }
   type Query {
     merchants: [Merchant!]!
+    product(id: String!): Product
   }
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
