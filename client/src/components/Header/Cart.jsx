@@ -20,14 +20,12 @@ export const Cart = () => {
   };
   const [cartTotal, setCartTotal] = React.useState(0);
   const adjustCartTotal = (itemTotal, operation) => {
-    let newTotal = cartTotal;
     if (operation === 'add') {
-      newTotal = cartTotal + itemTotal;
+      setCartTotal((prevTotal) => prevTotal + itemTotal);
     }
     if (operation === 'subtract') {
-      newTotal = cartTotal - itemTotal;
+      setCartTotal((prevTotal) => prevTotal - itemTotal);
     }
-    setCartTotal(newTotal);
   };
   return (
     <Dropdown isOpen={cartOpen} toggle={toggleCart} inNavbar>
