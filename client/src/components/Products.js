@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
 import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
 import { Query, Mutation } from 'react-apollo';
 import { GET_CART_PRODUCTS } from './Cart';
 

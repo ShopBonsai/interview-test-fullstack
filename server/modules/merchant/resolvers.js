@@ -1,9 +1,13 @@
+const { v4 } = require('uuid');
+
 const { merchants } = require("../../../mockMerchantData")
+
+const cart = [];
 
 const resolvers = {
   Query: {
     merchants: () => merchants,
-    cart: () => [],
+    cart: () => cart,
   },
   Mutation: {
     addToCart: (parent, args) => {
