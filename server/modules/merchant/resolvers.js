@@ -2,7 +2,8 @@ const { merchants } = require("../../../mockMerchantData")
 
 const resolvers = {
   Query: {
-    merchants: () => merchants
+    merchants: () => merchants,
+    cart: () => [],
   },
 };
 
