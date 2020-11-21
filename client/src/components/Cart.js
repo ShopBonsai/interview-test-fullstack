@@ -1,8 +1,10 @@
+import TagManager from 'react-gtm-module';
 import React, { Component } from 'react';
 import { ListGroup } from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import CartItem from './CartItem';
+import GTMConstants from '../helpers/GTMConstants'
 
 const GET_CART_PRODUCTS = gql`
   {
@@ -14,6 +16,12 @@ const GET_CART_PRODUCTS = gql`
     }
   }
 `;
+
+const getCartProductCount = cartProducts => {
+  return cartProducts ? cartProducts.reduce((total, cartProduct) => {
+    return total += cartProduct.quantity;
+  }, 0) : 0;
+}
 
 const withCartProducts = Component => props => {
   return (
@@ -30,6 +38,13 @@ const withCartProducts = Component => props => {
 class Cart extends Component {
   showCartProducts() {
     const { cartProducts, cartLoading } = this.props;
+
+    TagManager.dataLayer({
+      dataLayer: {
+        [GTMConstants.DATA_LAYER_CART_ITEM_COUNT]: getCartProductCount(cartProducts),
+      },
+    });
+    
     if (!cartLoading && cartProducts && cartProducts.length > 0) {
       return (
         <ListGroup>
