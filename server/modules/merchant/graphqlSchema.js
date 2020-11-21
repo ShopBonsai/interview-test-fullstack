@@ -32,14 +32,11 @@ const typeDefs = gql`
   type CartProduct {
     cartProductId: String
     quantity: Int!
+    productId: String
     name: String
     price: Float
-    description: String
     color: String
     size: String
-    image: String
-    merchant: String
-    brand: String
   }
   type User {
     userId: String
@@ -50,6 +47,13 @@ const typeDefs = gql`
   }
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
+    addToCart(
+      productId: String
+      name: String
+      price: Float
+      color: String
+      size: String
+    ): CartProduct!
   }
 `;
 

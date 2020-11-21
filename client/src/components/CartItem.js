@@ -7,7 +7,7 @@ class CartItem extends Component {
     
     return (
       <ListGroupItem>
-        {name}
+        {name} {quantity > 1 && (`(${quantity})`)}
       </ListGroupItem>
     );
   }

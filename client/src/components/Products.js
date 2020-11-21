@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
-import './styles.css';
+import { Query, Mutation } from 'react-apollo';
+import { GET_CART_PRODUCTS } from './Cart';
 
 const GET_PRODUCTS = gql`
   {
@@ -18,6 +19,26 @@ const GET_PRODUCTS = gql`
         size
         image
       }
+    }
+  }
+`;
+
+const ADD_TO_CART_MUTATION = gql`
+  mutation ADD_TO_CART_MUTATION(
+    $productId: String!
+    $name: String!
+    $price: Float!
+    $color: String!
+    $size: String!
+  ) {
+    addToCart(
+      productId: $productId
+      name: $name
+      price: $price
+      color: $color
+      size: $size
+    ) {
+      cartProductId
     }
   }
 `;
@@ -54,7 +75,29 @@ class ProductsList extends Component {
                   <CardSubtitle>Color: {color}</CardSubtitle>
                   <CardSubtitle>Size: {size}</CardSubtitle>
                   <CardText>Details: {description}</CardText>
-                  <Button color="primary" size="lg" block>Buy</Button>
+                  <Mutation 
+                    mutation={ADD_TO_CART_MUTATION}
+                    variables={{ 
+                      productId: product.id,
+                      name: name,
+                      price: price,
+                      color: color,
+                      size: size,
+                    }}
+                    refetchQueries={[{ query: GET_CART_PRODUCTS }]}
+                  >
+                    {(addToCart, { loading, error }) => (
+                      <Button 
+                        disabled={loading}
+                        color="primary"
+                        size="lg"
+                        block
+                        onClick={addToCart}
+                      >
+                        {loading ? 'Adding to Cart' : 'Buy'}
+                      </Button>
+                    )}
+                  </Mutation>
                 </CardBody>
               </Media>
             );

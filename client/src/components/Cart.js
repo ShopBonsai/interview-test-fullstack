@@ -70,3 +70,4 @@ class Cart extends Component {
 }
 
 export default withCartProducts(Cart);
+export { GET_CART_PRODUCTS };
