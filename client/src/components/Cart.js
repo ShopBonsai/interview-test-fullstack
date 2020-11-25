@@ -45,7 +45,7 @@ class Cart extends Component {
 
     TagManager.dataLayer({
       dataLayer: {
-        [GTMConstants.DATA_LAYER_CART_ITEM_COUNT]: getCartQuantity(cartProducts),
+        [GTMConstants.DATA_LAYER_CART_ITEM_QUANTITY]: getCartQuantity(cartProducts),
       },
     });
     
