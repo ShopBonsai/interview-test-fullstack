@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import CartItem from './CartItem';
 import GTMConstants from '../helpers/GTMConstants'
+import PropTypes from 'prop-types';
 
 const GET_CART_PRODUCTS = gql`
   {
@@ -17,18 +18,21 @@ const GET_CART_PRODUCTS = gql`
   }
 `;
 
-const getCartProductCount = cartProducts => {
-  return cartProducts ? cartProducts.reduce((total, cartProduct) => {
-    return total += cartProduct.quantity;
-  }, 0) : 0;
+const sumProductQuantities = (total, product) => {
+  return total += product.quantity;
+}
+
+const getCartQuantity = cartProducts => {
+  const INITIAL_QUANTITY = 0;
+  return cartProducts.reduce(sumProductQuantities, INITIAL_QUANTITY);
 }
 
 const withCartProducts = Component => props => {
   return (
     <Query query={GET_CART_PRODUCTS}>
-      {({ loading, data }) => {
+      {({ loading, data: { cart: cartProducts = [] } }) => {
         return (
-          <Component cartLoading={loading} cartProducts={data && data.cart} {...props} />
+          <Component cartLoading={loading} cartProducts={cartProducts} {...props} />
         );
       }}
     </Query>
@@ -41,7 +45,7 @@ class Cart extends Component {
 
     TagManager.dataLayer({
       dataLayer: {
-        [GTMConstants.DATA_LAYER_CART_ITEM_COUNT]: getCartProductCount(cartProducts),
+        [GTMConstants.DATA_LAYER_CART_ITEM_COUNT]: getCartQuantity(cartProducts),
       },
     });
     
@@ -83,6 +87,11 @@ class Cart extends Component {
     );
   }
 }
+
+Cart.propTypes = {
+  cartLoading: PropTypes.bool.isRequired,
+  cartProducts: PropTypes.array.isRequired,
+};
 
 export default withCartProducts(Cart);
 export { GET_CART_PRODUCTS };
