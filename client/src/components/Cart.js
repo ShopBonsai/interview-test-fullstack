@@ -15,6 +15,7 @@ const GET_CART_PRODUCTS = gql`
     }
   }
 `;
+export { GET_CART_PRODUCTS };
 
 const withCartProducts = Component => props => {
   return (
@@ -50,4 +51,4 @@ Cart.defaultProps = {
 };
 
 export default withCartProducts(Cart);
-export { GET_CART_PRODUCTS };
+
