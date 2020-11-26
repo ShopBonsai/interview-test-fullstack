@@ -66,7 +66,7 @@ class ProductsList extends Component {
             return (
               <Media key={product.id} className="product-card">
               <Media left href="#">
-                <Media object src={image} alt="Product image cap" />
+                <Media className="product__image" object src={image} alt="Product image cap" />
                 </Media>
                 <CardBody>
                   <CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
@@ -115,7 +115,7 @@ class ProductsList extends Component {
   
     render() {
       return (
-        <div>
+        <div className="products">
           {this.showProducts()}
         </div>
       );
