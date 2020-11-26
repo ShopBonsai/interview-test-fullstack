@@ -1,5 +1,3 @@
-const { v4 } = require('uuid');
-
 const { merchants } = require("../../../mockMerchantData")
 
 const cart = [];
@@ -22,7 +20,6 @@ const resolvers = {
       }
 
       const newCartProduct = {
-        cartProductId: v4(),
         quantity: 1,
         ...args,
       };

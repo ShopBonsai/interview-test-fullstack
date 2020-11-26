@@ -37,7 +37,7 @@ const ADD_TO_CART_MUTATION = gql`
       color: $color
       size: $size
     ) {
-      cartProductId
+      productId
     }
   }
 `;

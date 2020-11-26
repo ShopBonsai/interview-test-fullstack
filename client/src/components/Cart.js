@@ -8,7 +8,7 @@ import CartContents from './CartContents';
 const GET_CART_PRODUCTS = gql`
   {
     cart {
-      cartProductId
+      productId
       name
       quantity
       price

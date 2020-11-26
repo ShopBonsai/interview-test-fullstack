@@ -30,9 +30,8 @@ const typeDefs = gql`
     image: String
   }
   type CartProduct {
-    cartProductId: String
-    quantity: Int!
     productId: String
+    quantity: Int
     name: String
     price: Float
     color: String
