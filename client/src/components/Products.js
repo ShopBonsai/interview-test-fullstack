@@ -85,17 +85,19 @@ class ProductsList extends Component {
                     }}
                     refetchQueries={[{ query: GET_CART_PRODUCTS }]}
                   >
-                    {(addToCart, { loading, error }) => (
-                      <Button 
-                        disabled={loading}
-                        color="primary"
-                        size="lg"
-                        block
-                        onClick={addToCart}
-                      >
-                        {loading ? 'Adding to Cart' : 'Buy'}
-                      </Button>
-                    )}
+                    {(addToCart, { loading, error }) => {
+                      return (
+                        <Button 
+                          disabled={loading}
+                          color="primary"
+                          size="lg"
+                          block
+                          onClick={addToCart}
+                        >
+                          {loading ? 'Adding to Cart' : 'Buy'}
+                        </Button>
+                      );
+                    }}
                   </Mutation>
                 </CardBody>
               </Media>

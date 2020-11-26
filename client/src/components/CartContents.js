@@ -38,8 +38,7 @@ const CartContents = props => {
   return (
     <ListGroup>
       {
-        cartProducts.map(cartProduct => {
-          const { productId, name, quantity, price } = cartProduct
+        cartProducts.map(({ productId, name, quantity, price }) => {
           return (
             <CartItem 
               key={productId}

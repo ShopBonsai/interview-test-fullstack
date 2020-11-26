@@ -31,14 +31,16 @@ const withCartProducts = Component => props => {
 
 
 
-const Cart = props => (
-  <>
-    <h1>
-      Cart
-    </h1>
-    <CartContents {...props} />
-  </>
-);
+const Cart = props => {
+  return (
+    <>
+      <h1>
+        Cart
+      </h1>
+      <CartContents {...props} />
+    </>
+  );
+}
 
 Cart.propTypes = {
   cartLoading: PropTypes.bool.isRequired,
