@@ -1,9 +1,10 @@
 import React from 'react';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
-
+import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
-import CartContents from './CartContents';
+import CartItems from './CartItems';
+import GTMConstants from '../helpers/GTMConstants';
 
 const GET_CART_PRODUCTS = gql`
   {
@@ -29,15 +30,22 @@ const withCartProducts = Component => props => {
   );
 };
 
-
-
 const Cart = props => {
   return (
     <div className="cart">
       <h1>
         Cart
       </h1>
-      <CartContents {...props} />
+      <CartItems {...props} />
+      <Button
+        className="gtm-click-checkout"
+        color="primary"
+        size="lg"
+        block
+        data-gtmclickid={GTMConstants.EVENT_IDS.CHECKOUT}
+      >
+        Checkout
+      </Button>
     </div>
   );
 }

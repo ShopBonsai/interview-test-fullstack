@@ -21,7 +21,7 @@ const sumProductQuantities = (total, product) => {
   return total += product.quantity;
 }
 
-const CartContents = props => {
+const CartItems = props => {
   const { cartProducts } = props;
   TagManager.dataLayer({
     dataLayer: {
@@ -53,9 +53,9 @@ const CartContents = props => {
   );
 }
 
-CartContents.propTypes = {
+CartItems.propTypes = {
   cartLoading: PropTypes.bool.isRequired,
   cartProducts: PropTypes.array.isRequired,
 };
 
-export default CartContents;
+export default CartItems;

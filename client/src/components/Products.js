@@ -3,6 +3,7 @@ import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reac
 import { gql } from 'apollo-boost';
 import { Query, Mutation } from 'react-apollo';
 import { GET_CART_PRODUCTS } from './Cart';
+import GTMConstants from '../helpers/GTMConstants';
 
 const GET_PRODUCTS = gql`
   {
@@ -87,12 +88,13 @@ class ProductsList extends Component {
                   >
                     {(addToCart, { loading, error }) => {
                       return (
-                        <Button 
+                        <Button
                           disabled={loading}
                           color="primary"
                           size="lg"
                           block
                           onClick={addToCart}
+                          data-gtmclickid={GTMConstants.EVENT_IDS.BUY}
                         >
                           {loading ? 'Adding to Cart' : 'Buy'}
                         </Button>
