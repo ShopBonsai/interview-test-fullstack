@@ -35,6 +35,7 @@ export default gql`
     type Query {
         merchants: [Merchant!]!
         users: [User]
+        cart: CartResponse
     }
     type CartItem {
         id: String
@@ -53,7 +54,6 @@ export default gql`
         cart: Cart
     }
     type Mutation {
-        editMerchant(publishedState: Boolean!): Merchant
         addToCart(productId: String!, quantity: Int!): CartResponse
         updateCart(productId: String!, quantity: Int!): CartResponse
     }

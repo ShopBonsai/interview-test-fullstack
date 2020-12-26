@@ -5,7 +5,10 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist"
+    "skipLibCheck": true,
+    "outDir": "./dist/",
+    "jsx": "react",
+    "allowJs": true
   },
   "include": ["./server/", "./client/"],
   "lib": ["es2015"]

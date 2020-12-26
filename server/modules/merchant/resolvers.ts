@@ -7,25 +7,24 @@ for (let merchant of merchants) {
 export default {
     Query: {
         merchants: () => merchants,
-        users: async (_, __, { dataSources }) => {
-            const users = await dataSources.users.getUsers();
-            if (users) {
-                return users.map(user => {
-                    return {
-                        userId: user['_id'],
-                    };
-                });
-            } else {
-                return [];
-            }
+        cart: async (_, __, { dataSources }) => {
+            const cart = await dataSources.carts.get();
+            return {
+                success: true,
+                cart,
+            };
         },
     },
     Mutation: {
-        // TODO: Error Handling
         addToCart: async (_, { productId, quantity }, { dataSources }) => {
             const cart = await dataSources.carts.get();
             const product = products.find(product => product.id == productId);
-            // TODO: If product doesn't exist can't add it to cart
+            if (!product) {
+                return {
+                    success: false,
+                    message: `There's no product with the id: ${productId}`,
+                };
+            }
             if (cart) {
                 const cartItem = cart.items.find(item => item.id == productId);
 
@@ -67,6 +66,12 @@ export default {
         updateCart: async (_, { productId, quantity }, { dataSources }) => {
             const cart = await dataSources.carts.get();
             const product = products.find(product => product.id == productId);
+            if (!product) {
+                return {
+                    success: false,
+                    message: `There's no product with the id: ${productId}`,
+                };
+            }
             if (cart) {
                 const cartItem = cart.items.find(item => item.id == productId);
 
@@ -76,10 +81,16 @@ export default {
                         quantity
                     );
                 } else {
-                    // TODO: Error Can't update non-existing cart / product
+                    return {
+                        success: false,
+                        message: `Your cart doesn't contain any product with the id: ${productId}`,
+                    };
                 }
             } else {
-                // TODO: Error Can't update non-existing cart / product
+                return {
+                    success: false,
+                    message: "There's no existing cart to update",
+                };
             }
             return {
                 success: true,
