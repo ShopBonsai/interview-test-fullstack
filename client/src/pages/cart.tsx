@@ -6,6 +6,8 @@ import { GET_CART } from '../components/cart-total';
 import CartItem from '../components/cart-item';
 import FadeLoader from 'react-spinners/FadeLoader';
 import { colors } from '../styles';
+import PacmanLoader from 'react-spinners/PacmanLoader';
+import CheckOutButton from '../components/checkout-button';
 
 export const UPDATE_CART = gql`
     mutation UpdateCartMutation(
@@ -54,6 +56,13 @@ const containerStyles = {
 
 const withCartItems = Component => props => {
     const { data, loading, error } = useQuery(GET_CART);
+    if (loading) {
+        return (
+            <Container style={containerStyles}>
+                <PacmanLoader color={colors.primary} />
+            </Container>
+        );
+    }
     if (error) {
         return (
             <Container style={containerStyles}>
@@ -145,24 +154,13 @@ const Cart: FunctionComponent<CartProps> = (props: CartProps) => {
                                     <FadeLoader radius={1} color="#000" />
                                 </span>
                             ) : (
-                                <Button
-                                    style={{
-                                        backgroundColor: colors.primary,
-                                        border: 'none',
-                                    }}
-                                    size="lg"
-                                    block
-                                >
-                                    <span>
-                                        Checkout:{' '}
-                                        {cartItems
-                                            .reduce((a, b) => {
-                                                return a + b.quantity * b.price;
-                                            }, 0)
-                                            .toFixed(2)}
-                                        $
-                                    </span>
-                                </Button>
+                                <CheckOutButton
+                                    total={cartItems
+                                        .reduce((a, b) => {
+                                            return a + b.quantity * b.price;
+                                        }, 0)
+                                        .toFixed(2)}
+                                />
                             )}
                         </Row>
                     </div>

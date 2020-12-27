@@ -8,7 +8,8 @@ import { Router } from '@reach/router';
 import PageContainer from './components/page-container';
 import Footer from './components/footer';
 import Header from './components/header';
-
+import Profile from './pages/profile';
+import Login from './pages/login';
 class App extends Component {
     render() {
         return (
@@ -18,6 +19,8 @@ class App extends Component {
                     <Router primary={false} component={Fragment}>
                         <Products path="/" />
                         <Cart path="/cart" />
+                        <Profile path="/profile" />
+                        <Login path="/login" />
                     </Router>
                 </PageContainer>
                 <Footer />

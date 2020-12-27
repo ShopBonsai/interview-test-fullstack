@@ -17,6 +17,7 @@ const Footer: FunctionComponent = () => {
                 margin: '0 auto',
                 padding: '50px',
                 backgroundColor: 'white',
+                boxShadow: '-1px -2px lightgray',
                 position: 'fixed',
                 width: '100%',
                 bottom: 0,

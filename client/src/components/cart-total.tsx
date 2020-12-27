@@ -29,7 +29,6 @@ const CartTotal: FunctionComponent = () => {
     if (error) {
         return <span>Cart total unavailable. Please try again later</span>;
     }
-    console.log(data);
 
     const noOfItemsInCart =
         data.cart.cart != null

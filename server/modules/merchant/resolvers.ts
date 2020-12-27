@@ -1,3 +1,4 @@
+import { GraphQLDateTime } from 'graphql-iso-date';
 import { merchants } from './mockMerchantData';
 let products = [];
 for (let merchant of merchants) {

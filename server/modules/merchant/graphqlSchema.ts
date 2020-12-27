@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
+    scalar Date
     type Merchant {
         index: Int
         guid: String
@@ -64,7 +65,7 @@ export default gql`
     type Order {
         _id: String!
         userId: String
-        orderDate: String
+        orderDate: Date
         status: String
         shippedDate: String
         orderItems: [OrderItem]!
