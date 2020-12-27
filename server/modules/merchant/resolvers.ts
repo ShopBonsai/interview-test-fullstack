@@ -14,6 +14,13 @@ export default {
                 cart,
             };
         },
+        orders: async (_, __, { dataSources }) => {
+            const orders = await dataSources.orders.get();
+            return {
+                success: true,
+                orders,
+            };
+        },
     },
     Mutation: {
         addToCart: async (_, { productId, quantity }, { dataSources }) => {
@@ -96,6 +103,23 @@ export default {
                 success: true,
                 message: `Successfuly updated ${product.name} to ${quantity} in the cart`,
                 cart: await dataSources.carts.get(),
+            };
+        },
+
+        createOrder: async (_, __, { dataSources }) => {
+            const cart = await dataSources.carts.get();
+            if (!cart || cart.items.length === 0) {
+                return {
+                    success: false,
+                    message: "There's no existing cart to order",
+                };
+            }
+            const order = await dataSources.orders.create(cart.items);
+            await dataSources.carts.delete();
+
+            return {
+                success: true,
+                message: 'Successfuly placed your order',
             };
         },
     },

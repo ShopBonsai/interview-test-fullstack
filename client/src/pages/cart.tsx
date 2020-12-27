@@ -65,7 +65,9 @@ const withCartItems = Component => props => {
     return (
         <Component
             cartLoading={loading}
-            cartItems={data && data.cart.cart.items}
+            cartItems={
+                data && data.cart && data.cart.cart && data.cart.cart.items
+            }
             {...props}
         />
     );

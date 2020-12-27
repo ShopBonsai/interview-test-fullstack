@@ -29,10 +29,14 @@ const CartTotal: FunctionComponent = () => {
     if (error) {
         return <span>Cart total unavailable. Please try again later</span>;
     }
+    console.log(data);
 
-    const noOfItemsInCart = data.cart.cart.items.reduce((a, b) => {
-        return a + b.quantity;
-    }, 0);
+    const noOfItemsInCart =
+        data.cart.cart != null
+            ? data.cart.cart.items.reduce((a, b) => {
+                  return a + b.quantity;
+              }, 0)
+            : 0;
     return <span style={{ color: colors.primary }}>({noOfItemsInCart})</span>;
 };
 

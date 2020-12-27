@@ -10,7 +10,9 @@ import resolvers from './modules/merchant/resolvers';
 
 import { UserSchema } from './models/User';
 import { CartSchema } from './modules/merchant/models/Cart';
+import { OrderSchema } from './modules/merchant/models/Order';
 import Carts from './modules/merchant/datasources/carts';
+import Orders from './modules/merchant/datasources/orders';
 
 import mongoose from 'mongoose';
 
@@ -19,6 +21,7 @@ export const mongodbConn = mongoose.createConnection(
 );
 const UserModel = mongodbConn.model('User', UserSchema);
 const CartModel = mongodbConn.model('Cart', CartSchema);
+const OrderModel = mongodbConn.model('Order', OrderSchema);
 
 // #5 Initialize an Apollo server
 const server = new ApolloServer({
@@ -26,6 +29,7 @@ const server = new ApolloServer({
     resolvers,
     dataSources: () => ({
         carts: new Carts(CartModel),
+        orders: new Orders(OrderModel),
     }),
 });
 

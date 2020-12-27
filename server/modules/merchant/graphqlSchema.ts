@@ -34,8 +34,8 @@ export default gql`
     }
     type Query {
         merchants: [Merchant!]!
-        users: [User]
-        cart: CartResponse
+        cart: CartResponse!
+        orders: GetOrdersResponse!
     }
     type CartItem {
         id: String
@@ -44,7 +44,15 @@ export default gql`
         price: Float
         quantity: Int
     }
+    type OrderItem {
+        id: String
+        name: String
+        image: String
+        price: Float
+        quantity: Int
+    }
     type Cart {
+        _id: String
         userId: String
         items: [CartItem]
     }
@@ -53,8 +61,25 @@ export default gql`
         message: String
         cart: Cart
     }
+    type Order {
+        _id: String!
+        userId: String
+        orderDate: String
+        status: String
+        shippedDate: String
+        orderItems: [OrderItem]!
+    }
+    type CreateOrderResponse {
+        success: Boolean!
+        message: String
+    }
+    type GetOrdersResponse {
+        success: Boolean!
+        orders: [Order]
+    }
     type Mutation {
-        addToCart(productId: String!, quantity: Int!): CartResponse
-        updateCart(productId: String!, quantity: Int!): CartResponse
+        addToCart(productId: String!, quantity: Int!): CartResponse!
+        updateCart(productId: String!, quantity: Int!): CartResponse!
+        createOrder: CreateOrderResponse!
     }
 `;
