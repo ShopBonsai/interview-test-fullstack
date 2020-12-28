@@ -5,6 +5,7 @@ import '../components/styles.css';
 import Product from '../components/product';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import { colors } from '../styles';
+import requireAuth from '../requireAuth';
 
 const GET_PRODUCTS = gql`
     {
@@ -112,4 +113,4 @@ const ProductsList: FunctionComponent<ProductsListProps> = (
 
     return <div>{showProducts()}</div>;
 };
-export default withProducts(ProductsList);
+export default requireAuth(withProducts(ProductsList));

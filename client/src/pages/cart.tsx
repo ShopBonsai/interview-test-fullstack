@@ -8,6 +8,7 @@ import FadeLoader from 'react-spinners/FadeLoader';
 import { colors } from '../styles';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import CheckOutButton from '../components/checkout-button';
+import requireAuth from '../requireAuth';
 
 export const UPDATE_CART = gql`
     mutation UpdateCartMutation(
@@ -55,7 +56,9 @@ const containerStyles = {
 };
 
 const withCartItems = Component => props => {
-    const { data, loading, error } = useQuery(GET_CART);
+    const { data, loading, error } = useQuery(GET_CART, {
+        fetchPolicy: 'network-only',
+    });
     if (loading) {
         return (
             <Container style={containerStyles}>
@@ -177,4 +180,4 @@ const Cart: FunctionComponent<CartProps> = (props: CartProps) => {
 
     return <div className="cart">{showCartItems()}</div>;
 };
-export default withCartItems(Cart);
+export default requireAuth(withCartItems(Cart));

@@ -1,5 +1,14 @@
 import React, { FunctionComponent } from 'react';
+import { GoogleLogout } from 'react-google-login';
+import { navigate } from '@reach/router';
+import { isLoggedInVar } from '../createApolloClient';
+import { useQuery } from '@apollo/client';
+import { IS_LOGGED_IN } from '../requireAuth';
+
 const Header: FunctionComponent = () => {
+    const {
+        data: { isLoggedIn },
+    } = useQuery(IS_LOGGED_IN);
     return (
         <div
             style={{
@@ -84,6 +93,19 @@ const Header: FunctionComponent = () => {
                     </g>
                 </svg>
             </a>
+            {isLoggedIn && (
+                <div style={{ position: 'fixed', top: '20px', right: '20px' }}>
+                    <GoogleLogout
+                        clientId="1057747297021-a6jjec4ohpsjr4gnc523afpes0nuuup4.apps.googleusercontent.com"
+                        buttonText="Logout"
+                        onLogoutSuccess={() => {
+                            localStorage.removeItem('token');
+                            isLoggedInVar(false);
+                            navigate('/login', { replace: true });
+                        }}
+                    ></GoogleLogout>
+                </div>
+            )}
         </div>
     );
 };

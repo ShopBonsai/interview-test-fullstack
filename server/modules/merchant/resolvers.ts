@@ -1,21 +1,45 @@
-import { GraphQLDateTime } from 'graphql-iso-date';
+import { authenticateGoogle } from '../../passport';
 import { merchants } from './mockMerchantData';
+const jwt = require('jsonwebtoken');
+
 let products = [];
 for (let merchant of merchants) {
     products = [...products, ...merchant.products];
 }
 
+const generateJWT = function (email: string, id: string) {
+    const today = new Date();
+    const expirationDate = new Date(today);
+    expirationDate.setDate(today.getDate() + 60);
+
+    return jwt.sign(
+        {
+            email,
+            id,
+            exp: expirationDate.getTime() / 1000,
+        },
+        'secret'
+    );
+};
+
 export default {
     Query: {
-        merchants: () => merchants,
-        cart: async (_, __, { dataSources }) => {
+        merchants: () => {
+            return merchants;
+        },
+        user: async (_, __, { user }) => {
+            if (!user) return null;
+            return user;
+        },
+        cart: async (_, __, { dataSources, user }) => {
             const cart = await dataSources.carts.get();
             return {
                 success: true,
                 cart,
             };
         },
-        orders: async (_, __, { dataSources }) => {
+        orders: async (_, __, { dataSources, user }) => {
+            if (!user) return null;
             const orders = await dataSources.orders.get();
             return {
                 success: true,
@@ -24,7 +48,12 @@ export default {
         },
     },
     Mutation: {
-        addToCart: async (_, { productId, quantity }, { dataSources }) => {
+        addToCart: async (
+            _,
+            { productId, quantity },
+            { dataSources, user }
+        ) => {
+            if (!user) return null;
             const cart = await dataSources.carts.get();
             const product = products.find(product => product.id == productId);
             if (!product) {
@@ -71,7 +100,12 @@ export default {
             };
         },
 
-        updateCart: async (_, { productId, quantity }, { dataSources }) => {
+        updateCart: async (
+            _,
+            { productId, quantity },
+            { dataSources, user }
+        ) => {
+            if (!user) return null;
             const cart = await dataSources.carts.get();
             const product = products.find(product => product.id == productId);
             if (!product) {
@@ -107,7 +141,8 @@ export default {
             };
         },
 
-        createOrder: async (_, __, { dataSources }) => {
+        createOrder: async (_, __, { dataSources, user }) => {
+            if (!user) return null;
             const cart = await dataSources.carts.get();
             if (!cart || cart.items.length === 0) {
                 return {
@@ -122,6 +157,42 @@ export default {
                 success: true,
                 message: 'Successfuly placed your order',
             };
+        },
+        authGoogle: async (_, { accessToken }, { dataSources, req, res }) => {
+            req.body = {
+                ...req.body,
+                access_token: accessToken,
+            };
+
+            try {
+                // data contains the accessToken, refreshToken and profile from passport
+                const { data, info } = await authenticateGoogle(req, res);
+
+                if (data) {
+                    const user = await dataSources.users.getOrCreate(data);
+
+                    if (user) {
+                        return {
+                            name: user.name,
+                            token: generateJWT(user.email, user._id),
+                        };
+                    }
+                }
+
+                if (info) {
+                    switch (info.code) {
+                        case 'ETIMEDOUT':
+                            return new Error(
+                                'Failed to reach Google: Try Again'
+                            );
+                        default:
+                            return new Error('something went wrong');
+                    }
+                }
+                return Error('server error');
+            } catch (error) {
+                return error;
+            }
         },
     },
 };

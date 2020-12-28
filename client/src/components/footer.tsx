@@ -3,6 +3,8 @@ import { Col, Row } from 'reactstrap';
 import { Link } from '@reach/router';
 import { colors } from '../styles';
 import CartTotal from './cart-total';
+import { useQuery } from '@apollo/client';
+import { IS_LOGGED_IN } from '../requireAuth';
 
 const linkStyles = {
     color: 'black',
@@ -11,6 +13,10 @@ const linkStyles = {
     },
 };
 const Footer: FunctionComponent = () => {
+    const {
+        data: { isLoggedIn },
+    } = useQuery(IS_LOGGED_IN);
+    if (!isLoggedIn) return null;
     return (
         <footer
             style={{

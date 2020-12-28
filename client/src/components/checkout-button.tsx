@@ -25,25 +25,6 @@ const CheckOutButton: FunctionComponent<CheckOutButtonProps> = ({ total }) => {
             const { cart } = cache.readQuery({
                 query: GET_CART,
             });
-            const { orders } = cache.readQuery({
-                query: GET_ORDERS,
-            });
-            const newOrder = {
-                status: 'Unfullfilled',
-                orderDate: new Date(),
-                orderItems: cart.cart.items,
-            };
-            cache.writeQuery({
-                query: GET_ORDERS,
-                data: {
-                    orders: {
-                        orders: {
-                            ...orders,
-                            newOrder,
-                        },
-                    },
-                },
-            });
             cache.writeQuery({
                 query: GET_CART,
                 data: {

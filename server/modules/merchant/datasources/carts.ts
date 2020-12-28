@@ -41,7 +41,7 @@ interface Cart {
 
 export default class Carts extends MongoDataSource<mongoose.Document, Context> {
     get(): Promise<[Cart]> {
-        return this.collection.findOne({ userId: 'contextId' }); // TODO: Replace with user id from context
+        return this.collection.findOne({ userId: this.context.user._id });
     }
 
     create(
@@ -49,7 +49,7 @@ export default class Carts extends MongoDataSource<mongoose.Document, Context> {
         quantity: number
     ): Promise<InsertOneWriteOpResult<Cart>> {
         return this.collection.insertOne({
-            userId: 'contextId', // TODO: Replace with user id from context
+            userId: this.context.user._id,
             createdOn: Date.now(),
             items: [
                 {
@@ -61,12 +61,12 @@ export default class Carts extends MongoDataSource<mongoose.Document, Context> {
     }
 
     delete(): Promise<DeleteWriteOpResultObject> {
-        return this.collection.deleteOne({ userId: 'contextId' });
+        return this.collection.deleteOne({ userId: this.context.user._id });
     }
 
     addItem(product: Product, quantity: number): Promise<UpdateWriteOpResult> {
         return this.collection.updateOne(
-            { userId: 'contextId' }, // TODO: Replace with user id from context
+            { userId: this.context.user._id },
             {
                 $push: {
                     items: {
@@ -83,7 +83,7 @@ export default class Carts extends MongoDataSource<mongoose.Document, Context> {
     ): Promise<UpdateWriteOpResult> {
         if (quantity === 0) {
             return this.collection.updateOne(
-                { userId: 'contextId' },
+                { userId: this.context.user._id },
                 {
                     $pull: {
                         items: {
@@ -94,7 +94,7 @@ export default class Carts extends MongoDataSource<mongoose.Document, Context> {
             );
         } else {
             return this.collection.updateOne(
-                { userId: 'contextId', 'items.id': productId },
+                { userId: this.context.user._id, 'items.id': productId },
                 { $set: { 'items.$.quantity': quantity } }
             );
         }

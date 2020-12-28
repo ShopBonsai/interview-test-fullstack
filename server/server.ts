@@ -3,7 +3,7 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
 // #3 Import GraphQL type definitions
-import typeDefs from './modules/merchant/graphqlSchema';
+import typeDefs from './modules/merchant/typeDefs';
 
 // #4 Import GraphQL resolvers
 import resolvers from './modules/merchant/resolvers';
@@ -13,6 +13,8 @@ import { CartSchema } from './modules/merchant/models/Cart';
 import { OrderSchema } from './modules/merchant/models/Order';
 import Carts from './modules/merchant/datasources/carts';
 import Orders from './modules/merchant/datasources/orders';
+import Users from './modules/merchant/datasources/users';
+const jwt = require('jsonwebtoken');
 
 import mongoose from 'mongoose';
 
@@ -30,7 +32,25 @@ const server = new ApolloServer({
     dataSources: () => ({
         carts: new Carts(CartModel),
         orders: new Orders(OrderModel),
+        users: new Users(UserModel),
     }),
+    context: async ({ req, res }) => {
+        let user = null;
+        const token = (req.headers && req.headers.authorization) || '';
+
+        if (token) {
+            await jwt.verify(token, 'secret', async (err, decoded) => {
+                if (err) {
+                    return res.status(401).send({ message: 'Unauthorized!' });
+                }
+                user = await UserModel.findOne({
+                    _id: decoded.id,
+                });
+            });
+        }
+
+        return { req, res, user };
+    },
 });
 
 // #6 Initialize an Express application
@@ -41,6 +61,5 @@ server.applyMiddleware({ app });
 
 // #8 Set the port that the Express application will listen to
 app.listen({ port: 3000 }, () => {
-    // console.log(server.graphqlPath);
     console.log(`Server running on http://localhost:3000${server.graphqlPath}`);
 });

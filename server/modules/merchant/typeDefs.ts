@@ -31,12 +31,15 @@ export default gql`
         image: String
     }
     type User {
-        userId: String
+        _id: String
+        name: String
+        email: String
     }
     type Query {
         merchants: [Merchant!]!
         cart: CartResponse!
         orders: GetOrdersResponse!
+        user: User
     }
     type CartItem {
         id: String
@@ -78,9 +81,14 @@ export default gql`
         success: Boolean!
         orders: [Order]
     }
+    type AuthResponse {
+        token: String
+        name: String
+    }
     type Mutation {
         addToCart(productId: String!, quantity: Int!): CartResponse!
         updateCart(productId: String!, quantity: Int!): CartResponse!
         createOrder: CreateOrderResponse!
+        authGoogle(accessToken: String!): AuthResponse!
     }
 `;

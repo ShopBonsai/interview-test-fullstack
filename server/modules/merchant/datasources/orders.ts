@@ -33,14 +33,14 @@ interface Order {
 export default class Carts extends MongoDataSource<mongoose.Document, Context> {
     get(): Promise<any[]> {
         return this.collection
-            .find({ userId: 'contextId' })
+            .find({ userId: this.context.user._id })
             .sort({ orderDate: -1 })
-            .toArray(); // TODO: Replace with user id from context
+            .toArray();
     }
 
     create(orderItems: [OrderItem]): Promise<InsertOneWriteOpResult<Order>> {
         return this.collection.insertOne({
-            userId: 'contextId', // TODO: Replace with user id from context
+            userId: this.context.user._id,
             orderDate: new Date(),
             status: 'Unfulfilled',
             shippedDate: null,

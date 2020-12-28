@@ -7,6 +7,14 @@ import { colors } from '../styles';
 import Order from '../components/order';
 import requireAuth from '../requireAuth';
 
+export const GET_USER = gql`
+    query GET_USER {
+        user {
+            name
+            email
+        }
+    }
+`;
 export const GET_ORDERS = gql`
     query GET_ORDERS {
         orders {
@@ -55,7 +63,9 @@ const containerStyles = {
 };
 
 const withOrderItems = Component => props => {
-    const { data, loading, error } = useQuery(GET_ORDERS);
+    const { data, loading, error } = useQuery(GET_ORDERS, {
+        fetchPolicy: 'network-only',
+    });
     if (loading) {
         return (
             <Container style={containerStyles}>
@@ -80,14 +90,12 @@ const withOrderItems = Component => props => {
     );
 };
 const Profile: FunctionComponent<OrdersProps> = (props: OrdersProps) => {
+    const { data, loading, error } = useQuery(GET_USER);
     const showOrderItems = () => {
         const { orders, ordersLoading } = props;
         if (!ordersLoading && orders && orders.length > 0) {
             return (
-                <Container>
-                    <h1 style={{ marginBottom: '100px' }}>
-                        Welcome Back! Fred
-                    </h1>
+                <div>
                     <h4>Previous Orders</h4>
                     <Row style={{ padding: '15px' }}>
                         <Col>Date</Col>
@@ -99,20 +107,46 @@ const Profile: FunctionComponent<OrdersProps> = (props: OrdersProps) => {
                             return <Order key={order._id} order={order} />;
                         })}
                     </div>
-                </Container>
+                </div>
             );
         } else {
             return (
-                <Container>
+                <div>
                     <h1 style={{ marginBottom: '100px' }}>
                         Welcome Back! Fred
                     </h1>
                     <h3>You have no orders</h3>
-                </Container>
+                </div>
             );
         }
     };
+    if (loading) {
+        return (
+            <Container style={containerStyles}>
+                <PacmanLoader color={colors.primary} />
+            </Container>
+        );
+    }
 
-    return <div>{showOrderItems()}</div>;
+    if (error) {
+        return (
+            <Container style={containerStyles}>
+                Sorry, your information is not available at the moment. Please
+                try again later.
+            </Container>
+        );
+    }
+    console.log(data);
+    return (
+        <div>
+            <Container>
+                <div style={{ marginBottom: '100px' }}>
+                    <h1>Welcome back {data.user.name}!</h1>
+                    <h4>Email: {data.user.email}</h4>
+                </div>
+                {showOrderItems()}
+            </Container>
+        </div>
+    );
 };
 export default requireAuth(withOrderItems(Profile));

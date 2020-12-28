@@ -2,5 +2,8 @@
   "watch": ["server"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "ts-node ./server/server.ts"
+  "exec": "ts-node ./server/server.ts",
+  "env": {
+    "GOOGLE_CLIENT_SECRET": "AgdQnK9NzQ_IvBYFLnVEWD_a"
+  }
 }
