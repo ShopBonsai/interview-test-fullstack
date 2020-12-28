@@ -7,4 +7,14 @@ services:
         ports: # expose ports in “host:container” format
             - 27017:27017
         environment: #env variables to pass into the container
-            MONGODB_DATABASE: nest-course
+            MONGODB_DATABASE: bonsai
+    # web:
+    #     build: .
+    #     volumes:
+    #         - .:/usr/app/
+    #     ports:
+    #         - '3000:3000'
+    #         - '8080:8080'
+    #     environment:
+    #         GOOGLE_CLIENT_SECRET: AgdQnK9NzQ_IvBYFLnVEWD_a
+    #     command: ./wait-for.sh db:27017 -- /usr/app/node_modules/bin/nodemon && /usr/app/node_modules/bin/webpack-dev-server/webpack-dev-server --mode development --open

@@ -1,25 +1,19 @@
 // #1 Import Express and Apollo Server
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-
-// #3 Import GraphQL type definitions
-import typeDefs from './modules/merchant/typeDefs';
-
-// #4 Import GraphQL resolvers
-import resolvers from './modules/merchant/resolvers';
-
-import { UserSchema } from './models/User';
+import schema from './modules/graphql-schema';
+import { UserSchema } from './modules/user/models/User';
 import { CartSchema } from './modules/merchant/models/Cart';
 import { OrderSchema } from './modules/merchant/models/Order';
 import Carts from './modules/merchant/datasources/carts';
 import Orders from './modules/merchant/datasources/orders';
-import Users from './modules/merchant/datasources/users';
+import Users from './modules/user/datasources/users';
 const jwt = require('jsonwebtoken');
 
 import mongoose from 'mongoose';
 
 export const mongodbConn = mongoose.createConnection(
-    'mongodb://localhost:27017/test'
+    'mongodb://localhost:27017/bonsai'
 );
 const UserModel = mongodbConn.model('User', UserSchema);
 const CartModel = mongodbConn.model('Cart', CartSchema);
@@ -27,8 +21,7 @@ const OrderModel = mongodbConn.model('Order', OrderSchema);
 
 // #5 Initialize an Apollo server
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     dataSources: () => ({
         carts: new Carts(CartModel),
         orders: new Orders(OrderModel),

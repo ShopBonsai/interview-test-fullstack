@@ -1,7 +1,14 @@
 import { gql } from 'apollo-server-express';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import resolvers from './resolvers';
 
-export default gql`
+const typeDefs = gql`
     scalar Date
+    type User {
+        _id: String
+        name: String
+        email: String
+    }
     type Merchant {
         index: Int
         guid: String
@@ -30,16 +37,10 @@ export default gql`
         quantity: Int
         image: String
     }
-    type User {
-        _id: String
-        name: String
-        email: String
-    }
     type Query {
         merchants: [Merchant!]!
         cart: CartResponse!
         orders: GetOrdersResponse!
-        user: User
     }
     type CartItem {
         id: String
@@ -81,14 +82,14 @@ export default gql`
         success: Boolean!
         orders: [Order]
     }
-    type AuthResponse {
-        token: String
-        name: String
-    }
     type Mutation {
         addToCart(productId: String!, quantity: Int!): CartResponse!
         updateCart(productId: String!, quantity: Int!): CartResponse!
         createOrder: CreateOrderResponse!
-        authGoogle(accessToken: String!): AuthResponse!
     }
 `;
+
+export default makeExecutableSchema({
+    typeDefs,
+    resolvers,
+});

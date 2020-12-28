@@ -7,7 +7,7 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 import { colors } from '../styles';
 import requireAuth from '../requireAuth';
 
-const GET_PRODUCTS = gql`
+export const GET_PRODUCTS = gql`
     {
         merchants {
             guid
