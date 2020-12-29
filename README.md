@@ -52,6 +52,11 @@ Thank you and good luck for everyone who applied and submitted a PR.
 
 1. Ensure `yarn` is installed
 
+## Run MongoDB
+
+1. Make sure docker is running
+2. `docker-compose up -d`
+
 ## Run
 
 1. `yarn dev`
