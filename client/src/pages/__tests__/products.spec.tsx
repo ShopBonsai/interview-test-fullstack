@@ -1,7 +1,8 @@
 import React from 'react';
+import 'babel-polyfill';
 import { InMemoryCache } from '@apollo/client';
 
-import { renderApollo, cleanup, waitForElement } from '../../../test-utils';
+import { renderApollo, cleanup, waitFor, act } from '../../../test-utils';
 import Products, { GET_PRODUCTS } from '../products';
 
 const mockProducts = {
@@ -69,7 +70,7 @@ const mockProducts = {
         ],
     },
 };
-
+// TODO: Figure out why data is always undefined
 describe('Products Page', () => {
     // automatically unmount and cleanup DOM after the test is finished.
     afterEach(cleanup);
@@ -87,6 +88,7 @@ describe('Products Page', () => {
                     },
                 },
             },
+            addTypename: false,
         });
         const mocks = [
             {
@@ -98,6 +100,6 @@ describe('Products Page', () => {
             mocks,
             cache,
         });
-        await waitForElement(() => getByText(/VENIAM Swimming Shorts/i));
+        await waitFor(() => getByText(/VENIAM Swimming Shorts/i));
     });
 });

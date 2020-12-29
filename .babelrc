@@ -1,10 +1,3 @@
-{
-  "plugins": [
-    [
-      "babel-plugin-styled-components",
-      {
-        "displayName": false
-      }
-    ]
-  ]
+{ 
+  "presets": ["@babel/react", "@babel/env"]
 }

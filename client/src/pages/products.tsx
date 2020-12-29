@@ -34,6 +34,7 @@ const containerStyles = {
 
 const withProducts = Component => props => {
     const { data, loading, error } = useQuery(GET_PRODUCTS);
+
     if (loading) {
         return (
             <Container style={containerStyles}>

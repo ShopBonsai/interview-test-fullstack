@@ -9,7 +9,7 @@ for (let merchant of merchants) {
 export default {
     Query: {
         merchants: () => {
-            return [merchants[0]];
+            return merchants;
         },
         cart: async (_, __, { dataSources, user }) => {
             const cart = await dataSources.carts.get();
