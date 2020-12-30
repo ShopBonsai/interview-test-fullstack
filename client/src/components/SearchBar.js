@@ -7,25 +7,13 @@ const SearchBar = () => {
 
     const handleSearchTypeChange = useCallback((e) => {
         setSearchType(e.target.value)
-    }, [])
+    }, [searchType])
 
     const handleSearchTextChange = useCallback((e) => {
         setSearchText(e.target.value)
-    }, [])
+    }, [searchText])
 
-    const searchTypes = ['All', 'Brand', 'Product', 'Merchant']
-
-    useEffect(() => {
-        const searchChangeEvent = new CustomEvent('searchChangeEvent', {
-            detail: {
-                type: searchType,
-                text: searchText,
-            }
-        })
-
-        window.dispatchEvent(searchChangeEvent)
-    }, [searchType])
-
+    const searchTypes = ['', 'All', 'Brand', 'Product', 'Merchant']
 
     useEffect(() => {
         const searchChangeEvent = new CustomEvent('searchChangeEvent', {
@@ -66,7 +54,7 @@ const SearchBar = () => {
                         {searchTypes.map((type, index) => (<option value={type.toUpperCase()} key={index}>{type}</option>))}
                     </select>
                 </div>
-                <input type="text" placeholder={"e.g Gucci"} value={searchText} onChange={handleSearchTextChange} />
+                <input type="text" placeholder={"e.g Gucci"} onChange={handleSearchTextChange} />
             </div>
         </div>
     )
