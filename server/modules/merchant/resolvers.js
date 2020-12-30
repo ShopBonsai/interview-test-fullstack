@@ -31,9 +31,8 @@ const resolvers = {
 
       const fuse = new Fuse(merchants, options)
       const results = fuse.search(text)
-      const flatResults = results.flatMap((result) => result.item)
 
-      return flatResults
+      return results.flatMap((result) => result.item)
     }
   },
 };
