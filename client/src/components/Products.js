@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
@@ -22,7 +23,37 @@ const GET_PRODUCTS = gql`
   }
 `;
 
+const SEARCH_PRODUCTS = gql`
+  query($type: SearchType!, $text: String!) {
+    search(type: $type, text: $text) {
+      guid
+      merchant
+      products {
+        id
+        name
+        price
+        description
+        color
+        size
+        image
+      }
+    }
+  }`
+
 const withProducts = Component => props => {
+  if (props.isSearching) {
+    return (
+        <Query query={SEARCH_PRODUCTS} variables={{ text: props.searchText, type: props.searchType }}>
+          {({ loading, data }) => {
+            return (
+                <Component merchantsLoading={loading} merchants={data && data.search} {...props} />
+            );
+          }}
+        </Query>
+    )
+  }
+
+
   return (
     <Query query={GET_PRODUCTS}>
       {({ loading, data }) => {
@@ -35,10 +66,10 @@ const withProducts = Component => props => {
 };
 
 class ProductsList extends Component {
-  
+
     showProducts() {
       const { merchants, merchantsLoading } = this.props;
-  
+
       if (!merchantsLoading && merchants && merchants.length > 0) {
         return merchants.map(({products}) => {
           return products && products.length > 0 && products.map(product => {
@@ -68,7 +99,7 @@ class ProductsList extends Component {
         );
       }
     }
-  
+
     render() {
       return (
         <div>
@@ -77,4 +108,11 @@ class ProductsList extends Component {
       );
     }
   }
+
+ProductsList.propTypes = {
+  isSearching: PropTypes.bool,
+  searchText: PropTypes.string,
+  searchType: PropTypes.string,
+}
+
   export default withProducts(ProductsList)
