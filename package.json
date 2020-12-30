@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "fuse.js": "^6.4.4",
     "graphql": "^14.4.2",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
