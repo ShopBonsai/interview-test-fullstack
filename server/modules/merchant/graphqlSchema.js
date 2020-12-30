@@ -32,8 +32,15 @@ const typeDefs = gql`
   type User {
     userId: String
   }
+  enum SearchType {
+    ALL
+    PRODUCT
+    BRAND
+    MERCHANT
+  }
   type Query {
     merchants: [Merchant!]!
+    search(type: SearchType!, text: String!): [Merchant]
   }
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
