@@ -24,7 +24,7 @@ class App extends Component {
       const type = e.detail.type
       const text = (e.detail.text || '')
 
-      if (['ALL', 'BRAND', 'PRODUCT', 'MERCHANT'].includes(type) && text.length >= 3) {
+      if (['ALL', 'BRAND', 'PRODUCT', 'MERCHANT'].includes(type) && text.length >= 1) {
           this.setState({
               searchText: text,
               searchType: type,
