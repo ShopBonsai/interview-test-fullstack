@@ -32,7 +32,7 @@ const resolvers = {
       const fuse = new Fuse(merchants, options)
       const results = fuse.search(text)
 
-      return resultsg
+      return results
           .flatMap((result) => result.item)
     }
   },
