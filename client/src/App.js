@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { ApolloProvider } from 'react-apollo';
-import apolloClient from './createApolloClient';
 import Products from './components/Products';
 import SearchBar from "./components/SearchBar";
+import {ApolloProvider} from "react-apollo";
+import apolloClient from "./createApolloClient";
 
 class App extends Component {
 
@@ -24,7 +24,7 @@ class App extends Component {
       const type = e.detail.type
       const text = (e.detail.text || '')
 
-      if (['ALL', 'BRAND', 'PRODUCT', 'MERCHANT'].includes(type) && text.length > 3) {
+      if (['ALL', 'BRAND', 'PRODUCT', 'MERCHANT'].includes(type) && text.length >= 3) {
           this.setState({
               searchText: text,
               searchType: type,
@@ -39,14 +39,15 @@ class App extends Component {
 
   render() {
     return (
-      <ApolloProvider client={apolloClient}>
-        <SearchBar />
-        <Products
-            isSearching={this.state.isSearching}
-            searchText={this.state.searchText}
-            searchType={this.state.searchType}
-        />
-      </ApolloProvider>
+        <ApolloProvider client={apolloClient}>
+            <SearchBar />
+            {this.state.isSearching ? <h3>Search Results:</h3> : null}
+            <Products
+                isSearching={this.state.isSearching}
+                searchText={this.state.searchText}
+                searchType={this.state.searchType}
+            />
+        </ApolloProvider>
     )
   }
 }
