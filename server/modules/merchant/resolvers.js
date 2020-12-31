@@ -32,7 +32,10 @@ const resolvers = {
       const fuse = new Fuse(merchants, options)
       const results = fuse.search(text)
 
-      return results.flatMap((result) => result.item)
+      return results
+          .filter((result) => result.score > 0.7)
+          .sort((a, b) => b.score - a.score)
+          .flatMap((result) => result.item)
     }
   },
 };
