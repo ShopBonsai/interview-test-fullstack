@@ -31,3 +31,8 @@
 .search-bar-container input {
     width: 300px;
 }
+
+.search-result-header {
+    width: 50%;
+    margin: 30px auto;
+}

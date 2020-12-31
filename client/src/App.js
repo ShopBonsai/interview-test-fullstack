@@ -41,7 +41,7 @@ class App extends Component {
     return (
         <ApolloProvider client={apolloClient}>
             <SearchBar />
-            {this.state.isSearching ? <h3>Search Results:</h3> : null}
+            {this.state.isSearching ? <h3 className={'search-result-header'}>Search Results:</h3> : null}
             <Products
                 isSearching={this.state.isSearching}
                 searchText={this.state.searchText}
