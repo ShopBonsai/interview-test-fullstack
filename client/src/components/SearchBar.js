@@ -50,11 +50,11 @@ const SearchBar = () => {
             <div className={"search-bar-container"}>
                 <div>
                     <span>Search By:</span>
-                    <select onChange={handleSearchTypeChange}>
+                    <select onChange={handleSearchTypeChange} aria-label="search-type">
                         {searchTypes.map((type, index) => (<option value={type.toUpperCase()} key={index}>{type}</option>))}
                     </select>
                 </div>
-                <input type="text" placeholder={"e.g Gucci"} onChange={handleSearchTextChange} />
+                <input type="text" placeholder={"e.g Gucci"} onChange={handleSearchTextChange} aria-label="search-text" />
             </div>
         </div>
     )
