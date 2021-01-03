@@ -4,13 +4,26 @@ const initialState = {
   items: []
 };
 
+const updateCart = (items, newItem) =>{
+  const ismatch = items.find((product) => product._id === newItem._id);
+  if(ismatch){
+    return items.map((product) =>{
+      return product._id === newItem._id ? {
+        ...product, qty: product.qty + 1
+      } : product
+    });
+  };
+
+  return [...items, {...newItem, qty: 1}]
+};
+
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case ADD_TO_CART:
       return{
         ...state,
-        items: updateCartItemsCount(state.items, payload)
+        items: updateCart(state.items, payload)
       };
     case REMOVE_FROM_CART:
       return{
