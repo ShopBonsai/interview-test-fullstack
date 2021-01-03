@@ -1,19 +1,10 @@
-import React, { Component } from 'react'
-import { ApolloProvider } from 'react-apollo';
-import apolloClient from '../createApolloClient';
+import React from 'react';
 import ProductsList from '../components/Products';
 
-class Products extends Component {
-  constructor(props){
-    super(props);
-    this.state = {};
-  };
+const Store = (props) => {
+  return (
+    <ProductsList {...props} />
+  );
+}
 
-  render() {
-    return (
-      <ProductsList {...this.props} />
-    )
-  };
-};
-
-export default Products;
+export default Store;
