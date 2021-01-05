@@ -4,7 +4,9 @@ export default function QuantityIndicators(props) {
   return (
     <div className="qty-indicators">
       <button 
-        disabled={props.cartItem && props.cartItem.qty >= props.product.quantity}
+        disabled={
+          (props.cartItem && props.cartItem.qty && props.cartItem.qty >= props.product.quantity)
+          }
         onClick={() => props.increaseQty(props.product)}
         className="qty-btn"
         type="button"

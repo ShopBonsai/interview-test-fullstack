@@ -57,3 +57,7 @@
   .error-page__content .actions{
 	  margin-top: 4rem;
   }
+
+  .toaster{
+	  position: fixed;
+  }
