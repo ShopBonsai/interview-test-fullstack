@@ -7,19 +7,20 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+import  { Link as RRNavLink } from "react-router-dom";
 
 export default function NavigationBar(props) {
   const cartItems = useSelector(state => state.cart.items);
 
   return (
-    <Navbar color="dark" light expand="md">
+    <Navbar color="faded" light expand="md" fixed="true">
       <Collapse isOpen={false} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="mr-auto" navbar fill={true}>
             <NavItem>
-              <NavLink href="/">Home </NavLink>
+              <NavLink to="/" exact tag={RRNavLink}>Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/cart">Cart ({Object.keys(cartItems).length || 0})</NavLink>
+              <NavLink to="/cart" exact tag={RRNavLink}>Cart ({Object.keys(cartItems).length || 0})</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
