@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import { connect } from "react-redux";
+import { setNotification } from "../actions/notificationAction";
 import { addToCart, increasetItemQty, decreaseItemQty } from "../actions/cartAction";
 import QuantityIndicators from './QuantityIndicators';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
@@ -43,17 +44,15 @@ class ProductsList extends Component {
     this.state = {
       products: {}
     };
+
     this.addItemToCart = this.addItemToCart.bind(this);
     this.handleQtyIncrease = this.handleQtyIncrease.bind(this);
     this.handleQtyDecrease = this.handleQtyDecrease.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState){
-    console.log(prevProps, 'PRO', prevState)
-  };
-
   addItemToCart(item){
     this.props.addToCart(item);
+    this.props.setNotification(`${item.name} has been added to cart.`);
   }
 
   handleQtyIncrease(item){
@@ -83,17 +82,21 @@ class ProductsList extends Component {
                 <CardSubtitle>Color: {color}</CardSubtitle>
                 <CardSubtitle>Size: {size}</CardSubtitle>
                 <CardText>Details: {description}</CardText>
-                <QuantityIndicators
-                  product={product}
-                  increaseQty={this.handleQtyIncrease}
-                  cartItem={this.props.cartItems[product.id]}
-                  decreaseQty={this.handleQtyDecrease}
-                />
+                
+                {
+                  this.props.cartItems[product.id] && this.props.cartItems[product.id].qty > 0 &&
+                  <QuantityIndicators
+                    product={product}
+                    increaseQty={this.handleQtyIncrease}
+                    cartItem={this.props.cartItems[product.id]}
+                    decreaseQty={this.handleQtyDecrease}
+                  />
+                }
                 <Button 
                   block
                   size="lg"
                   color="primary" 
-                  disabled={this.props.cartItems[product.id]}
+                  disabled={((this.props.cartItems[product.id] && this.props.cartItems[product.id].qty >= quantity) || !!this.props.cartItems[product.id])}
                   onClick={() => this.addItemToCart(product)}
                 >Add To Cart</Button>
               </CardBody>
@@ -129,6 +132,7 @@ const mapDispatchToProps = {
   addToCart,
   decreaseItemQty,
   increasetItemQty,
+  setNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(productsListData);
