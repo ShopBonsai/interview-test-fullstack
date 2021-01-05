@@ -1,7 +1,8 @@
 import { ADD_TO_CART, REMOVE_FROM_CART, EMPTY_CART, INCREASE_QTY, DECREASE_QTY } from "../actions/types";
 
 const initialState = {
-  items: {}
+  items: {},
+  itemsQty: {}
 };
 
 const updateCart = (items, newItem) =>{
@@ -9,7 +10,7 @@ const updateCart = (items, newItem) =>{
   if(items[newItem.id]){
     newData = {
       ...items[newItem.id],
-      qty: items[newItem.id].qty + 1
+      qty: items[newItem.id].qty + 1  
     }
   } else {
     newData = {
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
     case ADD_TO_CART:
       let newitem = updateCart(state.items, payload);
       return{
+        ...state,
         items: {
           ...state.items,
           [newitem.id]: newitem
@@ -46,24 +48,40 @@ export default function (state = initialState, action) {
         items: {}
       };
     case INCREASE_QTY:
-      let updatedData = updateCart(state.items, payload);
-      return{
-        ...state,
-        items: {
-          ...state.item,
-          [updatedData.id]: updatedData
-        }
-      };
-    case DECREASE_QTY:
       return{
         ...state,
         items: {
           ...state.items,
           [payload.id]: {
             ...state.items[payload.id],
-            qty: state.items[payload.id].qty > 0 ? state.items[payload.id].qty - 1 : 0
+            qty: state.items[payload.id].qty + 1
           }
         }
+      };
+    case DECREASE_QTY:
+      let updatedData;
+
+      if(state.items[payload.id].qty <= 1){
+        delete state.items[payload.id];
+        return{
+          ...state,
+          items: {
+            ...state.items,
+          }
+        };
+      } else {
+        updatedData = {
+          ...state.items[payload.id],
+          qty: state.items[payload.id].qty - 1
+        };
+
+        return{
+          ...state,
+          items: {
+            ...state.items,
+            [payload.id]: updatedData
+          }
+        };
       };
     default:
       return state;
