@@ -9,10 +9,14 @@
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
+    "hoist-non-react-statics": "^3.3.2",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
-    "reactstrap": "^8.0.1"
+    "react-redux": "^7.2.2",
+    "reactstrap": "^8.0.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
     "server": "nodemon ./server/server.js",

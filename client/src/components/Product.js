@@ -1,16 +1,25 @@
 import React, {Component} from 'react';
+import { connect } from "react-redux";
+import { addToCart } from '../redux/actions'
 import {CardTitle, CardSubtitle, CardText, Button, CardBody, Media,  InputGroup, InputGroupAddon, Input} from 'reactstrap';
 
 class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: 0
-        }
-        this.setQuantity = this.setQuantity.bind(this)
+            quantity: 1
+        };
+        this.setQuantity = this.setQuantity.bind(this);
     }
     setQuantity(quantity) {
-        this.setState({ quantity: quantity })
+        this.setState({ quantity: quantity });
+    }
+    handleProduct(product, quantity) {
+        this.props.addToCart({
+            quantity,
+            product
+        });
+        this.setState({ quantity: 1 })
     }
     render() {
         return (
@@ -29,14 +38,22 @@ class Product extends Component {
                             <InputGroupAddon addonType="prepend">
                                 Quantity
                             </InputGroupAddon>
-                            <Input type='number' onChange={event => this.setQuantity(event.target.value)} />
+                            <Input type='number'
+                                   value={this.state.quantity}
+                                   onChange={event => this.setQuantity(event.target.value)} />
                         </InputGroup>
-                        <Button color="primary" size="lg" block onClick={() => this.props.addItem(this.props.product, Number(this.state.quantity))}>Buy</Button>
+                        <Button color="primary" size="lg" block onClick={() => this.handleProduct(this.props.product, Number(this.state.quantity))}>Buy</Button>
                     </CardBody>
                 </Media>
             </div>
         );
     }
 }
+const mapStateToProps = (state) =>({
+    byIds: state.cart.byIds,
+});
+const mapDispatchToProps = {
+    addToCart,
+};
 
-export default Product
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

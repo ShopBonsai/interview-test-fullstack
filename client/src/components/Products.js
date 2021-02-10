@@ -18,16 +18,11 @@ const withProducts = Component => props => {
 };
 
 class ProductsList extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       adding: false
     };
-    this.addItem = this.addItem.bind(this);
-  }
-  addItem(product, quantity) {
-    // this.setState({ adding: !this.state.adding })
   }
   showProducts() {
       const { merchants, merchantsLoading } = this.props;
@@ -37,7 +32,7 @@ class ProductsList extends Component {
           return products && products.length > 0 && products.map(product => {
             return (
                 <Product key={product.id}
-                         addItem={this.addItem}
+                         addToCart={this.addItem}
                          product={product}/>
             );
           })
@@ -59,4 +54,4 @@ class ProductsList extends Component {
       );
     }
   }
-  export default withProducts(ProductsList)
+  export default withProducts(ProductsList);
