@@ -20,9 +20,6 @@ const withProducts = Component => props => {
 class ProductsList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      adding: false
-    };
   }
   showProducts() {
       const { merchants, merchantsLoading } = this.props;

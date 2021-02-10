@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
+import { Provider } from "react-redux";
 import {ApolloProvider} from 'react-apollo';
 import apolloClient from './createApolloClient';
+import {Container, Row, Col} from 'reactstrap';
+import store from "./redux/store";
 import Products from './components/Products';
 import NavBarApp from './components/NavBarApp';
 import Cart from './components/Cart';
-import { Provider } from "react-redux";
-import store from "./redux/store";
-import {Container, Row, Col} from 'reactstrap';
+import Notifier from "./components/Notifier";
 
 class App extends Component {
     render() {
@@ -14,6 +15,7 @@ class App extends Component {
             <ApolloProvider client={apolloClient}>
                 <Provider store={store}>
                     <NavBarApp/>
+                    <Notifier/>
                     <Container fluid={true}>
                         <Row>
                             <Col xs="9">
