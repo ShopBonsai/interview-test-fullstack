@@ -24,14 +24,22 @@ export default function(state = initialState, action) {
         }
         case REMOVE_FROM_CART: {
             const { id } = action.payload;
+            const byIds = Object.values(state.byIds).reduce((acc, curr) => {
+                if(curr.product.id !== id) {
+                    const { product , newQuantity } = curr
+                    acc = {
+                        [curr.product.id]: {
+                            product,
+                            newQuantity
+                        }
+                    }
+                }
+                return acc
+            }, {})
             return {
                 ...state,
                 byIds: {
-                    ...state.byIds,
-                    [id]: {
-                        ...state.byIds[id]
-
-                    }
+                    ...byIds
                 }
             };
         }

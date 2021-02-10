@@ -21,8 +21,10 @@ class Notifier extends Component {
                     item: curr.product
                 }
             }, {})
-            this.setState({ visible: true })
-            this.setState({ text: `${current.quantity} ${current.item.name} added to your cart.`})
+            if (current.quantity) {
+                this.setState({ visible: true })
+                this.setState({ text: `${current.quantity} ${current.item.name} added to your cart.`})
+            }
         }
     }
     render() {
