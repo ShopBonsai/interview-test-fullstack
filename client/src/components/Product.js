@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import { addToCart } from '../redux/actions'
-import {CardTitle, CardSubtitle, CardText, Button, CardBody, Media,  InputGroup, InputGroupAddon, Input} from 'reactstrap';
+import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media,  InputGroup, InputGroupAddon, Input} from 'reactstrap';
 
 class Product extends Component {
     constructor(props) {

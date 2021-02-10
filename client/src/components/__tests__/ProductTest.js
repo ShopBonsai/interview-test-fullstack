@@ -1,9 +1,15 @@
 import React from 'react';
 import Product from '../Product';
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
 import ShallowRenderer from 'react-test-renderer/shallow';
+
+const mockStore = configureMockStore();
+const store = mockStore({});
 
 describe('Product Component', () => {
     const addItemFn = jest.fn();
+
     const testProps = {
         addItem: addItemFn,
         product: {
@@ -20,9 +26,8 @@ describe('Product Component', () => {
     };
     it('renders correctly', () => {
         const renderer = new ShallowRenderer()
-        renderer.render(<Product product={testProps.product} addItem={addItemFn} />);
+        renderer.render(<Provider store={store}><Product product={testProps.product} addItem={addItemFn} /></Provider>);
         const renderedOutput = renderer.getRenderOutput();
-        expect(renderedOutput.type).toBe('div');
         expect(renderedOutput).toMatchSnapshot();
     });
 })

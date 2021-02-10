@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from "../redux/store";
-import './styles.css';
 import {removeFromCart} from "../redux/actions";
 import {Button} from 'reactstrap';
 
