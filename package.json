@@ -10,6 +10,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.9",
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
+    "@fortawesome/free-regular-svg-icons": "^5.15.2",
+    "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "apollo-server-express": "^2.7.0",
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
@@ -18,7 +24,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.2.0",
-    "reactstrap": "^8.0.1"
+    "reactstrap": "^8.0.1",
+    "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
