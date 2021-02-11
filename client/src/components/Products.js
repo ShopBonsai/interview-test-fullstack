@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
+import { Alert, Spinner } from "reactstrap";
 
 import { Product } from "./Product";
 
@@ -26,6 +27,18 @@ const GET_PRODUCTS = gql`
 export const ProductsList = () => {
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return (
+      <Alert color="danger">
+        {error.message || "Oops something went wrong"}
+      </Alert>
+    );
+  }
+
   if (!loading && data.merchants && data.merchants.length > 0) {
     return (
       <div>
@@ -38,11 +51,11 @@ export const ProductsList = () => {
         })}
       </div>
     );
-  } else {
-    return (
-      <div>
-        <h3>No products available</h3>
-      </div>
-    );
   }
+
+  return (
+    <div>
+      <h3>No products available</h3>
+    </div>
+  );
 };
