@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import { Alert, Spinner } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import { Product } from "./Product";
 
