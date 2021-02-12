@@ -36,7 +36,6 @@ const SignUpMutation = gql`
 export const Signup = () => {
   const [state, dispatch] = useState();
 
-  console.log({ user: state.user });
   if (state.user) {
     return <Redirect to="/products" />;
   }
