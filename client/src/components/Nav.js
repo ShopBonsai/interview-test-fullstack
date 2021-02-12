@@ -13,36 +13,38 @@ export const NavHeader = () => {
         <img src={logo} width="32" />
       </Link>
 
-      <Link to="/products">
-        <div className="pl-10 text-gray-500 cursor-pointer hover:text-black">
-          Merchants
-        </div>
-      </Link>
+      <NavItem to="/products" text="Merchants" />
 
       <div className="flex-1" />
 
       {state.user ? (
-        <div
-          className="pr-10 text-gray-500 cursor-pointer hover:text-black"
+        <NavItem
+          text="Sign Out"
           onClick={() => dispatch({ type: "CLEAR_JWT" })}
-        >
-          Sign Out
-        </div>
+        />
       ) : (
         <>
-          <Link to="/login">
-            <div className="pr-10 text-gray-500 cursor-pointer hover:text-black">
-              Sign In
-            </div>
-          </Link>
-
-          <Link to="/signup">
-            <div className="pr-10 text-gray-500 cursor-pointer hover:text-black">
-              Sign Up
-            </div>
-          </Link>
+          <NavItem to="/login" text="Sign In" />
+          <NavItem to="/signup" text="Sign Up" />
         </>
       )}
     </div>
   );
 };
+
+function NavItem({ text, to, onClick }) {
+  const item = (
+    <div
+      className="ml-5 text-gray-500 cursor-pointer hover:text-black"
+      onClick={onClick}
+    >
+      {text}
+    </div>
+  );
+
+  if (to) {
+    return <Link to={to}>{item}</Link>;
+  }
+
+  return item;
+}
