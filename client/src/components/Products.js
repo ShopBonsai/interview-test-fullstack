@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import { Alert, Spinner } from "reactstrap";
-import { Link } from "react-router-dom";
 
 import { Product } from "./Product";
 
@@ -29,7 +28,11 @@ export const ProductsList = () => {
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <div className="text-center mt-40">
+        <Spinner />
+      </div>
+    );
   }
 
   if (error) {
