@@ -1,1 +1,4 @@
-export * from "./history";
+import * as BrowserStorage from "./BrowserStorage";
+
+export * from "./createApolloClient";
+export { BrowserStorage };

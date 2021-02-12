@@ -12,6 +12,11 @@ const Context = React.createContext({
   dispatch: () => initialState,
 });
 
+const Reactions = ({ children }) => {
+  useReactions();
+  return children;
+};
+
 export const Provider = ({ children, apolloClient }) => {
   const [state, setState] = React.useState(hydrateState(apolloClient));
 
@@ -22,7 +27,9 @@ export const Provider = ({ children, apolloClient }) => {
   };
 
   return (
-    <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
+    <Context.Provider value={{ state, dispatch }}>
+      <Reactions>{children}</Reactions>
+    </Context.Provider>
   );
 };
 
