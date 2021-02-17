@@ -62,7 +62,9 @@ It should look like this initially:
 
 # My Approach
 
-The feature set I decided to implement was a basic user authentication flow. Some key items that needed to be added to make this work were:
+The feature set I decided to implement was a basic user authentication flow. You can login using some test credentials, `username: test-user`, `password: foobar`, or sign up as a new user!
+
+Some key items that needed to be added to make this work were:
 
 1. React-Router to allow for navigation between pages. [Here](./client/src/App.js)
 2. Some sort of state management to detect if the user is logged in or not
@@ -74,7 +76,7 @@ The feature set I decided to implement was a basic user authentication flow. Som
    - On the Client, apollo needed to be updated to set the header, taking the JWT from the state. [Here](./client/src/helpers/createApolloClient.js)
    - In the API we want to decode those headers and include context in GQL. [Here](./server/server.js)
 4. Persisting Storage/DatabaseStorage
-   - For the Sake fo time users are written and read from the mockMerchantData
+   - For the sake of time users are written and read from the mockMerchantData
 
 ## Extended thoughts
 
