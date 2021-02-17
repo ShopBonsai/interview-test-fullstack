@@ -15,6 +15,7 @@ const GET_PRODUCTS = gql`
         color
         size
         image
+        quantity
       }
     }
   }

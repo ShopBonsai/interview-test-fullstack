@@ -19,15 +19,16 @@ module.exports = () => {
     module: {
       rules: [
         {
-          test: /\.js$/,
           exclude: /node_modules/,
+          test: /\.js$/,
           use: {
             loader: "babel-loader",
             options: {
-              presets: ["@babel/preset-react"],
               plugins: [
                 ["@babel/plugin-proposal-decorators", { legacy: true }],
+                ["@babel/plugin-proposal-class-properties"],
               ],
+              presets: ["@babel/preset-react"],
             },
           },
         },

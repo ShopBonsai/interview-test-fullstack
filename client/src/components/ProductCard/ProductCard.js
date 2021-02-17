@@ -1,17 +1,18 @@
-import {
-  Button,
-  CardBody,
-  CardSubtitle,
-  CardText,
-  CardTitle,
-  Media,
-} from "reactstrap";
+import { CardBody, CardSubtitle, CardText, CardTitle, Media } from "reactstrap";
+import { ProductActions } from "../ProductActions";
 import PropTypes from "prop-types";
 import React from "react";
 
 export const ProductCard = ({
-  product: { color, description, id, image, name, price, size },
+  localFavourites,
+  onBuyNow,
+  onNotifyMe,
+  onSetFavourites,
+  product,
+  product: { color, description, id, image, name, price, quantity, size },
 }) => {
+  const isQuantityZero = Boolean(quantity === 0);
+
   return (
     <Media key={id} className="product-card">
       <Media left href="#">
@@ -23,13 +24,23 @@ export const ProductCard = ({
         <CardSubtitle>Color: {color}</CardSubtitle>
         <CardSubtitle>Size: {size}</CardSubtitle>
         <CardText>Details: {description}</CardText>
-        <Button block color="primary" size="lg">
-          Buy
-        </Button>
+        <ProductActions
+          isBuyNowEnabled={!isQuantityZero}
+          isNotifyEnabled={isQuantityZero}
+          localFavourites={localFavourites}
+          product={product}
+          onBuyNow={onBuyNow}
+          onNotifyMe={onNotifyMe}
+          onSetFavourites={onSetFavourites}
+        />
       </CardBody>
     </Media>
   );
 };
 ProductCard.propTypes = {
+  localFavourites: PropTypes.arrayOf(PropTypes.string),
+  onBuyNow: PropTypes.func,
+  onNotifyMe: PropTypes.func,
+  onSetFavourites: PropTypes.func,
   product: PropTypes.object,
 };
