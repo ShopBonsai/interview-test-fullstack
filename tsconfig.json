@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "outDir": "./server/dist",
+    "rootDir": ".",
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "skipLibCheck": true
+  },
+  "include": ["./server/**/*"],
+  "exclude": ["node_modules", "./client/**/*"]
+}
