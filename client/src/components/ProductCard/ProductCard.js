@@ -5,8 +5,6 @@ import React from "react";
 
 export const ProductCard = ({
   localFavourites,
-  onBuyNow,
-  onNotifyMe,
   onSetFavourites,
   product,
   product: { color, description, id, image, name, price, quantity, size },
@@ -29,8 +27,6 @@ export const ProductCard = ({
           isNotifyEnabled={isQuantityZero}
           localFavourites={localFavourites}
           product={product}
-          onBuyNow={onBuyNow}
-          onNotifyMe={onNotifyMe}
           onSetFavourites={onSetFavourites}
         />
       </CardBody>

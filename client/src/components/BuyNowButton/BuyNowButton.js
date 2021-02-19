@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import React from "react";
 
 export const BuyNowButton = ({ handleBuyNow, isEnabled }) => {
+  const color = isEnabled ? "primary" : "secondary";
+
   return (
     <Button
       block
-      color="primary"
+      color={color}
       disabled={!isEnabled}
       size="lg"
       onClick={handleBuyNow}

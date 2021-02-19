@@ -1,25 +1,6 @@
-import { gql } from "apollo-boost";
+import { GET_PRODUCTS } from "../graphql";
 import { Query } from "react-apollo";
 import React from "react";
-
-const GET_PRODUCTS = gql`
-  {
-    merchants {
-      guid
-      merchant
-      products {
-        id
-        name
-        price
-        description
-        color
-        size
-        image
-        quantity
-      }
-    }
-  }
-`;
 
 export const withProducts = (Component) => {
   const WrappedWithProducts = (props) => {

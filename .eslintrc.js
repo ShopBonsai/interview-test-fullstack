@@ -45,7 +45,6 @@ module.exports = {
     "no-alert": "error",
     "no-console": "error", // // if-else-if chains are commonly used when there is a need to execute only one branch (or at most one branch) out // of several possible branches, based on certain conditions.
     "no-dupe-else-if": "error", // // This rule restricts the use of parentheses to only where they are necessary.
-    "no-extra-parens": ["error", "all", { ignoreJSX: "multi-line" }], // // The updates of imported bindings by ES Modules cause runtime errors.
     "no-import-assign": "error", // // Setters cannot return values. While returning a value from a setter does not produce an error, the returned // value is being ignored. Therefore, returning a value from a setter is either unnecessary or a possible error, // since the returned value cannot be used
     "no-setter-return": "error", // // Disallow assignments that can lead to race conditions due to usage of await or yield.
     "require-atomic-updates": "error", // // Enforces getter/setter pairs in objects and classes. It's a common mistake in JavaScript to create an object // with just a setter for a property but never have a corresponding getter defined for it. Without a getter, // you cannot read the property, so it ends up not being used.
@@ -123,7 +122,7 @@ module.exports = {
     ], // // Some people consider large functions a code smell. Large functions tend to do a lot of things and can make it // hard following what's going on. Many coding style guides dictate a limit of the number of lines that a // function can comprise of.
     "max-lines-per-function": [
       "error",
-      { max: 80, skipBlankLines: true, skipComments: true, IIFEs: true },
+      { max: 120, skipBlankLines: true, skipComments: true, IIFEs: true },
     ], // // Many JavaScript libraries use the callback pattern to manage asynchronous operations. A program of any // complexity will most likely need to manage several asynchronous operations at various levels of concurrency. // A common pitfall that is easy to fall into is nesting callbacks, which makes code more difficult to read the // deeper the callbacks are nested.
     "max-nested-callbacks": ["error", 3], // // Functions that take numerous parameters can be difficult to read and write because it requires the memorization // of what each parameter is, its type, and the order they should appear in. As a result, many coders adhere to a // convention that caps the number of parameters a function can take.
     "max-params": ["error", 4], // // The new operator in JavaScript creates a new instance of a particular type of object. That type of object is // represented by a constructor function. Since constructor functions are just regular functions, the only defining // characteristic is that new is being used as part of the call. Native JavaScript functions begin with an // uppercase letter to distinguish those functions that are to be used as constructors from functions that are not.

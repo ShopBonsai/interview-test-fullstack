@@ -1,17 +1,17 @@
 import "./styles.css";
-import { Button, Card, CardBody } from "reactstrap";
+import { Button, Card, CardBody, CardText } from "reactstrap";
 import React, { useCallback, useState } from "react";
 import { BuyNowButton } from "../BuyNowButton";
-import { BuyNowCard } from "../BuyNowCard";
 import { FavouriteButton } from "../FavouriteButton";
 import { NotifyMeButton } from "../NotifyMeButton";
-import { NotifyMeCard } from "../NotifyMeCard";
 import PropTypes from "prop-types";
 
 export const ProductActions = ({
   isBuyNowEnabled,
   isNotifyEnabled,
   localFavourites,
+  onBuyNow,
+  onNotifyMe,
   onSetFavourites,
   product,
 }) => {
@@ -43,11 +43,13 @@ export const ProductActions = ({
 
   const handleBuyNow = useCallback(() => {
     setBuyNowPromptState(true);
-  }, [setBuyNowPromptState]);
+    onBuyNow(product);
+  }, [setBuyNowPromptState, onBuyNow, product]);
 
   const handleNotifyMe = useCallback(() => {
     setNotifyMePromptState(true);
-  }, [setNotifyMePromptState]);
+    onNotifyMe(product);
+  }, [setNotifyMePromptState, onNotifyMe, product]);
 
   const handleDismissPopover = useCallback(() => {
     setNotifyMePromptState(false);
@@ -55,47 +57,34 @@ export const ProductActions = ({
   }, [setBuyNowPromptState, setNotifyMePromptState]);
 
   let actionsPopoverContent = null;
-  const actionsPopoverClass =
-    isBuyNowPromptShown || isNotifyMePromptShown ? "pop visible" : "pop";
-
-  if (isBuyNowPromptShown) {
-    actionsPopoverContent = (
-      <BuyNowCard product={product} onClose={handleDismissPopover} />
-    );
-  }
-
   if (isNotifyMePromptShown) {
-    actionsPopoverContent = (
-      <NotifyMeCard product={product} onClose={handleDismissPopover} />
-    );
+    actionsPopoverContent = <h2>Notify me</h2>;
+  }
+  if (isBuyNowPromptShown) {
+    actionsPopoverContent = <h2>Buy Now</h2>;
   }
 
   const actionsPopoverPrompt = (
-    <Card className={actionsPopoverClass} color="success">
+    <Card className="pop" color="success">
       <CardBody>
         <Button close onClick={handleDismissPopover} />
-        {actionsPopoverContent}
+        <CardText>{actionsPopoverContent}</CardText>
       </CardBody>
     </Card>
   );
 
   return (
     <>
-      {actionsPopoverPrompt}
+      {notifyMePrompt}
+      <NotifyMeButton
+        handleNotifyMe={handleNotifyMe}
+        isEnabled={isNotifyEnabled}
+      />
       <FavouriteButton
         handleManageFavourites={handleManageFavourites}
         isToggledOn={isFavourited}
       />
-      {isNotifyEnabled ? (
-        <NotifyMeButton
-          handleDismissPopover
-          handleNotifyMe={handleNotifyMe}
-          isEnabled={isNotifyEnabled}
-        />
-      ) : null}
-      {isBuyNowEnabled ? (
-        <BuyNowButton handleBuyNow={handleBuyNow} isEnabled={isBuyNowEnabled} />
-      ) : null}
+      <BuyNowButton handleBuyNow={handleBuyNow} isEnabled={isBuyNowEnabled} />
     </>
   );
 };
@@ -104,6 +93,8 @@ ProductActions.propTypes = {
   isBuyNowEnabled: PropTypes.bool,
   isNotifyEnabled: PropTypes.bool,
   localFavourites: PropTypes.arrayOf(PropTypes.string),
+  onBuyNow: PropTypes.func,
+  onNotifyMe: PropTypes.func,
   onSetFavourites: PropTypes.func,
   product: PropTypes.object,
 };

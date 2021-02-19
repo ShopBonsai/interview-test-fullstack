@@ -3,7 +3,9 @@ import { PropTypes } from "prop-types";
 import React from "react";
 
 export const NotifyMeButton = ({ handleNotifyMe, isEnabled }) => {
-  const color = isEnabled ? "primary" : "secondary";
+  // NOTE: currently this button does not have a disabled state - it is just hidden -
+  // this functionality is included to make this component more portable
+  const color = isEnabled ? "warning" : "secondary";
 
   return (
     <Button
@@ -13,7 +15,7 @@ export const NotifyMeButton = ({ handleNotifyMe, isEnabled }) => {
       size="lg"
       onClick={handleNotifyMe}
     >
-      Notify
+      Out of Stock
     </Button>
   );
 };
