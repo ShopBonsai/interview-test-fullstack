@@ -26,9 +26,14 @@ module.exports = () => {
             options: {
               plugins: [
                 ["@babel/plugin-proposal-decorators", { legacy: true }],
-                ["@babel/plugin-proposal-class-properties"],
+                ["@babel/plugin-proposal-class-properties", { loose: true }],
+                ["@babel/transform-class-properties"],
               ],
-              presets: ["@babel/preset-react"],
+              presets: [
+                "@babel/preset-env",
+                "@babel/preset-react",
+                "@babel/preset-es2015",
+              ],
             },
           },
         },

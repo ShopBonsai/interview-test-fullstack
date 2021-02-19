@@ -1,19 +1,10 @@
 import "./styles.css";
-import {
-  Button,
-  CardBody,
-  CardSubtitle,
-  CardText,
-  CardTitle,
-  Media,
-} from "reactstrap";
 import React, { Component } from "react";
 import { EmptyNotice } from "../EmptyNotice";
 import { Loading } from "../Loading";
 import { ProductCard } from "../ProductCard";
 import PropTypes from "prop-types";
 import { withProducts } from "../../containers";
-import { saveNotificationRequest } from "../../actions";
 
 class ProductsList extends Component {
   state = {
@@ -21,9 +12,6 @@ class ProductsList extends Component {
       // Restore favourites from local storage
       localStorage.getItem("favourites") || JSON.stringify([])
     ),
-    isBuyNow: false,
-    isNotifyMe: false,
-    selectedProduct: null,
   };
 
   render() {
@@ -40,17 +28,16 @@ class ProductsList extends Component {
         return (
           <ProductCard
             key={product.id}
-            onSetFavourites={this._handleSetFavourites}
             localFavourites={favourites}
             product={product}
+            onSetFavourites={this.handleSetFavourites}
           />
         );
       });
     });
   }
 
-  _handleSetFavourites = (favourites) => {
-    console.log("_handleSetFavourites", favourites);
+  handleSetFavourites = (favourites) => {
     this.setState({ favourites });
     // NOTE: We do not store favourites in the database until
     // the user has taken a "valuable" action to avoid

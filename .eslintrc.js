@@ -10,6 +10,8 @@ module.exports = {
   plugins: [
     "react",
     "react-hooks",
+    "@babel",
+    "babel",
     "jsx-a11y",
     "sonarjs",
     "import",
@@ -18,6 +20,7 @@ module.exports = {
     "sort-destructure-keys",
     "prettier",
   ],
+  parser: "babel-eslint",
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
