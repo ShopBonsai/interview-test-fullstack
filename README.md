@@ -21,16 +21,22 @@ provided, I would be submitting tests along with this (TL;DR: I feel bad about t
 - Adding "Notify Me" functionality for out of stock items
 - Making "Buy Now" functional
 
+## Mongo DB
+See note on `Database` support below
+
 
 ## Dev Facing Changes and rationale
+- Abstracted hardcoded asset URLs to .env
+ - not everyone develops on `localhost`
+- Added Database support
+ - This is disabled by default as I have no control over where this would be run (providing a docker container seemed out of scope)
+ - To enable this update `MONGO_ENABLED` in `.env` along with the connection credentials
 - Refactored the existing code for composability
  - The intent here is that while, yes, I could have added the features in situ without the change this would pose a long term maintenance problem
 - Added linting 
  - Table stakes stuff, I like me my linting rules. You may not agree with all of the ones I have enabled currently, but the intent to include them is
    to indicate what I hold myself to when coding
-- Added Database support
 - Updated webpack to support proper class-based React component syntax
-- Abstracted hardcoded asset URLs
 - added a notion of filtering/sorting
  - Just breadboarded the functionality, it does not implement filtering yet
 - User Favourites are not persisted immediately to the database
