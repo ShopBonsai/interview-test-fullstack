@@ -1,16 +1,26 @@
-/* eslint-disable require-await */
+const {
+  NotificationRequestModel,
+  OrderModel,
+  UserFavouritesModel,
+} = require("./databaseSchemas");
 const { merchants } = require("../../mockMerchantData");
 
 const resolvers = {
   Mutation: {
     favourite: async (_, favouriteData) => {
-      console.log(favouriteData);
+      if (process.env.MONGO_ENABLED === "true") {
+        await UserFavouritesModel.create(favouriteData.userFavourites);
+      }
     },
     notification: async (_, notificationData) => {
-      console.log(notificationData);
+      if (process.env.MONGO_ENABLED === "true") {
+        await NotificationRequestModel.create(notificationData.notification);
+      }
     },
     order: async (_, orderData) => {
-      console.log(orderData);
+      if (process.env.MONGO_ENABLED === "true") {
+        await OrderModel.create(orderData.orderData);
+      }
     },
   },
   Query: {

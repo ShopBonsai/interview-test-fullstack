@@ -11,6 +11,7 @@
     "eslint-plugin-jest": "^24.1.5",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
+    "mongoose": "^5.11.17",
     "prettier": "^2.2.1",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
