@@ -30,14 +30,20 @@ const typeDefs = gql`
     image: String
   }
   type User {
-    userId: String
+    userId: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    likes: [String!]!
   }
   type Query {
     merchants: [Merchant!]!
+    user(userId: String!): User
   }
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
   }
+  
 `;
 
 module.exports = typeDefs;

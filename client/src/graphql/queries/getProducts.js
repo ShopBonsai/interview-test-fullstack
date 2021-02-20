@@ -18,4 +18,4 @@ const GET_PRODUCTS = gql`
     }
 `;
 
-export default GET_PRODUCTS
+export default GET_PRODUCTS;

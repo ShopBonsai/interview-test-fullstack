@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "hoist-non-react-statics": "^3.3.2",
+    "mongoose": "^5.11.17",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
@@ -21,7 +22,9 @@
   "scripts": {
     "server": "nodemon ./server/server.js",
     "client": "webpack-dev-server --mode development --open",
-    "dev": "concurrently \"yarn client\" \"yarn server\"",
+    "spin-up-mongo-db": "cd ./server/db && sh docker-db.sh",
+    "create-initial-data": "node ./server/db/mongo/create_initial_data.js",
+    "dev": "concurrently \"yarn client\" \"yarn spin-up-mongo-db\" \"yarn create-initial-data\" \"yarn server\" ",
     "test-server": "NODE_ENV=test jest --verbose ./server",
     "test-client": "jest --verbose --detectOpenHandles ./src ",
     "test": "jest"
