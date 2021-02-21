@@ -16,7 +16,6 @@ class User extends Component {
         this.props.setCurrentUser({ user: data.user })
     }
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log(nextProps, 'VA___', nextContext)
         if (nextProps.currentUser && nextProps.currentUser.likes) {
             this.setState({ likes: nextProps.currentUser.likes.length })
         }

@@ -25,7 +25,7 @@
     "spin-up-mongo-db": "cd ./server/db && sh docker-db.sh",
     "create-initial-data": "node ./server/db/mongo/create_initial_data.js",
     "dev": "concurrently \"yarn client\" \"yarn spin-up-mongo-db\" \"yarn server\" \"yarn create-initial-data\"",
-    "test-server": "NODE_ENV=test jest --verbose ./server",
+    "test-server": "NODE_ENV=test jest --verbose --detectOpenHandles ./server",
     "test-client": "jest --verbose --detectOpenHandles ./src ",
     "test": "jest"
   },

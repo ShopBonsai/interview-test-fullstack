@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
 
 class Notifier extends Component {
@@ -29,7 +29,7 @@ class Notifier extends Component {
     }
     render() {
         return(
-            <div>
+            <div className='notifier-bar'>
                 <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss}>
                     {this.state.text}
                 </Alert>

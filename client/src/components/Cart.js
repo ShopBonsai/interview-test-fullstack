@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {removeFromCart} from "../redux/actions";
+import {removeFromCart} from '../redux/actions';
 import {Button} from 'reactstrap';
 
 

@@ -7,7 +7,7 @@ import store from "./redux/store";
 import Products from './components/Products';
 import NavBarApp from './components/NavBarApp';
 import Cart from './components/Cart';
-import Notifier from "./components/Notifier";
+import Notifier from './components/Notifier';
 
 class App extends Component {
     render() {
@@ -17,7 +17,7 @@ class App extends Component {
                     <NavBarApp/>
                     <Notifier/>
                     <Container fluid={true}>
-                        <Row>
+                        <Row style={{ marginTop: '65px' }}>
                             <Col xs="9">
                                 <Products/>
                             </Col>

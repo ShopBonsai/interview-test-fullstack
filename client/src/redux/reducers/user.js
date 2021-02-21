@@ -12,18 +12,16 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 data: {
-                    ...state.user,
                     ...user
                 }
             }
         }
         case SET_USER_LIKED_PRODUCT: {
             const { product } = action.payload
-            const userb = state.data.likes
-            userb.push(product.id)
             return {
                 data: {
                     ...state.data,
+                    likes: [...state.data.likes, product.id]
                 }
             }
         }
