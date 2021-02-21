@@ -1,5 +1,5 @@
 const mongoDBConn = require('../connection');
-const Merchant = require('../../models/merchant')
+const Merchant = require('../../models/merchant');
 const { merchants } = require('../../../mockMerchantData');
 const seed = async() => {
     await mongoDBConn()

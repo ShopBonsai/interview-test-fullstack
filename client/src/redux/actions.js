@@ -1,9 +1,9 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "./actionTypes";
+import { ADD_TO_CART, REMOVE_FROM_CART, SET_USER_LIKED_PRODUCT } from "./actionTypes";
 
-export const addToCart = (content) => ({
+export const addToCart = (product) => ({
     type: ADD_TO_CART,
     payload: {
-        ...content
+        ...product
     }
 });
 
@@ -12,3 +12,9 @@ export const removeFromCart = id => ({
     payload: { id }
 });
 
+export const setLikedProduct = (product) => ({
+    type: SET_USER_LIKED_PRODUCT,
+    payload: {
+        ...product
+    }
+})

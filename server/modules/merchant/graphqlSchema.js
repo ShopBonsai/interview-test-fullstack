@@ -36,11 +36,15 @@ const typeDefs = gql`
     email: String,
     likes: [String!]!
   }
+  type LikedProduct {
+    isLiked: Boolean
+  }
   type Query {
     merchants: [Merchant!]!
     user(userId: String!): User
   }
   type Mutation {
+    setLikedItem(userId: String!, productId: String!): LikedProduct
     editMerchant(publishedState: Boolean!): Merchant
   }
   

@@ -1,6 +1,7 @@
-import { SET_CURRENT_USER } from "../actionTypes";
+import { SET_CURRENT_USER, SET_USER_LIKED_PRODUCT } from "../actionTypes";
 const initialState = {
-    userId: 'df7aa083-7b59-45fd-a036-31efa59212c7'
+    userId: 'df7aa083-7b59-45fd-a036-31efa59212c7',
+    likes: []
 }
 
 export default function(state = initialState, action) {
@@ -10,6 +11,13 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 ...user
+            }
+        }
+        case SET_USER_LIKED_PRODUCT: {
+            const { product } = action.payload
+            return {
+                ...state,
+                likes: [ ...state.likes, product]
             }
         }
         default:

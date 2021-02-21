@@ -25,7 +25,6 @@ class Cart extends Component {
             }, 0).toFixed(2)
             this.setState({ subtotal: subtotal })
             this.getTax(subtotal)
-            console.log(this.props, 'TAA__')
         }
     }
     removeProduct(productId) {

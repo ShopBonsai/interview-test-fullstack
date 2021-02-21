@@ -5,6 +5,6 @@ const UserSchema = new mongoose.Schema({
     lastName: String,
     userId: String,
     email: String,
-    likes: [Object]
+    likes: [String]
 });
 module.exports = mongoose.model('User', UserSchema, 'bonsai-users')
