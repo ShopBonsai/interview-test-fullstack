@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, SET_USER_LIKED_PRODUCT } from "./actionTypes";
+import { ADD_TO_CART, REMOVE_FROM_CART, SET_USER_LIKED_PRODUCT, SET_CURRENT_USER } from "./actionTypes";
 
 export const addToCart = (product) => ({
     type: ADD_TO_CART,
@@ -17,4 +17,12 @@ export const setLikedProduct = (product) => ({
     payload: {
         ...product
     }
+});
+
+export const setCurrentUser = (user) => ({
+    type: SET_CURRENT_USER,
+    payload: {
+        ...user
+    }
 })
+

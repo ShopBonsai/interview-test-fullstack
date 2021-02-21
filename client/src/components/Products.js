@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import Product from './Product';
+import { Spinner } from 'reactstrap';
 import GET_PRODUCTS from '../graphql/queries/getProducts';
 import './styles.css';
 
@@ -8,7 +9,9 @@ import './styles.css';
 const withProducts = Component => props => {
   return (
     <Query query={GET_PRODUCTS}>
-      {({ loading, data }) => {
+      {({ loading, error, data }) => {
+        if (loading) return <div><Spinner color="primary"/></div>
+        if (error) return <div>Error ☠️</div>
         return (
           <Component merchantsLoading={loading} merchants={data && data.merchants} {...props} />
         );

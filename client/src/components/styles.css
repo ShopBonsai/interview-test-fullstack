@@ -10,6 +10,11 @@
 }
 .bar {
     box-shadow: 1px 2px 3px rgba(136, 10, 142, 0.3);
+    position: fixed;
+    background: white;
+    z-index: 999;
+    background-color: white;
+    width: 100%;
 }
 
 .cart-sidebar {

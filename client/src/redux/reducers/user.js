@@ -1,7 +1,8 @@
 import { SET_CURRENT_USER, SET_USER_LIKED_PRODUCT } from "../actionTypes";
 const initialState = {
-    userId: 'df7aa083-7b59-45fd-a036-31efa59212c7',
-    likes: []
+    data: {
+        userId: 'df7aa083-7b59-45fd-a036-31efa59212c7'
+    }
 }
 
 export default function(state = initialState, action) {
@@ -10,14 +11,20 @@ export default function(state = initialState, action) {
             const { user } = action.payload;
             return {
                 ...state,
-                ...user
+                data: {
+                    ...state.user,
+                    ...user
+                }
             }
         }
         case SET_USER_LIKED_PRODUCT: {
             const { product } = action.payload
+            const userb = state.data.likes
+            userb.push(product.id)
             return {
-                ...state,
-                likes: [ ...state.likes, product]
+                data: {
+                    ...state.data,
+                }
             }
         }
         default:

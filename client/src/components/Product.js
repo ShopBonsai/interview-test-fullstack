@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import { addToCart, setLikedProduct } from '../redux/actions';
-// import { useMutation } from '@apollo/react-hooks';
 import { Mutation } from 'react-apollo';
 import SET_LIKED_ITEM from '../graphql/mutations/setLikedItem'
 import { CardTitle, CardSubtitle, CardText, ButtonGroup, Button, CardBody, Media,  InputGroup, InputGroupAddon, Input} from 'reactstrap';
@@ -13,6 +12,8 @@ class Product extends Component {
             quantity: 1
         };
         this.setQuantity = this.setQuantity.bind(this);
+        this.likeProduct = this.likeProduct.bind(this);
+        this.isLiked = this.isLiked.bind(this);
     }
     setQuantity(quantity) {
         this.setState({ quantity: quantity });
@@ -24,10 +25,14 @@ class Product extends Component {
         });
         this.setState({ quantity: 1 })
     }
-    likeProduct(product) {
+    isLiked(productId) {
+        return this.props.currentUser.likes.includes(productId);
+    }
+    likeProduct(mutation, product) {
+        mutation();
         this.props.setLikedProduct({
             product
-        })
+        });
     }
     render() {
         return (
@@ -51,25 +56,20 @@ class Product extends Component {
                                    onChange={event => this.setQuantity(event.target.value)} />
                         </InputGroup>
                         <ButtonGroup size='lg' className='button-group'>
-                            <Mutation mutation={SET_LIKED_ITEM} variables={{ userId: this.props.userId, productId: this.props.product.id }}>
+                            <Mutation mutation={SET_LIKED_ITEM} variables={{ userId: this.props.currentUser.userId, productId: this.props.product.id }}>
                                 {(setLikedItem, { loading, error, data }) => {
                                 if (loading) return <div>Loading...</div>
-                                if (error) return <div>Error :(</div>
+                                if (error) return <div>Error ☠️</div>
                                  return (
-                                     <Button className='like-color'
-                                         disabled={data && data.setLikedItem.isLiked}
+                                     <Button
                                          block
-                                         // onClick={() => this.likeProduct(data, this.props.product)}>♥️
-                                         onClick={setLikedItem}>♥️
+                                         className='like-color'
+                                         disabled={ this.isLiked(this.props.product.id) || data && data.setLikedItem.isLiked }
+                                         onClick={() => this.likeProduct(setLikedItem, this.props.product)}>♥️
                                     </Button>
                                  )
                                 }}
                             </Mutation>
-                            {/*<Button className='like-color'*/}
-                            {/*     disabled={this.state.liked}*/}
-                            {/*     block*/}
-                            {/*     onClick={() => this.likeProduct(this.props.product)}>♥️*/}
-                            {/*</Button>*/}
                             <Button color='primary' block onClick={() => this.handleProduct(this.props.product, Number(this.state.quantity))}>Buy</Button>
                         </ButtonGroup>
                     </CardBody>
@@ -80,7 +80,7 @@ class Product extends Component {
 }
 const mapStateToProps = (state) =>({
     byIds: state.cart.byIds,
-    userId: state.user.userId
+    currentUser: state.user.data
 });
 const mapDispatchToProps = {
     addToCart,
