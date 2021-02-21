@@ -5,14 +5,21 @@
   "license": "MIT",
   "dependencies": {
     "apollo-boost": "^0.4.3",
-    "apollo-server-express": "^2.7.0",
+    "apollo-server-express": "^2.16.0",
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
-    "graphql": "^14.4.2",
+    "graphql": "^15.3.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
-    "reactstrap": "^8.0.1"
+    "reactstrap": "^8.0.1",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.2.31"
+  },
+  "resolutions": {
+    "graphql-tools": "4.0.7"
   },
   "scripts": {
     "server": "nodemon ./server/server.ts",

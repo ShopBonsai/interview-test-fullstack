@@ -1,25 +1,34 @@
-// #1 Import Express and Apollo Server
 import express from "express";
-
-// const { ApolloServer } = require('apollo-server-express');
 import { ApolloServer } from "apollo-server-express";
+import MerchantResolver from "./modules/merchant/resolvers";
+import { createConnection } from "typeorm";
+import "reflect-metadata";
+import { buildSchema } from "type-graphql";
 
-// #3 Import GraphQL type definitions
-import typeDefs from "./modules/merchant/graphqlSchema";
+export const PORT = process.env.PORT || 3000;
 
-// #4 Import GraphQL resolvers
-import resolvers from "./modules/merchant/resolvers";
+const init = async () => {
+  // #7 Initialize an Express application
+  const app = express();
+  // initialize database
+  const connection = await createConnection();
+  await connection.runMigrations();
 
-// #5 Initialize an Apollo server
-const server = new ApolloServer({ typeDefs, resolvers });
+  const schema = await buildSchema({
+    resolvers: [MerchantResolver]
+  });
 
-// #6 Initialize an Express application
-const app = express();
+  // initialize an Apollo server
+  const server = new ApolloServer({ schema });
+  // use the Express application as middleware in Apollo server
+  server.applyMiddleware({ app });
 
-// #7 Use the Express application as middleware in Apollo server
-server.applyMiddleware({ app });
+  // set the port that the Express application will listen to
+  app.listen({ port: PORT }, () => {
+    console.log(
+      `Server running on http://localhost:${PORT}${server.graphqlPath}`
+    );
+  });
+};
 
-// #8 Set the port that the Express application will listen to
-app.listen({ port: 3000 }, () => {
-  console.log(`Server running on http://localhost:3000${server.graphqlPath}`);
-});
+init();
