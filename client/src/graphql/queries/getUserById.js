@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 const GET_USER_BY_ID = gql`
     query user($userId: String!) {
         user(userId: $userId) {

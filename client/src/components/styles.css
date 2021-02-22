@@ -62,7 +62,11 @@ li.cart-item > div > p {
 .button-group {
     width: 100%;
 }
-
+.center-spinner {
+    position: absolute;
+    top: 50vh;
+    right: 50vh;
+}
 /*OVERRIDES*/
 .btn-block + .btn-block {
     margin-top: 0 !important;

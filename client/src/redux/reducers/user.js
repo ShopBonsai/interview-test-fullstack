@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, SET_USER_LIKED_PRODUCT } from "../actionTypes";
+import { SET_CURRENT_USER, SET_USER_LIKED_PRODUCT } from '../actionTypes';
 const initialState = {
     data: {
         userId: 'df7aa083-7b59-45fd-a036-31efa59212c7'

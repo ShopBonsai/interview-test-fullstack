@@ -10,10 +10,14 @@ const withProducts = Component => props => {
   return (
     <Query query={GET_PRODUCTS}>
       {({ loading, error, data }) => {
-        if (loading) return <div><Spinner color="primary"/></div>
+        if (loading) return (
+            <div className='center-spinner'>
+                <Spinner color="primary"/>
+            </div>
+        )
         if (error) return <div>Error ☠️</div>
         return (
-          <Component merchantsLoading={loading} merchants={data && data.merchants} {...props} />
+            <Component merchantsLoading={loading} merchants={data && data.merchants} {...props} />
         );
       }}
     </Query>

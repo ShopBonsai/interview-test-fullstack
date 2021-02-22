@@ -8,7 +8,7 @@ const resolvers = {
       return merchants
     },
     user: async (_, { userId })=> {
-      const user = await User.findOne({userId});
+      const user = await User.findOne({ userId });
       return user
     }
   },
