@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { ApolloProvider } from 'react-apollo';
-import apolloClient from './createApolloClient';
-import Products from './components/Products';
+import React, { Component } from "react";
+import { ApolloProvider } from "@apollo/client";
+import apolloClient from "./createApolloClient";
+import Products from "./components/Products";
 
 class App extends Component {
   render() {
@@ -9,7 +9,7 @@ class App extends Component {
       <ApolloProvider client={apolloClient}>
         <Products />
       </ApolloProvider>
-    )
+    );
   }
 }
 
