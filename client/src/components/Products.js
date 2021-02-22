@@ -73,13 +73,14 @@ const Products = () => {
   );
 
   if (loading) return <p>Loading...</p>;
-  if (error)
+  if (error) {
     return (
       <div>
         Something unexpected happened... Maybe refreshing will get it back to
         the expected state?
       </div>
     );
+  }
 
   return (
     <div>
