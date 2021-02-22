@@ -4,6 +4,7 @@ import MerchantResolver from "./modules/merchant/resolvers";
 import { createConnection } from "typeorm";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
+import OrderResolver from "./modules/order/resolvers";
 
 export const PORT = process.env.PORT || 3000;
 
@@ -15,7 +16,7 @@ const init = async () => {
   await connection.runMigrations();
 
   const schema = await buildSchema({
-    resolvers: [MerchantResolver]
+    resolvers: [MerchantResolver, OrderResolver]
   });
 
   // initialize an Apollo server

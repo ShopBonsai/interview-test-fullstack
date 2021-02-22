@@ -14,3 +14,13 @@ export const GET_PRODUCTS = gql`
     }
   }
 `;
+
+export const GET_ORDERS = gql`
+  {
+    orders {
+      id
+      quantity
+      totalPrice
+    }
+  }
+`;

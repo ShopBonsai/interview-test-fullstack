@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Arg, Int } from "type-graphql";
+import { multiply } from "mathjs";
 import Merchant from "../../db/entity/Merchant";
 import Order from "../../db/entity/Order";
 import Product from "../../db/entity/Product";
@@ -33,7 +34,7 @@ class MerchantResolver {
     const newOrder = new Order();
     newOrder.productId = id;
     newOrder.quantity = quantity;
-    newOrder.totalPrice = product.price * quantity;
+    newOrder.totalPrice = multiply(product.price, quantity);
     await Order.save(newOrder);
 
     return product;
