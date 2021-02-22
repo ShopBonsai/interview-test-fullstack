@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   CardTitle,
   CardSubtitle,
@@ -7,25 +7,34 @@ import {
   CardBody,
   Media
 } from "reactstrap";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, useMutation, gql } from "@apollo/client";
+import { GET_PRODUCTS } from "../queries";
+import { BUY_PRODUCT } from "../mutations";
+import Dropdown from "./Dropdown";
 
 import "./styles.css";
 
-const GET_PRODUCTS = gql`
-  {
-    products {
-      id
-      name
-      price
-      description
-      color
-      size
-      image
-    }
-  }
-`;
+const Product = ({
+  id,
+  image,
+  name,
+  price,
+  color,
+  size,
+  description,
+  quantity = 0
+}) => {
+  const [selectedQuantity, setSelectedQuantity] = useState(quantity);
+  const [buyProduct] = useMutation(BUY_PRODUCT);
 
-const Product = ({ image, name, price, color, size, description }) => {
+  const handleQuantitySelect = ({ target: { value } }) => {
+    setSelectedQuantity(parseInt(value, 10));
+  };
+
+  const handleClickBuy = () => {
+    buyProduct({ variables: { id, quantity: selectedQuantity } });
+  };
+
   return (
     <Media className="product-card">
       <Media left href="#">
@@ -37,9 +46,22 @@ const Product = ({ image, name, price, color, size, description }) => {
         <CardSubtitle>Color: {color}</CardSubtitle>
         <CardSubtitle>Size: {size}</CardSubtitle>
         <CardText>Details: {description}</CardText>
-        <Button color="primary" size="lg" block>
-          Buy
-        </Button>
+        {quantity ? (
+          <div className="flex mx-4 items-center">
+            <Button onClick={handleClickBuy} color="primary" size="lg" block>
+              Buy
+            </Button>
+            <div className="mx-2">
+              <Dropdown
+                quantity={quantity}
+                selectedQuantity={selectedQuantity}
+                handleSelect={handleQuantitySelect}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="flex mx-4">No more items...</div>
+        )}
       </CardBody>
     </Media>
   );
@@ -52,6 +74,7 @@ const Products = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Something bad happened...</p>;
+
   return (
     <div>
       {products.map(product => (
