@@ -26,7 +26,10 @@ class Product extends Component {
         this.setState({ quantity: 1 })
     }
     isLiked(productId) {
-        return this.props.currentUser.likes.includes(productId);
+        if (this.props && this.props.currentUser && this.props.currentUser.likes) {
+            return this.props.currentUser.likes.includes(productId);
+        }
+        return false
     }
     likeProduct(mutation, product) {
         mutation();

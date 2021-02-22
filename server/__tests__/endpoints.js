@@ -19,7 +19,12 @@ describe('GRAPHQL Endpoints', () => {
         likes:['a561cb49-bd09-47c6-b234-8997f49c8770']
     }
     const product = {
-        productId: 'a561cb49-bd09-47c6-b234-8997f49c8770'
+        productId: 'a561cb49-bd09-47c6-b234-8997f49c8770',
+        name: 'INCIDIDUNT Suit',
+        price: 230.8,
+        color: 'fugiat',
+        size: 'L',
+        brand: 'Laurel Lancaster'
     }
     it('GET PRODUCTS', async (done) => {
         request
@@ -30,7 +35,7 @@ describe('GRAPHQL Endpoints', () => {
             .set('Accept', 'application/json')
             .expect("Content-Type", /json/)
             .expect(200)
-            .end(function (err, res) {
+            .end((err, res) => {
                 if (err) return done(err);
                 expect(res.body).toBeInstanceOf(Object);
                 expect(res.body.data).toBeInstanceOf(Object);
@@ -48,7 +53,7 @@ describe('GRAPHQL Endpoints', () => {
             .set('Accept', 'application/json')
             .expect("Content-Type", /json/)
             .expect(200)
-            .end(function (err, res) {
+            .end( (err, res) => {
                 if (err) return done(err);
                 expect(res.body).toBeInstanceOf(Object);
                 expect(res.body.data).toBeInstanceOf(Object);
@@ -73,7 +78,7 @@ describe('GRAPHQL Endpoints', () => {
             .set('Accept', 'application/json')
             .expect("Content-Type", /json/)
             .expect(200)
-            .end(function (err, res) {
+            .end((err, res) => {
                 if (err) return done(err);
                 expect(res.body).toBeInstanceOf(Object);
                 expect(res.body.data).toBeInstanceOf(Object);
@@ -83,4 +88,29 @@ describe('GRAPHQL Endpoints', () => {
                 done();
             })
     });
+    it('GET PRODUCT BY ID WITH BRAND', async (done) => {
+        request
+            .post('/graphql')
+            .send({
+                query: `{ productById(productId: "${product.productId}") { name brand price color size } }`
+            })
+            .set('Accept', 'application/json')
+            .expect("Content-Type", /json/)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(res.body).toBeInstanceOf(Object);
+                expect(res.body.data).toBeInstanceOf(Object);
+                expect(res.body.data.productById).toBeInstanceOf(Object);
+                expect(res.body.data.productById).toHaveProperty('brand');
+                expect(res.body.data.productById.brand).toEqual(product.brand);
+                expect(res.body.data.productById).toHaveProperty('color');
+                expect(res.body.data.productById.color).toEqual(product.color);
+                expect(res.body.data.productById).toHaveProperty('price');
+                expect(res.body.data.productById.price).toEqual(product.price);
+                expect(res.body.data.productById).toHaveProperty('size');
+                expect(res.body.data.productById.size).toEqual(product.size);
+                done();
+            })
+    })
 })

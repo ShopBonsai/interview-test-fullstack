@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const ProductSchema = new mongoose.Schema({
     id: mongoose.Schema.Types.ObjectId,
-    title: String,
-    completed: Boolean,
     belongsToBrand: Number,
     name: String,
     price: Number,

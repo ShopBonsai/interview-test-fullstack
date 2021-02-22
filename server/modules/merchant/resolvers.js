@@ -10,6 +10,15 @@ const resolvers = {
     user: async (_, { userId })=> {
       const user = await User.findOne({ userId });
       return user
+    },
+    productById: async (_, { productId }) => {
+        let currentProduct
+        const currentMerchant = await Merchant.findOne({ 'products.id': productId })
+        if (currentMerchant.products) {
+            currentProduct = currentMerchant.products.find(item => item.id === productId)
+            currentProduct.brand = currentMerchant.brands[currentProduct.belongsToBrand]
+        }
+        return currentProduct
     }
   },
   Mutation: {
