@@ -21,7 +21,7 @@ class App extends Component {
                             <Col xs="9">
                                 <Products/>
                             </Col>
-                            <Col xs="3">
+                            <Col xs="3" style={{ zIndex: 0 }}>
                                 <Cart/>
                             </Col>
                         </Row>

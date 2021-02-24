@@ -26,7 +26,7 @@ describe('GRAPHQL Endpoints', () => {
         size: 'L',
         brand: 'Pansy Espinoza'
     }
-    it.only('GET PRODUCTS', async (done) => {
+    it('GET PRODUCTS', async (done) => {
         const query = '{ merchants { guid merchant products { id name price description color size image } } }'
         request
             .post('/graphql')
