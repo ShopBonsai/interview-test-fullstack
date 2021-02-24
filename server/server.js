@@ -15,7 +15,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async() => {
-    await mongoDBConn()
+    await mongoDBConn
   }
 });
 
@@ -24,6 +24,8 @@ const app = express();
 
 // #7 Use the Express application as middleware in Apollo server
 server.applyMiddleware({ app });
+
+
 
 // #8 Set the port that the Express application will listen to
 if (process.env.NODE_ENV !== 'test') {

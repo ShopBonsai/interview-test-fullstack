@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import GET_USER_BY_ID from '../graphql/queries/getUserById';
 import GET_PRODUCT_BY_ID from '../graphql/queries/getProductById';
-import { Badge } from 'reactstrap';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../redux/actions';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';

@@ -68,7 +68,8 @@ class Cart extends Component {
                                     <p><b>TOTAL: ${this.state.total}</b></p>
                                     <Button block
                                         color="success"
-                                        size="lg" >CHECKOUT</Button>
+                                        disabled={true}
+                                        size="lg" >CHECKOUT <small>coming soon</small></Button>
                                 </div>
                             </div> : '' }
                     </div>

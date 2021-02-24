@@ -1,10 +1,11 @@
 import React from 'react';
 import ShallowRenderer from 'react-test-renderer/shallow';
-import {Provider} from "react-redux";
-import NavBarApp from "../NavBarApp";
-import configureMockStore from "redux-mock-store";
+import {Provider} from 'react-redux';
+import NavBarApp from '../NavBarApp';
+import configureMockStore from 'redux-mock-store';
 
 const mockStore = configureMockStore();
+
 const store = mockStore({});
 
 describe('NavBarApp Component', () => {

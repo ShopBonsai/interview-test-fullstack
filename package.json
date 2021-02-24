@@ -20,20 +20,22 @@
     "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
-    "server": "nodemon ./server/server.js",
-    "client": "webpack-dev-server --mode development --open",
-    "spin-up-mongo-db": "cd ./server/db && sh docker-db.sh",
-    "create-initial-data": "node ./server/db/mongo/create_initial_data.js",
-    "dev": "concurrently \"yarn client\" \"yarn spin-up-mongo-db\" \"yarn server\" \"yarn create-initial-data\"",
+    "server": "node ./server/server.js",
+    "client": "webpack-dev-server --host 0.0.0.0 --mode development --open",
+    "dev": "wait && concurrently \"yarn server\" \"yarn client\"",
     "test-server": "NODE_ENV=test jest --verbose --detectOpenHandles ./server",
-    "test-client": "jest --verbose --detectOpenHandles ./src ",
-    "test": "jest"
+    "test-client": "jest --verbose --detectOpenHandles ./src",
+    "test-redux": "jest --verbose --detectOpenHandles ./src/redux",
+    "test": "jest",
+    "start:app": "docker-compose up bonsai-app",
+    "start:mongo-bonsai-db": "docker-compose up mongo-bonsai-db"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.12.13",
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/plugin-syntax-jsx": "^7.12.13",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
     "@babel/plugin-transform-runtime": "^7.12.15",
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.0.0",
