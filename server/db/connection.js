@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const activeConn = async () => {
     console.log('CONNECTING...', mongoose.connection.readyState)
-    await mongoose.connect('mongodb://host.docker.internal:27019/bonsai-shop', {
+    await mongoose.connect(`mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`, {
         useNewUrlParser: true,
         socketTimeoutMS: 100,
         keepAlive: true,

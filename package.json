@@ -23,10 +23,10 @@
     "server": "node ./server/server.js",
     "client": "webpack-dev-server --host 0.0.0.0 --mode development --open",
     "dev": "wait && concurrently \"yarn server\" \"yarn client\"",
-    "test-server": "NODE_ENV=test jest --verbose --detectOpenHandles ./server",
+    "test-server": "NODE_ENV=test  MONGO_HOST='localhost' MONGO_DB='bonsai-shop-testing' MONGO_PORT=27019 jest --verbose --detectOpenHandles ./server",
     "test-client": "jest --verbose --detectOpenHandles ./src",
     "test-redux": "jest --verbose --detectOpenHandles ./src/redux",
-    "test": "jest",
+    "test": "NODE_ENV=test  MONGO_HOST='localhost' MONGO_DB='bonsai-shop-testing' MONGO_PORT=27019 jest",
     "start:app": "docker-compose up bonsai-app",
     "start:mongo-bonsai-db": "docker-compose up mongo-bonsai-db"
   },

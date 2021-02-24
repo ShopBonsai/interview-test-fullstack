@@ -11,6 +11,9 @@ services:
     links:
       - mongo-bonsai-db
     environment:
+      MONGO_HOST: host.docker.internal
+      MONGO_DB: bonsai-shop
+      MONGO_PORT: 27019
       WAIT_HOSTS: mongo-bonsai-db:27019
     networks:
       - app-network
