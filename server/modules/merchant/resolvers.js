@@ -4,6 +4,6 @@ const resolvers = {
   Query: {
     merchants: () => merchants
   },
-};
+}
 
-module.exports = resolvers;
+module.exports = resolvers

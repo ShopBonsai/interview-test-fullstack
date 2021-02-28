@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
   type Merchant {
@@ -38,6 +38,6 @@ const typeDefs = gql`
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
   }
-`;
+`
 
-module.exports = typeDefs;
+module.exports = typeDefs
