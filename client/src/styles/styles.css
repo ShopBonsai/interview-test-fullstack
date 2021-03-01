@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 30px;
+}
+
+.product-card {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  color: grey;
+  box-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+}
+
+.sidebar {
+  display: flex;
+  height: 0%;
+  min-width: 200px;
+  padding: 20px;
+  margin-right: 30px;
+  box-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+}
+
+.sizes {
+  margin-bottom: 10px;
+}
+
+.sidebar p {
+  margin: 0;
+}
