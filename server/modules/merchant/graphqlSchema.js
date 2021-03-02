@@ -35,6 +35,7 @@ const typeDefs = gql`
     birthday: String
     address: Address
     image: String
+    cart: Cart
   }
   type Address {
     street: String
@@ -43,12 +44,18 @@ const typeDefs = gql`
     country: String
     postal: String
   }
+  type Cart {
+    products: [Product]
+  }
   type Query {
     merchants: [Merchant!]!
     products(name: String, color: String, size: String): [Product!]!
+    cart: [Product!]!
   }
   type Mutation {
-    editMerchant(publishedState: Boolean!): Merchant
+    editMerchant(index: Int, publishedState: Boolean!): Merchant!
+    addToCart(productId: String): Cart!
+    removeFromCart(productId: String): Cart!
   }
 `
 

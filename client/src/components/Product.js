@@ -16,7 +16,7 @@ const Product = props => {
         <CardSubtitle>Color: {color}</CardSubtitle>
         <CardSubtitle>Size: {size}</CardSubtitle>
         <CardText>Details: {description}</CardText>
-        <Button color="primary" size="lg" block>Add to Cart</Button>
+        <Button color="primary" size="lg" block onClick={props.addProductToCart}>Add to Cart</Button>
       </CardBody>
     </Media>
   )
@@ -24,6 +24,7 @@ const Product = props => {
 
 Product.propTypes = {
   product: PropTypes.object.isRequired,
+  addProductToCart: PropTypes.func
 }
 
 export default Product
