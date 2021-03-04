@@ -44,7 +44,6 @@ const ProductsList = props => {
     <div className="wrapper">
       <div className="sidebar-wrapper">
         <Sidebar setName={setName} setSize={setSize} />
-        <Cart />
       </div>
 
       <div className="products">

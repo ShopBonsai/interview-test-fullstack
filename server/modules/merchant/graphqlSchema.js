@@ -54,7 +54,7 @@ const typeDefs = gql`
   }
   type Mutation {
     editMerchant(index: Int, publishedState: Boolean!): Merchant!
-    addToCart(productId: String): Cart!
+    addToCart(productId: String, quantity: Int): Cart!
     removeFromCart(productId: String): Cart!
   }
 `

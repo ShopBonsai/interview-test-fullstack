@@ -18,15 +18,22 @@ const resolvers = {
   },
   Mutation: {
     // Add new item to cart
-    addToCart: (_, { productId }) => {
-      cart.push(products.find(product => product.id === productId))
+    addToCart: (_, { productId, quantity }) => {
+      const product = products.find(product => product.id === productId)
+      const productInCart = cart.find(product => product.id === productId)
+
+      if (productInCart) {
+        productInCart.quantity += quantity
+      } else {
+        cart.push({ ...product, quantity })
+      }
+
       return cart
     },
 
     // Remove item from cart
     removeFromCart: (_, { productId }) => {
       const productIndex = cart.findIndex(product => product.id === productId)
-      const product = cart[productIndex]
       cart.splice(productIndex, 1)
       return cart
     }

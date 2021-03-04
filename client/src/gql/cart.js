@@ -5,13 +5,18 @@ export const GET_CART = gql`
     cart {
       id
       name
+      color
+      size
+      price
+      description
+      quantity
     }
   }
 `
 
 export const ADD_TO_CART = gql`
-  mutation AddToCart($productId: String) {
-    addToCart(productId: $productId) {
+  mutation AddToCart($productId: String, $quantity: Int) {
+    addToCart(productId: $productId, quantity: $quantity) {
       products {
         id
         name
