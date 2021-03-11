@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
-import './styles.css';
+import './Products.css';
 
 const GET_PRODUCTS = gql`
   {
@@ -63,7 +63,7 @@ class ProductsList extends Component {
       } else {
         return (
           <div>
-            <h3>No products available</h3>
+            <strong>No products available</strong>
           </div>
         );
       }
