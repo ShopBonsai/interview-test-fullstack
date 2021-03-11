@@ -9,8 +9,8 @@ export const SiteHeader = ({ navLinks }) => (
     <Nav className="" navbar>
       {navLinks.map(({ href, text }) => (
         <NavItem key={href}>
-          <Link to={href}>
-            <NavLink>{text}</NavLink>
+          <Link className='nav-link' to={href}>
+            {text}
           </Link>
         </NavItem>
       ))}
