@@ -81,7 +81,19 @@ const withDeleteProductWithId = Component => props => {
 }
 
 class ProductsList extends Component {
-  
+
+    hasProductsToShow() {
+      const { merchants } = this.props;
+      if (!merchants) {
+        return false;
+      }
+      for (const merchant of merchants) {
+        for (const _ of merchant.products) {
+          return true;
+        }
+      }
+      return false;
+    }
 
     removeProduct(product) {
       const { deleteProductWithId } = this.props;
@@ -132,8 +144,8 @@ class ProductsList extends Component {
         return (
           <div>Loading...</div>
         );
-      } else if (merchants && merchants.length > 0) {
-        return this.showProducts(merchants);
+      } else if (this.hasProductsToShow()) {
+        return this.showProducts();
       } else {
         return (
           <div>
