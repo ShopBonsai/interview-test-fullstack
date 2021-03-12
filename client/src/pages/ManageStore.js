@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { gql } from 'apollo-boost';
 import { Query, Mutation } from 'react-apollo';
 import { Button, Col, FormGroup, Input, Label, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Row } from 'reactstrap';
+import Confetti from 'react-confetti';
+import { useWindowSize } from 'react-use';
 import ProductsList from '../components/templates/Products';
 import './ManageStore.css';
 import { LoadingArea } from '../components/organisms/LoadingArea';
@@ -47,37 +49,51 @@ const EDIT_MERCHANT_WITH_GUID = gql`
   }
 `;
 
-const ManageStorePageComponent = ({ merchantLoading, merchant }) => (
-  <div>
-    <h1>Manage Store</h1>
-    {
-      merchantLoading
-        ? (
-          <>
-            <Col>
-              <LoadingArea />
-            </Col>
-          </>
-        )
-        : (
-          <>
-            <Row>
+const ManageStorePageComponent = ({ merchantLoading, merchant }) => {
+  const { width, height } = useWindowSize();
+  return (
+    <div>
+      <Confetti
+        style={{
+          zIndex: -1,
+          position: 'fixed',
+        }}
+        width={width}
+        height={height}
+        numberOfPieces={10}
+        colors={['#222', '#ff5030', '#ff5033']}
+        gravity={0.01}
+      />
+      <h1>Manage Store</h1>
+      {
+        merchantLoading
+          ? (
+            <>
               <Col>
-                <MerchantInfoTable merchant={merchant} />
+                <LoadingArea />
               </Col>
-            </Row>
-            
-            <Row>
-              <Col>
-                <h2>Your Products</h2>
-                <ProductsList merchantGuid={merchant.guid} />
-              </Col>
-            </Row>
-          </>
-        )
-    }
-  </div>
-)
+            </>
+          )
+          : (
+            <>
+              <Row>
+                <Col>
+                  <MerchantInfoTable merchant={merchant} />
+                </Col>
+              </Row>
+              
+              <Row style={{ marginTop: 32 }}>
+                <Col>
+                  <h2>Your Products</h2>
+                  <ProductsList merchantGuid={merchant.guid} />
+                </Col>
+              </Row>
+            </>
+          )
+      }
+    </div>
+  );
+}
 
 const MerchantInfoTableComponent = ({ merchant, editMerchantWithGuid }) => {
   const [isEditingInfo, updateIsEditingInfo] = useState(false);
