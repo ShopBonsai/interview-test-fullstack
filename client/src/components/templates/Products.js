@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
 import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import './Products.css';
 
 const GET_PRODUCTS = gql`
@@ -40,6 +40,16 @@ const GET_PRODUCTS_BY_MERCHANT = gql`
   }
 `;
 
+const DELETE_PRODUCT_WITH_ID = gql`
+  mutation DeleteProductWithId(
+    $id: String!
+  ) {
+    deleteProductWithId(
+      id: $id
+    )
+  }
+`;
+
 const withProducts = Component => props => {
   const { merchantGuid } = props;
   return (
@@ -58,10 +68,37 @@ const withProducts = Component => props => {
   );
 };
 
+const withDeleteProductWithId = Component => props => {
+  return (
+    <Mutation mutation={DELETE_PRODUCT_WITH_ID} refetchQueries={['GetProducts', 'GetProductsByMerchant']}>
+      {(deleteProductWithId) => {
+        return (
+          <Component deleteProductWithId={deleteProductWithId} {...props} />
+        )
+      }}
+    </Mutation>
+  )
+}
+
 class ProductsList extends Component {
   
-    showProducts(merchants) {
-      return merchants.map(({products}) => {
+
+    removeProduct(product) {
+      const { deleteProductWithId } = this.props;
+      deleteProductWithId({
+        variables: {
+          id: product.id
+        },
+      });
+      console.log('deleted?', product)
+    }
+  
+    showProducts() {
+      const { merchants, merchantGuid } = this.props;
+
+      const handleRemove = (product) => this.removeProduct(product);
+
+      return merchants.map(({ guid, products }) => {
         return products && products.length > 0 && products.map(product => {
           const { color, description, image, name, price, size } = product
           return (
@@ -76,6 +113,11 @@ class ProductsList extends Component {
                 <CardSubtitle>Size: {size}</CardSubtitle>
                 <CardText>Details: {description}</CardText>
                 <Button color="primary" size="lg" block>Buy</Button>
+                {
+                  (merchantGuid && merchantGuid === guid) && (
+                    <Button color="secondary" size="sm" block onClick={() => handleRemove(product)}>Remove</Button>
+                  )
+                }
               </CardBody>
             </Media>
           );
@@ -101,4 +143,5 @@ class ProductsList extends Component {
       }
     }
   }
-  export default withProducts(ProductsList)
+
+export default withProducts(withDeleteProductWithId(ProductsList))

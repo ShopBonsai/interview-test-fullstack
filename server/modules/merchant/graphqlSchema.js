@@ -45,6 +45,7 @@ const typeDefs = gql`
       address: String!
       companyDescription: String!
     ): Merchant
+    deleteProductWithId(id: String!): String!
   }
 `;
 
