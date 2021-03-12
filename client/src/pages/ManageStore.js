@@ -4,6 +4,7 @@ import { Query, Mutation } from 'react-apollo';
 import { Button, FormGroup, Input, Label, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
 import ProductsList from '../components/templates/Products';
 import './ManageStore.css';
+import { LoadingArea } from '../components/organisms/LoadingArea';
 
 const GET_MERCHANT_BY_GUID = gql`
   query GetMerchantByGuid($guid: String!) {
@@ -51,7 +52,7 @@ const ManageStorePageComponent = ({ merchantLoading, merchant }) => (
     <h1>Manage Store</h1>
     {
       merchantLoading
-        ? <div>Loading...</div>
+        ? <LoadingArea />
         : (
         <div>
           <MerchantInfoTable merchant={merchant} />

@@ -3,6 +3,7 @@ import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reac
 import { gql } from 'apollo-boost';
 import { Query, Mutation } from 'react-apollo';
 import './Products.css';
+import { LoadingArea } from '../organisms/LoadingArea';
 
 const GET_PRODUCTS = gql`
   query GetProducts {
@@ -142,7 +143,7 @@ class ProductsList extends Component {
   
       if (merchantsLoading) {
         return (
-          <div>Loading...</div>
+          <LoadingArea />
         );
       } else if (this.hasProductsToShow()) {
         return this.showProducts();
