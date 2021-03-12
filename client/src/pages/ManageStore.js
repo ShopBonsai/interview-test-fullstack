@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { gql } from 'apollo-boost';
 import { Query, Mutation } from 'react-apollo';
 import { Button, FormGroup, Input, Label, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
@@ -54,34 +54,154 @@ const ManageStorePageComponent = ({ merchantLoading, merchant }) => (
         ? <div>Loading...</div>
         : (
         <div>
-          <div className='merchant-info-table'>
-            <ListGroup>
-              <ListGroupItem>
-                <ListGroupItemHeading>
-                  {merchant.merchant}
-                  <img className='merchant-logo' src={merchant.logo}></img>
-                </ListGroupItemHeading>
-                <ListGroupItemText>{merchant.companyDescription}</ListGroupItemText>
-              </ListGroupItem>
-              <ListGroupItem>
-                <ListGroupItemHeading>
-                  Contact Details
-                </ListGroupItemHeading>
-                <ListGroupItemText>
-                  {merchant.address}
-                  <br />
-                  <a href={`mailto:${merchant.contactEmail}`}>{merchant.contactEmail}</a>
-                </ListGroupItemText>
-              </ListGroupItem>
-            </ListGroup>
-          </div>
+          <MerchantInfoTable merchant={merchant} />
           <ProductsList merchantGuid={merchant.guid} />
         </div>
         )
     }
   </div>
-);
+)
 
+const MerchantInfoTableComponent = ({ merchant, editMerchantWithGuid }) => {
+  const [isEditingInfo, updateIsEditingInfo] = useState(false);
+
+  const [draftMerchantName, updateDraftMerchantName] = useState(merchant.merchant);
+  const [draftContactEmail, updateDraftContactEmail] = useState(merchant.contactEmail);
+  const [draftPhone, updateDraftPhone] = useState(merchant.phone);
+  const [draftAddress, updateDraftAddress] = useState(merchant.address);
+  const [draftCompanyDescription, updateDraftCompanyDescription] = useState(merchant.companyDescription);
+
+  const handleSave = async () => {
+    await editMerchantWithGuid({
+      variables: {
+        guid: merchant.guid,
+        merchant: draftMerchantName,
+        contactEmail: draftContactEmail,
+        phone: draftPhone,
+        address: draftAddress,
+        companyDescription: draftCompanyDescription,
+      },
+    });
+    updateIsEditingInfo(false);
+  };
+
+  const handleReset = async () => {
+    await Promise.all([
+      updateDraftMerchantName(merchant.merchant),
+      updateDraftContactEmail(merchant.contactEmail),
+      updateDraftPhone(merchant.phone),
+      updateDraftAddress(merchant.address),
+      updateDraftCompanyDescription(merchant.companyDescription),
+    ]);
+  }
+
+  const handleEdit = () => updateIsEditingInfo(true);
+  const handleCancel = async () => {
+    await handleReset();
+    updateIsEditingInfo(false);
+  }
+
+  const hasUnsavedChanges = (
+    merchant.merchant !== draftMerchantName
+    || merchant.contactEmail !== draftContactEmail
+    || merchant.phone !== draftPhone
+    || merchant.address !== draftAddress
+    || merchant.companyDescription !== draftCompanyDescription
+  )
+  
+  return (
+    <ListGroup>
+      <ListGroupItem>
+        {
+          isEditingInfo
+          ? (
+            <>
+              <FormGroup>
+                <Label for="merchantName">Merchant Name</Label>
+                <Input type="text" name="merchantName" id="merchantName"
+                  value={draftMerchantName}
+                  onChange={(e) => updateDraftMerchantName(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="companyDescription">Company Description</Label>
+                <Input type="textarea" name="companyDescription" id="companyDescription"
+                  value={draftCompanyDescription}
+                  onChange={(e) => updateDraftCompanyDescription(e.target.value)}
+                />
+              </FormGroup>
+            </>
+          )
+          : (
+            <>
+              <ListGroupItemHeading>
+                {merchant.merchant || <em>No merchant name... 🤔</em>}
+                <img className='merchant-logo' src={merchant.logo}></img>
+              </ListGroupItemHeading>
+              <ListGroupItemText>{merchant.companyDescription || <em>No description</em>}</ListGroupItemText>
+            </>
+          )
+        }
+      </ListGroupItem>
+
+      <ListGroupItem>
+        {
+          isEditingInfo
+          ? (
+            <>
+              <FormGroup>
+                <Label for="merchantAddress">Address</Label>
+                <Input type="text" name="merchantAddress" id="merchantAddress"
+                  value={draftAddress}
+                  onChange={(e) => updateDraftAddress(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="merchantEmail">Email</Label>
+                <Input type="textarea" name="merchantEmail" id="merchantEmail"
+                  value={draftContactEmail}
+                  onChange={(e) => updateDraftContactEmail(e.target.value)}
+                />
+              </FormGroup>
+            </>
+          )
+          : (
+            <>
+              <ListGroupItemHeading>
+                Contact Details
+              </ListGroupItemHeading>
+              <ListGroupItemText>
+                {merchant.address || <em>No address</em>}
+                <br />
+                {merchant.contactEmail ? <a href={`mailto:${merchant.contactEmail}`}>{merchant.contactEmail}</a> : <em>No email address</em>}
+              </ListGroupItemText>
+            </>
+          )
+        }
+      </ListGroupItem>
+
+      <ListGroupItem>
+        <ListGroupItemText>
+          {
+            isEditingInfo
+            ? (
+              <>
+                <Button disabled={!hasUnsavedChanges} color="primary" size="md" onClick={handleSave}>Save</Button> {' '}
+                <Button disabled={!hasUnsavedChanges} size="md" onClick={handleReset}>Reset</Button> {' '}
+                <Button size="md" onClick={handleCancel}>Cancel</Button>
+              </>
+            )
+            : (
+              <Button color="primary" size="md" onClick={handleEdit}>Edit</Button>
+            )
+          }
+        </ListGroupItemText>
+      </ListGroupItem>
+    </ListGroup>
+  )
+}
+
+/* TODO: Integrate a login solution to get current merchant GUID */
 const withCurrentMerchant = (Component) => props => {
   return (
     <Query query={GET_MERCHANT_BY_GUID} variables={{
