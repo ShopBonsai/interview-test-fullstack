@@ -37,7 +37,14 @@ const typeDefs = gql`
     merchant(guid: String!): Merchant!
   }
   type Mutation {
-    editMerchant(publishedState: Boolean!): Merchant
+    editMerchantWithGuid(
+      guid: String!
+      merchant: String!
+      contactEmail: String!
+      phone: String!
+      address: String!
+      companyDescription: String!
+    ): Merchant
   }
 `;
 

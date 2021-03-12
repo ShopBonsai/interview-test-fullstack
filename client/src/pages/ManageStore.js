@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
-import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
+import { Query, Mutation } from 'react-apollo';
+import { Button, FormGroup, Input, Label, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
 import ProductsList from '../components/templates/Products';
 import './ManageStore.css';
 
@@ -11,6 +11,33 @@ const GET_MERCHANT_BY_GUID = gql`
       guid
       merchant
       logo
+      contactEmail
+      phone
+      address
+      companyDescription
+    }
+  }
+`;
+
+const EDIT_MERCHANT_WITH_GUID = gql`
+  mutation EditMerchantWithGuid(
+    $guid: String!
+    $merchant: String!
+    $contactEmail: String!
+    $phone: String!
+    $address: String!
+    $companyDescription: String!
+  ) {
+    editMerchantWithGuid(
+      guid: $guid,
+      merchant: $merchant,
+      contactEmail: $contactEmail,
+      phone: $phone,
+      address: $address,
+      companyDescription: $companyDescription
+    ) {
+      guid
+      merchant
       contactEmail
       phone
       address
@@ -72,4 +99,17 @@ const withCurrentMerchant = (Component) => props => {
   );
 };
 
+const withEditMerchant = (Component) => (props) => {
+  return (
+    <Mutation mutation={EDIT_MERCHANT_WITH_GUID} refetchQueries={['GetMerchantByGuid']}>
+      {(editMerchantWithGuid) => {
+        return (
+          <Component editMerchantWithGuid={editMerchantWithGuid} {...props} />
+        )
+      }}
+    </Mutation>
+  )
+}
+
+const MerchantInfoTable = withEditMerchant(MerchantInfoTableComponent);
 export const ManageStorePage = withCurrentMerchant(ManageStorePageComponent);

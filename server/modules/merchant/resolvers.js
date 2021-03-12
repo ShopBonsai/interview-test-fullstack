@@ -9,6 +9,25 @@ const resolvers = {
       return merchantsByGuid[guid]
     },
   },
+  Mutation: {
+    /* TODO: Restrict merchant updates by current user */
+    editMerchantWithGuid: (_, {
+      guid,
+      merchant: merchantName,
+      contactEmail,
+      phone,
+      address,
+      companyDescription,
+    }) => {
+      const merchant = merchantsByGuid[guid];
+      merchant.merchant = merchantName;
+      merchant.contactEmail = contactEmail;
+      merchant.phone = phone;
+      merchant.address = address;
+      merchant.companyDescription = companyDescription;
+      return merchant;
+    }
+  }
 };
 
 module.exports = resolvers;
