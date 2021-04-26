@@ -12,7 +12,8 @@
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
-    "reactstrap": "^8.0.1"
+    "reactstrap": "^8.0.1",
+    "typeorm": "^0.2.32"
   },
   "scripts": {
     "server": "nodemon ./server/server.ts",
