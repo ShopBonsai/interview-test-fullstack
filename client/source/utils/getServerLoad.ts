@@ -10,17 +10,21 @@ const ADD_ACCESS = gql`
 `;
 
 let timer = 0;
+let firstPass = false;
 
 export const timerStart = () => {
   timer = Date.now();
+  firstPass = true;
 };
 
 export const timerEnd = () => {
-  const result = Date.now() - timer;
-  client.mutate({
-    mutation: ADD_ACCESS,
-    variables: {
-      loadTime: result,
-    },
-  });
+  if (firstPass) { 
+    const result = Date.now() - timer;
+    client.mutate({
+      mutation: ADD_ACCESS,
+      variables: {
+        loadTime: result,
+      },
+    });
+  }
 };
