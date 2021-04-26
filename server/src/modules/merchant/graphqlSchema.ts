@@ -18,6 +18,17 @@ const typeDefs = gql`
     publishedBy: User
     companyDescription: String
   }
+
+  input MerchantInput {
+    logo: String
+    publishedState: Boolean
+    merchant: String
+    commissionFee: String
+    contactEmail: String
+    phone: String
+    address: String
+    companyDescription: String
+  }
   type Product {
     belongsToBrand: Int
     id: String
@@ -36,6 +47,7 @@ const typeDefs = gql`
     merchants: [Merchant!]!
   }
   type Mutation {
+    createMerchant(input: MerchantInput!) : Merchant
     editMerchant(publishedState: Boolean!): Merchant
   }
 `;
