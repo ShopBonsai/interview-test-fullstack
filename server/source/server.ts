@@ -1,12 +1,12 @@
 // #1 Import Express and Apollo Server
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
+import express = require('express');
+import { ApolloServer } from "apollo-server-express";
 
 // #3 Import GraphQL type definitions
-const typeDefs = require('./modules/merchant/graphqlSchema');
+import { typeDefs } from "./modules/merchant/graphqlSchema";
 
 // #4 Import GraphQL resolvers
-const resolvers = require('./modules/merchant/resolvers');
+import { resolvers } from "./modules/merchant/resolvers";
 
 // #5 Initialize an Apollo server
 const server = new ApolloServer({ typeDefs, resolvers });
