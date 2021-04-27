@@ -5,7 +5,8 @@
   },
   "extends": ["eslint:recommended"],
   "rules": {
-    "strict": ["error", "never"]
+    "strict": ["error", "never"],
+    "@typescript-eslint/no-var-requires": 0
   },
   "env": {
     "browser": true

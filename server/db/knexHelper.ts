@@ -1,5 +1,5 @@
 /*
- * TODO: Add types to the arguments below to accept only appropriate Knex classes
+ * TODO: Add `types` to the arguments below to accept only appropriate Knex classes
  * NOTE: Still, there does not seem to be an official way to add Knex "@types"
  * Going to leave this as a .ts because it helps with suggestions/hints, etc.
  */
