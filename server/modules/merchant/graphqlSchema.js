@@ -42,10 +42,13 @@ const typeDefs = gql`
   }
   type Query {
     merchants: [Merchant!]!
-    getAllMerchants: [Merchant!]!
     findMerchant(id: Int!): Merchant
   }
+  type UserCart {
+    products: [Product]!
+  }
   type Mutation {
+    # editMerchant(publishedState: Boolean!): Merchant
     editMerchant(publishedState: Boolean!): Merchant
   }
 `;
