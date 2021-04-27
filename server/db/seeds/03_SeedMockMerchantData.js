@@ -1,102 +1,103 @@
 // exports.seed = async function seedMockMerchantData(knex) {
 const { merchants } = require('../../../mockMerchantData');
-const db = require('../connect.ts');
+const db = require('../connect');
+
+/*
+ *  FIXME: Running this function fails to exit.
+ * It appears that knex is running "forever"
+ * Similar to this: https://stackoverflow.com/questions/50783466/tests-running-forever-with-knex-and-mocha
+ */
 
 // exports.seed = async function seedMockMerchantData(knex) {
-const merchArr = merchants.slice(0, 1);
+async function seedMockMerchantData() {
+  const knex = db;
+  // ❗️ Delete existing data
+  await knex('merchant_publishes').del();
+  await knex('merchant_products').del();
+  await knex('merchants').del();
+  await knex('products').del();
 
-async function main() {
-  await db('merchants').del();
-  await db('products').del();
+  try {
+    merchants.map(async m => {
+      // Create a `merchant` record
 
-  merchArr.map(async m => {
-    // Create the `merchant`
-
-    /*
-     * 🚨 Must to .replace('T', ' ') on all dates
-     * This is because format has a "T" which can't be parsed
-     */
-    const merch = {
-      index_val: m.index,
-      guid: m.guid,
-      logo: m.logo,
-      created_at: new Date(m.dateCreated.replace('T', ' ')),
-      published_state: m.publishedState,
-      merchant_name: m.merchant,
-      commission_fee: parseInt(m.commissionFee) / 100,
-      contact_email: m.contactEmail,
-      address: m.address,
-      published_date: new Date(m.publishedDate.replace('T', ' ')),
-      description: m.companyDescription,
-    };
-
-    // console.log('merch', merch);
-    const merchRecordId = await db('merchants').insert(merch);
-    console.log(merchRecordId);
-    console.log('----------------------------------');
-    console.log('----------------------------------');
-    console.log('----------------------------------');
-
-    // console.log(m.publishedBy.userId);
-    let user = await db
-      .select('*')
-      .from('users')
-      .where('id', m.publishedBy.userId)
-      .first();
-
-    // Create the `merchant_publishes`
-    await db('merchant_publishes').insert({
-      user_id: user.id,
-      merchant_id: merchRecordId,
-    });
-
-    const brands = m.brands;
-    const prods = m.products;
-
-    prods.map(async p => {
-      let prod = {
-        original_id: p.id,
-        product_name: p.name,
-        price: p.price,
-        description: p.description,
-        size: p.size,
-        quantity: p.quantity,
-        image_url: p.image,
+      /*
+       * 🚨 Must to .replace('T', ' ') on all dates
+       * This is because format has a "T" which can't be parsed
+       */
+      const _merchObj = {
+        index_val: m.index,
+        guid: m.guid,
+        logo: m.logo,
+        created_at: new Date(m.dateCreated.replace('T', ' ')),
+        published_state: m.publishedState,
+        merchant_name: m.merchant,
+        commission_fee: parseInt(m.commissionFee) / 100,
+        contact_email: m.contactEmail,
+        address: m.address,
+        published_date: new Date(m.publishedDate.replace('T', ' ')),
+        description: m.companyDescription,
       };
 
-      const prodBrand = await db
+      const merchId = await knex('merchants').insert(_merchObj);
+
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      console.log(merchId);
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
+      // Query the `user` by `id`
+      const user = await knex
         .select('*')
-        .from('brands')
-        .where('name', brands[p.belongsToBrand])
+        .from('users')
+        .where('id', m.publishedBy.userId)
         .first();
 
-      // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-      // console.log(p);
-
-      const prodRecordId = await db('products').insert({
-        ...prod,
-        brand_id: prodBrand,
+      // Create the `merchant_publishes` event
+      await knex('merchant_publishes').insert({
+        user_id: user.id,
+        merchant_id: merchId,
       });
 
-      // Create
-      await db('merchant_products').insert({
-        merchant_id: merchRecordId,
-        product_id: prodRecordId,
-      });
+      /* ================================= */
+      const merchantProduct = m.products;
+      const merchantBrands = m.brands;
+      /* ================================= */
 
-      // console.log(prod);
-      // console.log('Brand: ', prodBrand);
-      // console.log('Brand.id: ', prodBrand.id);
-      // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      // Create individual `products` of the merchant
+      merchantProduct.map(async p => {
+        let prod = {
+          original_id: p.id,
+          product_name: p.name,
+          price: p.price,
+          description: p.description,
+          size: p.size,
+          quantity: p.quantity,
+          image_url: p.image,
+        };
+
+        // Query the `brand` by ID
+        const prodBrand = await knex
+          .select('*')
+          .from('brands')
+          .where('name', merchantBrands[p.belongsToBrand])
+          .first();
+
+        // Create the `product` (with appropriate brand_id)
+        const prodRecordId = await knex('products').insert({
+          ...prod,
+          brand_id: prodBrand.id,
+        });
+
+        // Create `merchant_products` record in our join table
+        await knex('merchant_products').insert({
+          merchant_id: merchId,
+          product_id: prodRecordId,
+        });
+      });
     });
-
-    // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    // console.log(prods);
-    // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-  });
-
-  console.log(merchArr);
+  } catch (err) {
+    console.log(`There was an Error: ${err}`);
+  }
 }
 
-main();
-// seedMockMerchantData();
+seedMockMerchantData();
