@@ -19,7 +19,8 @@
   "scripts": {
     "server": "nodemon ./server/server.ts",
     "client": "webpack-dev-server --mode development --open",
-    "dev": "concurrently \"yarn client\" \"yarn server\""
+    "dev": "concurrently \"yarn client\" \"yarn server\"",
+    "init": "createdb bonsai_demo2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
