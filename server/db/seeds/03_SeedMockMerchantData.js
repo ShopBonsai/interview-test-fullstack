@@ -12,17 +12,21 @@ async function main() {
   merchArr.map(async m => {
     // Create the `merchant`
 
+    /*
+     * 🚨 Must to .replace('T', ' ') on all dates
+     * This is because format has a "T" which can't be parsed
+     */
     const merch = {
       index_val: m.index,
       guid: m.guid,
       logo: m.logo,
-      // created_at: new Date(m.dateCreated),
+      created_at: new Date(m.dateCreated.replace('T', ' ')),
       published_state: m.publishedState,
       merchant_name: m.merchant,
       commission_fee: parseInt(m.commissionFee) / 100,
       contact_email: m.contactEmail,
       address: m.address,
-      // published_date: new Date(m.publishedDate),
+      published_date: new Date(m.publishedDate.replace('T', ' ')),
       description: m.companyDescription,
     };
 
@@ -66,8 +70,8 @@ async function main() {
         .where('name', brands[p.belongsToBrand])
         .first();
 
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-      console.log(p);
+      // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      // console.log(p);
 
       const prodRecordId = await db('products').insert({
         ...prod,
@@ -75,15 +79,15 @@ async function main() {
       });
 
       // Create
-      // await db('merchant_products').insert({
-      //   merchant_id: merchRecordId,
-      //   product_id: prodRecordId,
-      // });
+      await db('merchant_products').insert({
+        merchant_id: merchRecordId,
+        product_id: prodRecordId,
+      });
 
-      console.log(prod);
-      console.log('Brand: ', prodBrand);
-      console.log('Brand.id: ', prodBrand.id);
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+      // console.log(prod);
+      // console.log('Brand: ', prodBrand);
+      // console.log('Brand.id: ', prodBrand.id);
+      // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     });
 
     // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
