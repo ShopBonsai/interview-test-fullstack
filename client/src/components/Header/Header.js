@@ -4,7 +4,7 @@ const Header = ({ username, onUsernameInput }) => {
   /*
    * NOTE: This is just for demonstration purposes.
    * Ideally you would want to store this information in a cookie or
-   * other persistant storage on client
+   * other persistent storage on client
    */
 
   /*
@@ -14,30 +14,45 @@ const Header = ({ username, onUsernameInput }) => {
    * it provides you more flexibility
    */
 
-  const [authStatus, setAuthStatus] = React.useState('IDLE');
+  const [authStatus, setAuthStatus] = React.useState(
+    username === '' ? 'IDLE' : 'AUTHED'
+  );
 
   const submitUsername = async e => {
     e.preventDefault();
-    debugger;
-    // Query if this is a
+
+    // TODO: Actually do a query over here if there is time
     setAuthStatus('PENDING');
 
     if (username === 'bonsai24') {
       setAuthStatus('AUTHED');
+      window.localStorage.setItem('username', username);
     } else {
       setAuthStatus('UN_AUTHED');
+      // TODO: Users deserve to know what has failed.
+      /*
+       * Only "clear" out necessary fields
+       * Assure they are _obvious_ (outlined in red)
+       * Change the .focus() to be the first invalid field
+       */
     }
   };
 
   return (
     <>
+      {/* TODO: ON_PENDING load a spinning gif, but... not now */}
       {authStatus === 'UN_AUTHED' || authStatus === 'IDLE' ? (
         <form onSubmit={submitUsername}>
           <label htmlFor="username">
             Username
             <span>You are not currently logged in</span>
           </label>
-          <input id="username" value={username} onChange={onUsernameInput} />
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={onUsernameInput}
+          />
         </form>
       ) : (
         <div className="test">
