@@ -5,7 +5,7 @@ module.exports = {
       host: 'localhost',
       user: 'root',
       password: 'root',
-      database: 'bonsai_demo',
+      database: 'bonsai_demo2',
     },
     migrations: {
       directory: __dirname + '/server/db/migrations',

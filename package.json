@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "knex": "^0.95.4",
+    "mysql": "^2.18.1",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
