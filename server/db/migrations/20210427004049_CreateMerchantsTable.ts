@@ -1,4 +1,4 @@
-const { addTimestamps } = require('../knexHelper');
+const { addTimestamps } = require('../knexHelper.ts');
 
 exports.up = async function startMigration(knex) {
   await knex.schema.createTable('merchants', function createMerchantTable(t) {
