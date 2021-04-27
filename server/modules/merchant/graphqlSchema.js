@@ -43,6 +43,7 @@ const typeDefs = gql`
   type Query {
     merchants: [Merchant!]!
     findMerchant(id: Int!): Merchant
+    findProduct(id: Int!, user_id: String): Product
     getAllProductsInCart(user_id: String!): [Product]!
   }
   # type UserCart {
