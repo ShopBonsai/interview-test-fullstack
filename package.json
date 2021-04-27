@@ -9,6 +9,8 @@
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
+    "kafka-node": "^5.0.0",
+    "kafkajs": "^1.15.0",
     "knex": "^0.95.4",
     "mysql": "^2.18.1",
     "react": "^16.8.6",
