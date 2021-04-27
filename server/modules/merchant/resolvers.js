@@ -1,8 +1,12 @@
-const { merchants } = require("../../../mockMerchantData")
+const { merchants } = require('../../../mockMerchantData');
+const { GraphQLID, GraphQLString } = require('graphql');
+const { GET_ALL_MERCHANTS } = require('../Queries/Merchant.ts');
 
+// Merchants
 const resolvers = {
   Query: {
-    merchants: () => merchants
+    merchants: () => merchants,
+    getAllMerchants: GET_ALL_MERCHANTS,
   },
 };
 
