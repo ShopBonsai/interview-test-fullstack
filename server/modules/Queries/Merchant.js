@@ -14,7 +14,11 @@ const GET_MERCHANT_PRODUCTS = async ({ id }) => {
   const productIds = productIdsRes.map(r => r.product_id);
 
   console.log('----productIds', productIds);
-  return await db('products').whereIn('id', [...productIds]);
+  return await db('products').whereIn('id', productIds);
 };
 
-module.exports = { GET_ALL_MERCHANTS, GET_MERCHANT_PRODUCTS };
+const FIND_MERCHANT = async (_, { id }) => {
+  return await db('merchants').where('id', id).first();
+};
+
+module.exports = { GET_ALL_MERCHANTS, GET_MERCHANT_PRODUCTS, FIND_MERCHANT };

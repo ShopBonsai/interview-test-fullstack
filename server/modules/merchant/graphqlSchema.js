@@ -35,7 +35,7 @@ const typeDefs = gql`
     color: String
     size: String
     quantity: Int
-    image: String
+    image_url: String
   }
   type User {
     userId: String
@@ -43,6 +43,7 @@ const typeDefs = gql`
   type Query {
     merchants: [Merchant!]!
     getAllMerchants: [Merchant!]!
+    findMerchant(id: Int!): Merchant
   }
   type Mutation {
     editMerchant(publishedState: Boolean!): Merchant
