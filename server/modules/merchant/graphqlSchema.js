@@ -8,26 +8,28 @@ const { gql } = require('apollo-server-express');
  */
 const typeDefs = gql`
   type Merchant {
+    id: Int
     index_val: Int
     guid: String
     logo: String
     created_at: String
-    publishedState: Boolean
+    published_state: Boolean
     brands: [String]
-    merchant: String
+    merchant_name: String
     products: [Product]
-    commissionFee: String
-    contactEmail: String
+    commission_fee: String
+    contact_email: String
     phone: String
     address: String
-    publishedDate: String
+    published_date: String
     publishedBy: User
-    companyDescription: String
+    description: String
   }
   type Product {
-    belongsToBrand: Int
-    id: String
-    name: String
+    id: Int
+    original_id: String
+    brand_id: Int
+    product_name: String
     price: Float
     description: String
     color: String
