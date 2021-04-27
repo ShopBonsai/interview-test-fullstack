@@ -7,6 +7,7 @@ const {
 } = require('../Queries/Merchant');
 
 const { GET_ALL_PRODUCTS_IN_CART } = require('../Queries/UserCart.ts');
+const { ADD_TO_CART } = require('../Mutations/UserCart.ts');
 
 // Merchants
 const resolvers = {
@@ -14,6 +15,9 @@ const resolvers = {
     merchants: GET_ALL_MERCHANTS,
     findMerchant: FIND_MERCHANT,
     getAllProductsInCart: GET_ALL_PRODUCTS_IN_CART,
+  },
+  Mutation: {
+    addToCart: ADD_TO_CART,
   },
   Merchant: {
     products: GET_MERCHANT_PRODUCTS,

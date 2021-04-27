@@ -1,3 +1,4 @@
+// (function () {
 const knex = require('knex');
 const knexConfig = require('../../knexfile');
 
@@ -11,3 +12,4 @@ const db = knex(connectionConfig);
  * For now, it is a matter of going into mysql cli `mysql -u root -p` and creating DB
  */
 module.exports = db;
+// })();
