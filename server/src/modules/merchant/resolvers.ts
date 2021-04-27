@@ -1,17 +1,20 @@
-import { merchants as Merchants } from "../../mockMerchantData"
+import { merchants as Merchants } from "../../mockMerchantData";
 
 const resolvers = {
   Query: {
     merchants: (_: any, args: any, { models }: any) => {
-      return Merchants
-    }
+      return Merchants;
+    },
   },
   Mutation: {
     createMerchant: async (_: any, { input }: any, { models }: any) => {
-      return models.Merchant.create(input)
-    }
+      return models.Merchant.create(input);
+    },
+  },
 
-  }
+  Brand: {},
+  Product: {},
+  Merchant: {},
 };
 
-module.exports = resolvers;
+export { resolvers };

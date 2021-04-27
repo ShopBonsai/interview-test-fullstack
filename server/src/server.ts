@@ -1,17 +1,17 @@
 // #1 Import Express and Apollo Server
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 import { ApolloServer } from "apollo-server-express";
-import models from './modules/models'
+import models from "./modules/models";
 
-dotenv.config()
+dotenv.config();
 
 // #3 Import GraphQL type definitions
-const typeDefs = require("./modules/merchant/graphqlSchema");
+import { typeDefs } from "./modules/merchant/graphqlSchema";
 
 // #4 Import GraphQL resolvers
-const resolvers = require("./modules/merchant/resolvers");
+import { resolvers } from "./modules/merchant/resolvers";
 
 // #5 Initialize an Apollo server
 const server = new ApolloServer({
@@ -32,19 +32,20 @@ server.applyMiddleware({ app });
 
 const start = async () => {
   try {
-    await mongoose.connect(String(process.env.MONGO_URI), { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+    await mongoose.connect(String(process.env.MONGO_URI), {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+    console.log("mongodb connected!");
     app.listen({ port: 3000 }, () => {
-      console.log(`Server running on http://localhost:3000${server.graphqlPath}`);
+      console.log(
+        `Server running on http://localhost:3000${server.graphqlPath}`
+      );
     });
   } catch (error) {
-    throw new Error(`could not connect to mongoose ${error}`)
-
+    throw new Error(`could not connect to mongoose ${error}`);
   }
+};
 
-}
-
-
-start()
-
-
-
+start();
