@@ -11,7 +11,7 @@ module.exports = {
       directory: __dirname + '/server/db/migrations',
     },
     seeds: {
-      directory: __dirname + '/server/seeds/migrations',
+      directory: __dirname + '/server/db/seeds',
     },
   },
   // production: {
