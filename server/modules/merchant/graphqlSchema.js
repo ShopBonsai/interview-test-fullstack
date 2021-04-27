@@ -1,11 +1,17 @@
 const { gql } = require('apollo-server-express');
 
+/*
+ * 🚨
+ * PROBLEM.
+ * NOTE: There is a problem as the items in the database are visually described differently
+ * ie. [dateCreated => created_at], [publishedState => published_state]
+ */
 const typeDefs = gql`
   type Merchant {
-    index: Int
+    index_val: Int
     guid: String
     logo: String
-    dateCreated: String
+    created_at: String
     publishedState: Boolean
     brands: [String]
     merchant: String
