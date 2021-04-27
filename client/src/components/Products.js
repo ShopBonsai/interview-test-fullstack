@@ -10,6 +10,7 @@ import {
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import './styles.css';
+import AddToCartButton from './AddToCartButton';
 
 const GET_PRODUCTS = gql`
   {
@@ -23,6 +24,7 @@ const GET_PRODUCTS = gql`
         description
         color
         size
+        quantity
         image_url
       }
     }
@@ -79,6 +81,7 @@ class ProductsList extends Component {
                   <Button color="primary" size="lg" block>
                     Buy
                   </Button>
+                  <AddToCartButton product={product} />
                 </CardBody>
               </Media>
             );
