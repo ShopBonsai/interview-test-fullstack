@@ -1,17 +1,27 @@
+require('dotenv').config();
+
 module.exports = {
   development: {
     client: 'mysql',
     connection: {
-      host: 'localhost',
-      user: 'root',
-      password: 'root',
-      database: 'bonsai_demo2',
+      host: process.env.DATABASE_HOST,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DEVELOPMENT_DATABASE,
     },
     migrations: {
       directory: __dirname + '/server/db/migrations',
     },
     seeds: {
       directory: __dirname + '/server/db/seeds',
+    },
+  },
+  standard: {
+    client: 'mysql',
+    connection: {
+      host: process.env.DATABASE_HOST,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
     },
   },
   // production: {
