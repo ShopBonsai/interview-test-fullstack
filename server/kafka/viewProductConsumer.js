@@ -1,4 +1,5 @@
 const { Kafka } = require('kafkajs');
+const db = requre('../db/connect.js');
 
 const config = {
   KAFKA_HOST: 'localhost:9092',
@@ -67,13 +68,46 @@ function handleProductViewEvent(eventBlob) {
   const productId = eventBlob.id;
   const userId = eventBlob.user_id;
 
-  cachedEvents.incrementViewFor(userId, productId);
-  console.log(cachedEvents.getNumViewsFor(userId, productId));
-
   // State Machine
+  if (cachedEvents.incrementViewFor(userId, productId) >= 5) {
+    const { userEmail, emailContent } = generateEmailContent(userId, productId);
+    sendEmail(userEmail, emailContent);
+  }
+
+  console.log(cachedEvents.getNumViewsFor(userId, productId));
 }
 
+function generateEmailContent(userId, productId) {}
+
+const nodemailer = require('nodemailer');
+
+const sendEmail = async (userEmail, content) => {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+      user: 'theodora.mcdermott34@ethereal.email',
+      pass: 'QezgTJDUqJPJchU3Eu',
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: '"Bonsai 🌴" <theodora.mcdermott34@ethereal.email>', // sender address
+    to: 'dsomel21@gmail.com',
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world?', // plain text body
+    html: '<b>Hello world?</b>', // html body
+  });
+
+  console.log('Message sent: %s', info.messageId);
+
+  // Preview only available when sending through an Ethereal account
+  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+};
+
 // Turns on consumer
-consumeViewProductEvents();
+// consumeViewProductEvents();
+
+sendEmail();
 
 module.exports = consumeViewProductEvents;
