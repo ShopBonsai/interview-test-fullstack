@@ -1,5 +1,5 @@
 const { Kafka } = require('kafkajs');
-const db = requre('../db/connect.js');
+const db = require('../db/connect.js');
 
 const config = {
   KAFKA_HOST: 'localhost:9092',
@@ -69,19 +69,57 @@ function handleProductViewEvent(eventBlob) {
   const userId = eventBlob.user_id;
 
   // State Machine
-  if (cachedEvents.incrementViewFor(userId, productId) >= 5) {
-    const { userEmail, emailContent } = generateEmailContent(userId, productId);
-    sendEmail(userEmail, emailContent);
-  }
+  cachedEvents.incrementViewFor(userId, productId);
 
-  console.log(cachedEvents.getNumViewsFor(userId, productId));
+  if (cachedEvents.getNumViewsFor(userId, productId) >= 5) {
+    const { userEmail, emailContent } = generateEmailContent(userId, productId);
+    generateEmailContent(userId, productId)
+      //
+      .then(res => {
+        sendEmail(res.userEmail, res.emailContent);
+        cachedEvents.resetViewsFor(userId, productId);
+      });
+  }
 }
 
-function generateEmailContent(userId, productId) {}
+const generateEmailContent = async (userId, productId) => {
+  const userEmail = 'dsomel21@gmail.com';
+
+  const product = await db('products').where('id', productId).first();
+
+  const emailContent = {
+    subject: `${product.product_name} is having a special offer! Just for you!`,
+    text: `We saw that you were interested in the all new ${
+      product.product_name
+    }!
+      We really want you to have it! Which is why, we want you to have it for, NOT $${
+        product.price
+      }, but $${parseInt(product.price * 0.75)}!
+
+      Here is some more information about the wicked product!
+      ${product.description}
+    `,
+    html: `<p>We saw that you were interested in the all new <strong>${
+      product.product_name
+    }</strong>!</p>
+    
+    <p>We really want you to have it! Which is why, we want you to have it for, NOT $${
+      product.price
+    }, but $<strong>${parseInt(product.price * 0.75)}</strong>!</p>
+
+    <p>Here is some more information about the wicked product!</p>
+    <hr />
+    <section>
+      ${product.description}
+    </section>`,
+  };
+
+  return { userEmail, emailContent };
+};
 
 const nodemailer = require('nodemailer');
 
-const sendEmail = async (userEmail, content) => {
+const sendEmail = async (userEmail, emailContent) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
@@ -92,11 +130,11 @@ const sendEmail = async (userEmail, content) => {
   });
 
   let info = await transporter.sendMail({
-    from: '"Bonsai 🌴" <theodora.mcdermott34@ethereal.email>', // sender address
-    to: 'dsomel21@gmail.com',
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world?', // plain text body
-    html: '<b>Hello world?</b>', // html body
+    from: '"Bonsai 🌴" <theodora.mcdermott34@ethereal.email>',
+    to: userEmail,
+    subject: emailContent.subject,
+    text: emailContent.text,
+    html: emailContent.html,
   });
 
   console.log('Message sent: %s', info.messageId);
@@ -106,8 +144,6 @@ const sendEmail = async (userEmail, content) => {
 };
 
 // Turns on consumer
-// consumeViewProductEvents();
-
-sendEmail();
+consumeViewProductEvents();
 
 module.exports = consumeViewProductEvents;
