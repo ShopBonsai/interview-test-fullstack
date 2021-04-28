@@ -7,8 +7,6 @@ import Header from './components/Header';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
-  // const [username, setUsername] = React.useState('');
-
   /*
    * NOTE: Use lazy state initialization, since getting from localStorage
    * could be an expensive-ish operation.

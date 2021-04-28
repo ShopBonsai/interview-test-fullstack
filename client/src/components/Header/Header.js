@@ -1,4 +1,7 @@
 import React from 'react';
+import { fetchGet } from '../../helper/fetchHelper';
+import '../styles.css';
+import { Form, Label, Input } from 'reactstrap';
 
 const Header = ({ username, onUsernameInput }) => {
   /*
@@ -28,20 +31,15 @@ const Header = ({ username, onUsernameInput }) => {
      */
     setAuthStatus('PENDING');
 
-    // Best code in the world right here.
-    if (username === 'bonsai24') {
+    // const res = await fetchGet('/users', { username });
+    const res = await fetchGet(`/users?username=${username}`);
+
+    const { user } = res;
+
+    if (user !== undefined) {
       setAuthStatus('AUTHED');
-      window.localStorage.setItem('username', username);
-      window.localStorage.setItem(
-        'user_id',
-        '02ddaf20-4a70-4fd8-8a2f-823443468786'
-      );
-    } else if (username === 'bonsai48') {
-      window.localStorage.setItem('username', username);
-      window.localStorage.setItem(
-        'user_id',
-        '018643b6-1bc6-4d1d-847b-2e994e548305'
-      );
+      window.localStorage.setItem('username', user.username);
+      window.localStorage.setItem('user_id', user.id);
     } else {
       setAuthStatus('UN_AUTHED');
       // TODO: Users deserve to know what has failed.
@@ -56,23 +54,24 @@ const Header = ({ username, onUsernameInput }) => {
   return (
     <>
       {/* TODO: ON_PENDING load a spinning gif, but... not now */}
-      {authStatus === 'UN_AUTHED' || authStatus === 'IDLE' ? (
-        <form onSubmit={submitUsername}>
-          <label htmlFor="username">
-            Username
-            <span>You are not currently logged in</span>
-          </label>
-          <input
+      {authStatus === 'AUTHED' ? (
+        <div className="display-name">
+          <p>Greetings, {username}!</p>
+        </div>
+      ) : (
+        <Form onSubmit={submitUsername} className="login-form">
+          <Label htmlFor="username">
+            Enter username
+            <p>You are not currently signed in 😢</p>
+          </Label>
+          <Input
             type="text"
             id="username"
             value={username}
             onChange={onUsernameInput}
+            className={`${authStatus === 'UN_AUTHED' && 'failed-input'}`}
           />
-        </form>
-      ) : (
-        <div className="test">
-          <p>Hi {username}</p>
-        </div>
+        </Form>
       )}
     </>
   );

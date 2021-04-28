@@ -13,7 +13,6 @@ const GET_MERCHANT_PRODUCTS = async ({ id }) => {
 
   const productIds = productIdsRes.map(r => r.product_id);
 
-  console.log('----productIds', productIds);
   return await db('products').whereIn('id', productIds);
 };
 

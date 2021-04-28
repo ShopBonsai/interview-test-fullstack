@@ -1,43 +1,58 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+import { useParams, Link } from 'react-router-dom';
+import { fetchGet } from '../../helper/fetchHelper';
+import {
+  CardTitle,
+  CardSubtitle,
+  CardText,
+  Button,
+  CardBody,
+  Media,
+  Spinner,
+} from 'reactstrap';
 
 const Product = () => {
-  const GET_PRODUCT = gql`
-    {
-      findProduct() {
-        guid
-        merchant_name
-        products {
-          id
-          product_name
-          price
-          description
-          color
-          size
-          quantity
-          image_url
-        }
-      }
-    }
-  `;
-
-  const withProducts = Component => props => {
-    return (
-      <Query query={GET_PRODUCTS}>
-        {({ loading, data }) => {
-          debugger;
-        }}
-      </Query>
-    );
-  };
-
   const { id } = useParams();
+
+  const [product, setProduct] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchProduct = async () => {
+      const res = await fetchGet(`/products/${id}`);
+      setProduct(res.product);
+    };
+    fetchProduct();
+  }, []);
 
   return (
     <>
-      <p>Product</p>
+      {product === null ? (
+        <Spinner color="primary" />
+      ) : (
+        <Media className="product-card">
+          <Media left href="#">
+            <Media object src={product.image_url} alt="Product image cap" />
+          </Media>
+          <CardBody>
+            <CardTitle style={{ fontWeight: 600 }}>
+              {product.product_name}
+            </CardTitle>
+            <CardTitle>Price: {product.price}</CardTitle>
+            <CardSubtitle>Color: {product.color}</CardSubtitle>
+            <CardSubtitle>Size: {product.size}</CardSubtitle>
+            <CardText>Details: {product.description}</CardText>
+            <Button color="primary" size="lg" block>
+              Buy
+            </Button>
+          </CardBody>
+        </Media>
+      )}
+
+      <Link to="/">
+        <Button color="secondary" size="lg" block>
+          Back
+        </Button>
+      </Link>
     </>
   );
 };
