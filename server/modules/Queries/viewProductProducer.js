@@ -20,16 +20,19 @@ const produceViewProductEvent = messageObj => {
     await producer.connect();
 
     // after the produce has connected, we start an interval timer
-    // setInterval(async () => {
     try {
       // send a message to the configured topic with
-      // the key and value formed from the current value of `i`
       await producer.send({
         topic: config.KAFKA_TOPIC_NAME,
-        messages: [messageObj],
+        messages: [
+          {
+            key: JSON.stringify({ messageObj, timestamp: Date.now() }),
+            value: JSON.stringify(messageObj),
+          },
+        ],
       });
 
-      console.log(`Message has been written: ${message}`);
+      console.log(`Message has been written: ${messageObj}`);
     } catch (err) {
       console.error(`Error publishing message: ${err}`);
     }
