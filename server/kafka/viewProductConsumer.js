@@ -70,8 +70,13 @@ function handleProductViewEvent(eventBlob) {
 
   // State Machine
   cachedEvents.incrementViewFor(userId, productId);
+  const numTimesViewed = cachedEvents.getNumViewsFor(userId, productId);
 
-  if (cachedEvents.getNumViewsFor(userId, productId) >= 5) {
+  console.log(
+    `User: ${userId} has viewed Product ${productId}: ${numTimesViewed} times.`
+  );
+
+  if (numTimesViewed >= 5) {
     const { userEmail, emailContent } = generateEmailContent(userId, productId);
     generateEmailContent(userId, productId)
       //
