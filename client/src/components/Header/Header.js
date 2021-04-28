@@ -22,11 +22,26 @@ const Header = ({ username, onUsernameInput }) => {
     e.preventDefault();
 
     // TODO: Actually do a query over here if there is time
+    /*
+     * I had a terrible time with Apollo...
+     * This is all hardcoded.
+     */
     setAuthStatus('PENDING');
 
+    // Best code in the world right here.
     if (username === 'bonsai24') {
       setAuthStatus('AUTHED');
       window.localStorage.setItem('username', username);
+      window.localStorage.setItem(
+        'user_id',
+        '02ddaf20-4a70-4fd8-8a2f-823443468786'
+      );
+    } else if (username === 'bonsai48') {
+      window.localStorage.setItem('username', username);
+      window.localStorage.setItem(
+        'user_id',
+        '018643b6-1bc6-4d1d-847b-2e994e548305'
+      );
     } else {
       setAuthStatus('UN_AUTHED');
       // TODO: Users deserve to know what has failed.
