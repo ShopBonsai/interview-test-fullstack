@@ -15,7 +15,12 @@ const producer = kafka.producer();
 
 // we define an async function that writes a new message each second
 
-const produceViewProductEvent = messageObj => {
+interface argMessageObj {
+  user_id: string;
+  id: number;
+}
+
+const produceViewProductEvent = (messageObj: argMessageObj) => {
   const produce = async () => {
     await producer.connect();
 
@@ -41,4 +46,4 @@ const produceViewProductEvent = messageObj => {
   produce();
 };
 
-module.exports = { produceViewProductEvent };
+module.exports = produceViewProductEvent;
