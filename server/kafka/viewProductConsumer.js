@@ -67,7 +67,10 @@ function handleProductViewEvent(eventBlob) {
 
   const productId = eventBlob.id;
   const userId = eventBlob.user_id;
-
+  if (userId === 'null') {
+    console.log('Skip. Not processing events that contain `null` user_id.');
+    return;
+  }
   // State Machine
   cachedEvents.incrementViewFor(userId, productId);
 
