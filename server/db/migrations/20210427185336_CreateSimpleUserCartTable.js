@@ -13,15 +13,6 @@ exports.up = async function startMigration(knex) {
     // TIMESTAMPS
     addTimestamps(knex, t);
   });
-
-  // Also create a `user_cart` for each User
-  const userIdRes = await knex.select('id').from('users');
-  const userIds = userIdRes.map(rec => {
-    return { user_id: rec.id };
-  });
-
-  // console.log(userIds);
-  await knex('user_carts').insert(userIds);
 };
 
 exports.down = async function startMigration(knex) {

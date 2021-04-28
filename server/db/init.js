@@ -12,6 +12,7 @@ const initDB = () => {
       console.log('✅ Database is in good shape.');
     })
     .catch(err => console.log(`❌ Error initializing database: ${err}`));
+  return;
 };
 
 initDB();
