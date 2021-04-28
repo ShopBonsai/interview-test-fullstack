@@ -59,10 +59,16 @@ class ProductViewCache {
   }
 }
 
+const cachedEvents = new ProductViewCache();
+
 function handleProductViewEvent(eventBlob) {
   console.log('Incoming Event: ', eventBlob);
+
   const productId = eventBlob.id;
   const userId = eventBlob.user_id;
+
+  cachedEvents.incrementViewFor(userId, productId);
+  console.log(cachedEvents.getNumViewsFor(userId, productId));
 
   // State Machine
 }
