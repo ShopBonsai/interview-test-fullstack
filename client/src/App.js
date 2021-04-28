@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import apolloClient from './createApolloClient';
-import Products from './components/Products';
+import ProductList from './components/ProductList';
+import Product from './screens/Product/Product';
 import Header from './components/Header';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
   // const [username, setUsername] = React.useState('');
@@ -17,12 +19,22 @@ const App = () => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Header
-        username={username}
-        onUsernameInput={e => setUsername(e.target.value)}
-      />
+      <Router>
+        <Header
+          username={username}
+          onUsernameInput={e => setUsername(e.target.value)}
+        />
 
-      <Products />
+        <Switch>
+          <Route path="/products/:id">
+            <Product />
+          </Route>
+
+          <Route path="/">
+            <ProductList />
+          </Route>
+        </Switch>
+      </Router>
     </ApolloProvider>
   );
 };

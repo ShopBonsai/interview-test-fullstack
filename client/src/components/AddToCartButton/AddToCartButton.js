@@ -11,13 +11,10 @@ import {
 // TODO: We need some globals state to view the current users cart...
 // TODO: We also need to run some graphql mutations for persisting their cart...
 const addToCart = async curProduct => {
-  debugger;
   if (product.quantity <= 0) return;
 };
 
 const AddToCartButton = ({ product }) => {
-  console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-  console.log(product);
   return (
     <Button
       color="secondary"

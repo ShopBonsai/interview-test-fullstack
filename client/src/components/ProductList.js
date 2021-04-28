@@ -11,6 +11,7 @@ import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import './styles.css';
 import AddToCartButton from './AddToCartButton';
+import { Link } from 'react-router-dom';
 
 const GET_PRODUCTS = gql`
   {
@@ -78,9 +79,12 @@ class ProductsList extends Component {
                   <CardSubtitle>Color: {color}</CardSubtitle>
                   <CardSubtitle>Size: {size}</CardSubtitle>
                   <CardText>Details: {description}</CardText>
-                  <Button color="primary" size="lg" block>
-                    Buy
-                  </Button>
+                  <Link to={`/products/${product.id}`}>
+                    <Button color="primary" size="lg" block>
+                      View
+                    </Button>
+                    <br />
+                  </Link>
                   <AddToCartButton product={product} />
                 </CardBody>
               </Media>
