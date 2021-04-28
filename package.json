@@ -26,9 +26,12 @@
     "server": "nodemon ./server/server.ts",
     "client": "webpack-dev-server --mode development --open",
     "dev": "concurrently \"yarn client\" \"yarn server\"",
-    "init": "node server/db/init.js",
+    "init": "node server/db/init",
     "migrate": "knex migrate:latest",
-    "seed": "knex seed:run && node server/db/SeedMockMerchantData.js"
+    "seed": "knex seed:run && node server/db/SeedMockMerchantData.js",
+    "config_db": "yarn run migrate && yarn run seed",
+    "config_kafka": "node server/kafka/createTopic",
+    "consume_events": "node server/kafka/viewProductConsumer"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

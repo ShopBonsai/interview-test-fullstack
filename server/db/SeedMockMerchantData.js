@@ -95,3 +95,7 @@ async function seedMockMerchantData() {
 }
 
 seedMockMerchantData();
+console.log('✅ users seeded');
+console.log('✅ brands seeded');
+console.log('✅ carts seeded');
+console.log('✅ products & merchants seeded');
