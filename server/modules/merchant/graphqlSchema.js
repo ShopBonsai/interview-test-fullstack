@@ -38,13 +38,14 @@ const typeDefs = gql`
     image_url: String
   }
   type User {
-    userId: String
+    id: String
   }
   type Query {
     merchants: [Merchant!]!
     findMerchant(id: Int!): Merchant
     findProduct(id: Int!, user_id: String): Product
     getAllProductsInCart(user_id: String!): [Product]!
+    findUser(username: String!): User
   }
   # type UserCart {
   #   id: Int
