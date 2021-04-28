@@ -8,9 +8,10 @@ const db = require('../connect');
  * Similar to this: https://stackoverflow.com/questions/50783466/tests-running-forever-with-knex-and-mocha
  */
 
-// exports.seed = async function seedMockMerchantData(knex) {
-async function seedMockMerchantData() {
-  const knex = db;
+exports.seed = async function seedMockMerchantData(knex) {
+  // async function seedMockMerchantData() {
+  // const knex = db;
+
   // ❗️ Delete existing data
   await knex('merchant_publishes').del();
   await knex('merchant_products').del();
@@ -98,6 +99,6 @@ async function seedMockMerchantData() {
   } catch (err) {
     console.log(`There was an Error: ${err}`);
   }
-}
+};
 
-seedMockMerchantData();
+// seedMockMerchantData();
