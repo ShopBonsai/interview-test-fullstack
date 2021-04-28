@@ -26,7 +26,9 @@
     "server": "nodemon ./server/server.ts",
     "client": "webpack-dev-server --mode development --open",
     "dev": "concurrently \"yarn client\" \"yarn server\"",
-    "init": "node server/db/init.js"
+    "init": "node server/db/init.js",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run && node server/db/SeedMockMerchantData.js"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

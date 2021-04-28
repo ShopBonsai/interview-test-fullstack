@@ -100,6 +100,7 @@ const nestedBrandNames = [
 
 exports.seed = async function seedAllMockBrands(knex) {
   // ❗️This will delete existing brands
+  await knex('merchant_products').del();
   await knex('brands').del();
 
   const brandNames = nestedBrandNames.flatMap(brands => brands);
