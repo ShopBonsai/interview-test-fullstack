@@ -8,9 +8,9 @@ dotenv.config();
 
 let connected = false;
 let current = 0;
-const limit = 10;
+const limit = 100;
 
-const connnectDb = async () => {
+const connectDb = async () => {
   await mongoose.connect(String(process.env.MONGO_URI), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -39,12 +39,23 @@ const getMerchants = async () => {
 };
 
 const getBrands = async () => {
-  return Brand.find({}).exec();
+  await connectDb();
+  const merchants = await getMerchants();
+
+  const brandsOutput = [];
+
+  for (const { brands } of merchants) {
+    for (const brand of brands) {
+      brandsOutput.push(brand);
+    }
+  }
+
+  return brandsOutput
 };
 
 const createUsers = async () => {
   if (!connected) {
-    await connnectDb();
+    await connectDb();
   }
 
   if (current === limit) {
@@ -66,7 +77,7 @@ const createUsers = async () => {
 
 const createMerchants = async () => {
   if (!connected) {
-    await connnectDb();
+    await connectDb();
   }
 
   if (current === limit) {
@@ -105,7 +116,7 @@ const createMerchants = async () => {
 
 const createBrands = async () => {
   if (!connected) {
-    await connnectDb();
+    await connectDb();
   }
 
   let merchants = await getMerchants();
@@ -115,19 +126,25 @@ const createBrands = async () => {
   });
 
   for (const { id } of merchants) {
-    const brand = await Brand.create({
-      name: faker.company.companyName(),
-      merchantId: id,
-    });
-
-    console.log(brand);
+    const merchant = await Merchant.updateOne(
+      { _id: id },
+      {
+        $push: {
+          brands: {
+            name: faker.company.companyName(),
+            merchantId: id,
+          },
+        },
+      }
+    );
+    console.log(merchant);
   }
   return await disconnectDb();
 };
 
 createProducts = async () => {
   if (!connected) {
-    await connnectDb();
+    await connectDb();
   }
 
   if (current === limit) {
@@ -159,3 +176,4 @@ createProducts();
 //createBrands();
 //createMerchants();
 //createUsers();
+//getBrands().then(console.log);

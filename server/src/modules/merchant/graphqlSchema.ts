@@ -7,7 +7,7 @@ const typeDefs = gql`
     logo: String
     dateCreated: String
     publishedState: Boolean
-    brands: [String]
+    brands: [Brand]
     merchant: String
     products: [Product]
     commissionFee: String
@@ -39,6 +39,7 @@ const typeDefs = gql`
     size: String
     quantity: Int
     image: String
+    brand:[Brand]
   }
   type User {
     userId: String
@@ -47,8 +48,16 @@ const typeDefs = gql`
     email: String
     role: String
   }
+
+  type Brand {
+    name: String!
+    merchantId: ID!
+    merchants: [Merchant]
+  }
   type Query {
     merchants: [Merchant!]!
+    products: [Product!]!
+    brands: [Brand!]!
   }
   type Mutation {
     createMerchant(input: MerchantInput!): Merchant

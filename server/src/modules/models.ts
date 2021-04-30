@@ -18,7 +18,7 @@ const merchantSchema = new Schema({
     userId: String,
   },
   companyDescription: String,
-  brands: [String],
+  brands: [brandSchema],
 });
 
 const productSchema = new Schema({
@@ -42,11 +42,9 @@ const userSchema = new Schema({
 
 merchantSchema.index({ merchant: 1 }, { unique: true });
 userSchema.index({ email: 1 }, { unique: true });
-brandSchema.index({ name: 1 }, { unique: true });
 
-const Brand = model("Brand", brandSchema);
 const Product = model("Product", productSchema);
 const Merchant = model("Merchant", merchantSchema);
 const User = model("User", userSchema);
 
-export default { Brand, Product, Merchant, User };
+export default { Product, Merchant, User };

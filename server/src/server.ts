@@ -5,13 +5,13 @@ import dotenv from "dotenv";
 import { ApolloServer } from "apollo-server-express";
 import models from "./modules/models";
 
-dotenv.config();
-
 // #3 Import GraphQL type definitions
 import { typeDefs } from "./modules/merchant/graphqlSchema";
 
 // #4 Import GraphQL resolvers
 import { resolvers } from "./modules/merchant/resolvers";
+
+dotenv.config();
 
 // #5 Initialize an Apollo server
 const server = new ApolloServer({
