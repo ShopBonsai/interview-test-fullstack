@@ -30,7 +30,8 @@ const typeDefs = gql`
     companyDescription: String
   }
   type Product {
-    belongsToBrand: Int
+    belongsToBrand: ID,
+    belongsToMerchant: ID,
     id: String
     name: String
     price: Float
@@ -39,7 +40,8 @@ const typeDefs = gql`
     size: String
     quantity: Int
     image: String
-    brand:[Brand]
+    brand: Brand
+    merchant: Merchant
   }
   type User {
     userId: String
@@ -50,18 +52,22 @@ const typeDefs = gql`
   }
 
   type Brand {
-    name: String!
-    merchantId: ID!
-    merchants: [Merchant]
+    name: String
+    merchantId: ID
   }
   type Query {
     merchants: [Merchant!]!
-    products: [Product!]!
+    products(merchant: ID, sortBy: SortBy): [Product!]!
     brands: [Brand!]!
   }
   type Mutation {
     createMerchant(input: MerchantInput!): Merchant
     editMerchant(publishedState: Boolean!): Merchant
+  }
+
+  enum SortBy { 
+    merchant
+    brand
   }
 `;
 

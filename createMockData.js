@@ -39,18 +39,7 @@ const getMerchants = async () => {
 };
 
 const getBrands = async () => {
-  await connectDb();
-  const merchants = await getMerchants();
-
-  const brandsOutput = [];
-
-  for (const { brands } of merchants) {
-    for (const brand of brands) {
-      brandsOutput.push(brand);
-    }
-  }
-
-  return brandsOutput
+  return Brand.find({}).exec();
 };
 
 const createUsers = async () => {
@@ -126,17 +115,15 @@ const createBrands = async () => {
   });
 
   for (const { id } of merchants) {
-    const merchant = await Merchant.updateOne(
-      { _id: id },
-      {
-        $push: {
-          brands: {
-            name: faker.company.companyName(),
-            merchantId: id,
-          },
-        },
-      }
-    );
+    const brand = await Brand.create({
+      name: faker.company.companyName(),
+      merchantId: id,
+    });
+
+    const merchant = await Merchant.findById(id);
+    merchant.brands.push(brand._id);
+    await merchant.save();
+
     console.log(merchant);
   }
   return await disconnectDb();
@@ -155,9 +142,10 @@ createProducts = async () => {
 
   const sizes = ["XS", "S", "M", "L", "XL"];
 
-  for (const { _id: belongsToBrand } of brands) {
+  for (const { _id: belongsToBrand, merchantId: belongsToMerchant } of brands) {
     const product = await Product.create({
       belongsToBrand,
+      belongsToMerchant,
       name: faker.commerce.productName(),
       price: Math.floor(Math.random() * (1000 - 100) + 100) / 100,
       description: faker.commerce.productDescription(),
@@ -176,4 +164,3 @@ createProducts();
 //createBrands();
 //createMerchants();
 //createUsers();
-//getBrands().then(console.log);

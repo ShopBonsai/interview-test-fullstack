@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const brandSchema = new Schema({
   name: String,
@@ -18,11 +18,16 @@ const merchantSchema = new Schema({
     userId: String,
   },
   companyDescription: String,
-  brands: [brandSchema],
-});
+  brands: [{
+    type: Schema.Types.ObjectId,
+    ref: 'brand',
+ 
+  }],
+}, { timestamps: true });
 
 const productSchema = new Schema({
   belongsToBrand: String,
+  belongsToMerchant: String,
   id: String,
   name: String,
   price: Number,
@@ -31,20 +36,22 @@ const productSchema = new Schema({
   size: String,
   quantity: Number,
   image: String,
-});
+}, { timestamps: true });
 
 const userSchema = new Schema({
   firstName: String,
   lastName: String,
   email: String,
   role: String,
-});
+}, { timestamps: true });
 
 merchantSchema.index({ merchant: 1 }, { unique: true });
 userSchema.index({ email: 1 }, { unique: true });
+brandSchema.index({ name: 1 }, { unique: true })
 
-const Product = model("Product", productSchema);
-const Merchant = model("Merchant", merchantSchema);
-const User = model("User", userSchema);
+const Product = model('product', productSchema);
+const Brand = model('brand', brandSchema);
+const Merchant = model('merchant', merchantSchema);
+const User = model('user', userSchema);
 
-export default { Product, Merchant, User };
+export default { Product, Merchant, Brand, User };
