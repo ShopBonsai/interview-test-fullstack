@@ -13,7 +13,7 @@ const merchantSchema = new Schema({
   contactEmail: String,
   phone: String,
   address: String,
-  publishedDate: String,
+  publishedDate: Date,
   publishedBy: {
     userId: String,
   },

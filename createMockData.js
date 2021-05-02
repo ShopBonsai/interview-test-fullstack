@@ -160,7 +160,7 @@ createProducts = async () => {
   createProducts();
 };
 
-createProducts();
+//createProducts();
 //createBrands();
 //createMerchants();
 //createUsers();

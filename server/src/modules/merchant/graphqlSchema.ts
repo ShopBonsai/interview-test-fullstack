@@ -2,14 +2,13 @@ import { gql } from "apollo-server-express";
 
 const typeDefs = gql`
   type Merchant {
-    index: Int
     guid: String
     logo: String
     dateCreated: String
     publishedState: Boolean
     brands: [Brand]
     merchant: String
-    products: [Product]
+    products(skip: Int, limit: Int): [Product]
     commissionFee: String
     contactEmail: String
     phone: String
@@ -30,34 +29,35 @@ const typeDefs = gql`
     companyDescription: String
   }
   type Product {
-    belongsToBrand: ID,
-    belongsToMerchant: ID,
-    id: String
-    name: String
-    price: Float
+    id: String!
+    belongsToBrand: ID!,
+    belongsToMerchant: ID!,
+    name: String!
+    price: Float!
     description: String
     color: String
     size: String
-    quantity: Int
-    image: String
+    quantity: Int!
+    image: String!
     brand: Brand
     merchant: Merchant
   }
   type User {
-    userId: String
-    firstName: String
-    lastName: String
-    email: String
-    role: String
+    userId: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    role: String!
   }
 
   type Brand {
     name: String
     merchantId: ID
+    merchant: Merchant
   }
   type Query {
     merchants: [Merchant!]!
-    products(merchant: ID, sortBy: SortBy): [Product!]!
+    products(merchant: ID, sortBy: SortBy, limit: Int, skip: Int): [Product!]!
     brands: [Brand!]!
   }
   type Mutation {

@@ -21,6 +21,8 @@
   },
   "scripts": {
     "server": "nodemon ./server/dist/server.js",
+    "server:build:watch": "npx tsc -w",
+    "server:dev":  "concurrently \"yarn server:build:watch\" \"yarn server\"",
     "client": "webpack-dev-server --mode development --open",
     "dev": "concurrently \"yarn client\" \"yarn server\""
   },
