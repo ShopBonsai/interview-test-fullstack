@@ -71,4 +71,4 @@ Hi! I wish i had more time to spend on this to add additional functionality such
 - Modeled DB schema/models to be scalable such that many records can be crated, vs the nested nature of the test JSON
 - Setup data models to be accesable via Apollo server context.
 - Setup pagination for Products which can also be used at the field level
-- Showcases virtual features of GraphQL, ex dateCreated guid
+- Showcased virtual features of GraphQL, ex dateCreated guid
