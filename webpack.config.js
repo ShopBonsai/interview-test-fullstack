@@ -18,7 +18,11 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-            plugins: [['@babel/plugin-proposal-decorators', { legacy: true }]],
+            plugins: [
+              ['@babel/plugin-proposal-decorators', { legacy: true }],
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-transform-runtime',
+            ],
           },
         },
       },
@@ -29,4 +33,21 @@ module.exports = {
     ],
   },
   plugins: [htmlPlugin],
+  devServer: {
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:3000',
+      },
+    ],
+  },
+  plugins: [htmlPlugin],
+  devServer: {
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:3000',
+      },
+    ],
+  },
 };

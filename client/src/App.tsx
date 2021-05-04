@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import apolloClient from './createApolloClient';
-import Products from './components/Products';
+import { Products, Cart, Nav } from './components';
+
+import './styles.css';
 
 const App: React.FC = () => {
   return (
-    <ApolloProvider client={apolloClient}>
-      <Products />
-    </ApolloProvider>
+    <Fragment>
+      <Nav />
+      <Cart />
+      <ApolloProvider client={apolloClient}>
+        <Products />
+      </ApolloProvider>
+    </Fragment>
   );
 };
 
