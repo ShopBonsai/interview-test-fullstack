@@ -6,7 +6,9 @@ import { productData } from '../fixtures/productCard';
 
 describe('Product Card component snapshot tests', () => {
     it('should render correctly', () => {
-        const tree = renderer.create(<ProductCard data={productData} />).toJSON();
+        const tree = renderer
+            .create(<ProductCard data={productData} />)
+            .toJSON();
 
         expect(tree).toMatchSnapshot();
     });

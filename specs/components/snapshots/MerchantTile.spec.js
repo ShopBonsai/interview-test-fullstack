@@ -6,7 +6,9 @@ import { merchantData } from '../fixtures/merchantTile';
 
 describe('Merchant Tile component snapshot tests', () => {
     it('should render correctly', () => {
-        const tree = renderer.create(<MerchantTile data={merchantData} />).toJSON();
+        const tree = renderer
+            .create(<MerchantTile data={merchantData} />)
+            .toJSON();
 
         expect(tree).toMatchSnapshot();
     });
@@ -14,8 +16,8 @@ describe('Merchant Tile component snapshot tests', () => {
     it('should not render if the merchant has not been published', () => {
         const data = {
             ...merchantData,
-            publishedState: false
-        }
+            publishedState: false,
+        };
         const tree = renderer.create(<MerchantTile data={data} />).toJSON();
 
         expect(tree).toMatchSnapshot();

@@ -5,9 +5,11 @@ import { MerchantTile } from '../../client/src/components/MerchantTile';
 import { ProductCard } from '../../client/src/components/ProductCard';
 import { merchantData } from './fixtures/merchantTile';
 
-describe("Product Card component unit tests", () => {
+describe('Product Card component unit tests', () => {
     it('should render a product tile for each product', () => {
-        const testInstance = renderer.create(<MerchantTile data={merchantData}/>).root;
+        const testInstance = renderer.create(
+            <MerchantTile data={merchantData} />,
+        ).root;
         const products = testInstance.findAllByType(ProductCard);
 
         expect(products).toHaveLength(merchantData.products.length);
@@ -32,7 +34,7 @@ describe("Product Card component unit tests", () => {
         };
 
         const testInstance = renderer.create(<MerchantTile data={data} />).root;
-        
+
         expect(testInstance.children).toHaveLength(0);
     });
 });
