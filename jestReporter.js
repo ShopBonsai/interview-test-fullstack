@@ -3,13 +3,16 @@ const fs = require('fs');
 function report(resultData) {
     const content = {};
 
+    let prevResults;
+
     try {
-        content.results = [...JSON.parse(fs.readFileSync('./testResults.json', 'utf-8')).results];
+        prevResults = JSON.parse(fs.readFileSync('./testResults.json', 'utf-8'));
     } catch(e) {
         console.log("Error retrieving previous test results: ", e);
     }
-    
-    content.results = [...content.results, resultData];
+
+    const prevData = prevResults && prevResults.results && prevResults.results.length ? [...prevResults.results] : [];
+    content.results = [...prevData, resultData];
 
     try {
         fs.writeFileSync('./testResults.json', JSON.stringify(content));
