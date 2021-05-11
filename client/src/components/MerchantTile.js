@@ -24,7 +24,7 @@ export const MerchantTile = ({data}) => {
     }
 
     return <>
-        <Container style={styles.container} fluid="true">
+        <Container style={styles.container} fluid={true}>
            <Row style={styles.row}>
                 <Col style={styles.left} sm="4">
                     <Row>
