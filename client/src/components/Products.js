@@ -4,9 +4,9 @@ import { Query } from 'react-apollo';
 import './styles.css';
 
 import { Loader } from './Loader';
-import{ MerchantTile } from './MerchantTile';
+import { MerchantTile } from './MerchantTile';
 
-const GET_PRODUCTS = gql`
+export const GET_PRODUCTS = gql`
   {
     merchants {
       guid
@@ -43,7 +43,7 @@ const withProducts = Component => props => {
 class ProductsList extends Component {
     showProducts() {
       const { merchants, merchantsLoading } = this.props;
-  
+
       if (!merchantsLoading && merchants && merchants.length > 0) {
         return merchants.map((merchant) => {
             return <MerchantTile key={merchant.guid} data={merchant}/>
