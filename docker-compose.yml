@@ -1,0 +1,9 @@
+
+version: '3.7'
+services:
+    postgres:
+        image: postgres:10.5
+        restart: always
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
