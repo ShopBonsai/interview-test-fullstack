@@ -1,3 +1,5 @@
+export {};
+
 // #1 Import Express and Apollo Server
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
