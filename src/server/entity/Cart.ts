@@ -1,7 +1,7 @@
 
 import { Field, ID, InputType, ObjectType } from "type-graphql";
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
-import { Product } from "./Product";
+
 
 @Entity()
 @ObjectType()
@@ -15,34 +15,37 @@ export class Cart extends BaseEntity {
     sessionId: string;
 
     @Column({ type: 'jsonb' })
-    @Field(() => [Product])
+    @Field(() => [cartProduct])
     products: object[];
 }
 
-
-
-@InputType()
-export class CartInput {
-    @Field(() => ID)
-    id: number;
+@ObjectType()
+export class cartProduct {
+    
+    @Field(() => String)
+    merchantId: string;
 
     @Field(() => String)
-    sessionId: string;
-
-    @Field(() => [CartItemInput])
-    products: CartItemInput[];
-}
-
-@InputType()
-export class CartItemInput {
-    @Field(() => String)
-    MerchantId: string;
-
-    @Field(() => String)
-    ProducttId: string;
+    productId: string;
 
     @Field(() => Number)
     quantity: number;
 
+}
+
+
+@InputType()
+export class CartInput {
+    @Field(() => String)
+    sessionId: string;
+
+    @Field(() => String)
+    merchantId: string;
+
+    @Field(() => String)
+    productId: string;
+
+    @Field(() => Number)
+    quantity: number;
 
 }
