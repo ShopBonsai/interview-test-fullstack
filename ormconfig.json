@@ -5,7 +5,7 @@
    "username": "postgres",
    "password": "postgres",
    "database": "bonsai_test",
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "entities": [
       "src/server/entity/**/*.ts"

@@ -5,23 +5,25 @@
    "license": "MIT",
    "dependencies": {
       "apollo-boost": "^0.4.9",
+      "apollo-server": "^2.24.0",
       "apollo-server-express": "^2.24.0",
       "bootstrap": "^5.0.1",
       "express": "^4.17.1",
       "graphql": "^15.5.0",
+      "pg": "^8.6.0",
       "react": "^17.0.2",
       "react-apollo": "^3.1.5",
       "react-dom": "^17.0.2",
       "reactstrap": "^8.9.0",
-      "typeorm": "0.2.32",
       "reflect-metadata": "^0.1.13",
-      "pg": "^8.6.0"
+      "type-graphql": "^1.1.1",
+      "typeorm": "^0.2.32"
    },
    "scripts": {
       "server": "nodemon -w src --ext ts --exec ts-node ./src/server/server.ts",
-      "client": "webpack-dev-server --mode development --open",
+      "client": "webpack serve --mode development --open",
       "dev": "concurrently \"yarn client\" \"yarn server\"",
-      "seed": "ts-node ./src/seeder/index.ts",
+      "seed": "ts-node ./src/server/seeder/index.ts",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
    },
    "devDependencies": {

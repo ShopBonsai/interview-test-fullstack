@@ -1,41 +1,41 @@
 // Initially I was planning to strore the products in a separate table but based on the current product-brand relationship shape, document type or jsob seems more appropriate, 
-//keepign this to facilitate evaluation
+//keepign this for graphql data definition only
 
-// import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+ import { Field, ID, ObjectType } from "type-graphql";
 
-// export enum productSize {
-//     S,
-//     M,
-//     L
-// }
+export enum productSize {
+    S,
+    M,
+    L
+}
 
-// @Entity()
-// export class Product {
+@ObjectType()
+export class Product {
 
-//     @PrimaryGeneratedColumn("uuid")
-//     id: number;
+    @Field(() => ID)
+    id: number;
 
-//     @Column()
-//     belongsToBrand: number;
+    @Field(() => Number)
+    belongsToBrand: number;
 
-//     @Column()
-//     name: string;
+    @Field(() => String)
+    name: string;
 
-//     @Column()
-//     price: number;
+    @Field(() => Number)
+    price: number;
 
-//     @Column()
-//     description: string;
+    @Field(() => String)
+    description: string;
 
-//     @Column()
-//     color: string;
+    @Field(() => String)
+    color: string;
 
-//     @Column({ type: "enum", enum: productSize })
-//     size: string;
+    @Field(() => String)
+    size: string;
 
-//     @Column()
-//     quantity: string;
+    @Field(() => Number)
+    quantity: number;
 
-//     @Column()
-//     image: string;
-// }
+    @Field(() => String)
+    image: string;
+}
