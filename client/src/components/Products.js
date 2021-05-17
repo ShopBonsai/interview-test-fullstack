@@ -67,9 +67,9 @@ class ProductsList extends Component {
                   <CardSubtitle>Color: {color}</CardSubtitle>
                   <CardSubtitle>Size: {size}</CardSubtitle>
                   <CardText>Details: {description}</CardText>
-                  {/* TODO: quantity shoule come through an input or from incrementing the current count */}
+                  {/* TODO: quantity shoule come through an input or from incrementing the current count, used a random integer for demo purposes*/}
                   {/* TODO: sessionId should be implemented and stored locally through cookies for example */}
-                  <Mutation mutation={ADD_TO_CART} variables={{ sessionId:"test", merchantId:guid , productId:product.id, quantity: 4 }}> 
+                  <Mutation mutation={ADD_TO_CART} variables={{ sessionId:"test", merchantId:guid , productId:product.id, quantity: Math.floor(Math.random() * 4) }}> 
                     {(createCart, { data, loading, error }) => {
                       if (error) {
                         return (

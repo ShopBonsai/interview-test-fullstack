@@ -1,6 +1,6 @@
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server";
-import { MerchantResolver, CartResolver } from "./modules/merchant/resolvers"; // add this
+import { MerchantResolver, CartResolver } from "./modules/merchant/resolvers";
 import { buildSchema } from "type-graphql";
 
 createConnection().then(async () => {
