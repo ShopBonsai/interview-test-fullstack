@@ -44,9 +44,12 @@ class ProductsList extends Component {
           return products && products.length > 0 && products.map(product => {
             const { color, description, image, name, price, size } = product
             return (
-              <Media key={product.id} className="product-card">
-              <Media left href="#">
-                <Media object src={image} alt="Product image cap" />
+              <Media 
+                key={product.id} 
+                className="product-card"
+                onClick={() => alert(`You clicked on the ${name} product. This should take you to the product overview page for ${name}.`)}>
+                <Media left href="#">
+                  <Media object src={image} alt="Product image cap" />
                 </Media>
                 <CardBody>
                   <CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
