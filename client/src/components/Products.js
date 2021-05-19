@@ -3,6 +3,7 @@ import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reac
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import './styles.css';
+import { ProductSkeleton, ProductImage } from './';
 
 const GET_PRODUCTS = gql`
   {
@@ -38,16 +39,17 @@ class ProductsList extends Component {
   
     showProducts() {
       const { merchants, merchantsLoading } = this.props;
-  
+      if (merchantsLoading) {
+				return [...Array(3)].map((elem, i) => <ProductSkeleton key={i}/>)
+			}
       if (!merchantsLoading && merchants && merchants.length > 0) {
         return merchants.map(({products}) => {
           return products && products.length > 0 && products.map(product => {
-            const { color, description, image, name, price, size } = product
+            const { color, description, image, name, price, size, id } = product
+
             return (
-              <Media key={product.id} className="product-card">
-              <Media left href="#">
-                <Media object src={image} alt="Product image cap" />
-                </Media>
+              <Media key={id} className="product-card">
+                <ProductImage image={image}/>
                 <CardBody>
                   <CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
                   <CardTitle>Price: {price}</CardTitle>
