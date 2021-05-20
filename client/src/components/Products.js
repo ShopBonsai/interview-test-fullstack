@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
+import {
+	CardTitle,
+	CardSubtitle,
+	CardText,
+	Button,
+	CardBody,
+	Media,
+	Form,
+} from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import './styles.css';
-import { ProductSkeleton, ProductImage } from './';
+import { ProductSkeleton, ProductImage, QuantityInput } from './';
 
 const GET_PRODUCTS = gql`
   {
@@ -18,6 +26,7 @@ const GET_PRODUCTS = gql`
         color
         size
         image
+        quantity
       }
     }
   }
@@ -45,8 +54,7 @@ class ProductsList extends Component {
       if (!merchantsLoading && merchants && merchants.length > 0) {
         return merchants.map(({products}) => {
           return products && products.length > 0 && products.map(product => {
-            const { color, description, image, name, price, size, id } = product
-
+            const { color, description, image, name, price, size, id, quantity } = product
             return (
               <Media key={id} className="product-card">
                 <ProductImage image={image}/>
@@ -56,7 +64,10 @@ class ProductsList extends Component {
                   <CardSubtitle>Color: {color}</CardSubtitle>
                   <CardSubtitle>Size: {size}</CardSubtitle>
                   <CardText>Details: {description}</CardText>
-                  <Button color="primary" size="lg" block>Buy</Button>
+                  <Form>
+                    <QuantityInput availableQuantity={quantity}/>
+                    <Button color="primary" size="lg" block>Add to cart</Button>
+                  </Form>
                 </CardBody>
               </Media>
             );
