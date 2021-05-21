@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
-import {
-	CardTitle,
-	CardSubtitle,
-	CardText,
-	Button,
-	CardBody,
-	Media,
-	Form,
-} from 'reactstrap';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import './styles.css';
-import { ProductSkeleton, ProductImage, QuantityInput } from './';
+import { ProductSkeleton, Product } from './';
 
 const GET_PRODUCTS = gql`
   {
@@ -54,23 +45,13 @@ class ProductsList extends Component {
       if (!merchantsLoading && merchants && merchants.length > 0) {
         return merchants.map(({products}) => {
           return products && products.length > 0 && products.map(product => {
-            const { color, description, image, name, price, size, id, quantity } = product
             return (
-              <Media key={id} className="product-card">
-                <ProductImage image={image}/>
-                <CardBody>
-                  <CardTitle style={{fontWeight: 600}}>{name}</CardTitle>
-                  <CardTitle>Price: {price}</CardTitle>
-                  <CardSubtitle>Color: {color}</CardSubtitle>
-                  <CardSubtitle>Size: {size}</CardSubtitle>
-                  <CardText>Details: {description}</CardText>
-                  <Form>
-                    <QuantityInput availableQuantity={quantity}/>
-                    <Button color="primary" size="lg" block>Add to cart</Button>
-                  </Form>
-                </CardBody>
-              </Media>
-            );
+							<Product
+								product={product}
+								key={product.id}
+								updateCart={this.props.updateCart}
+							/>
+						);
           })
         });
       } else {

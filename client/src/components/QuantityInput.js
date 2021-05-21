@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Input, InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
-const QuantityInput = ({ availableQuantity }) => {
-	const [selectedQuantity, setSelectedQuantity] = useState(1);
+const QuantityInput = ({ availableQuantity, selectedQuantity, setSelectedQuantity }) => {
 
 	const onInputChange = (e) => {
 		const numericValue = parseInt(e.target.value, 10);
