@@ -23,6 +23,7 @@
   .img {
     width: 300px;
     height: 300px;
+    border-radius: 0;
   }
 
   @keyframes pulse {
@@ -33,3 +34,15 @@
       background-position: -135% 0%;
     }
   }
+
+/* Media Queries */
+@media(max-width: 768px) {
+  .product-card {
+    width: 95%;
+  }
+}
+@media(max-width: 1024px) {
+  .product-card {
+    flex-direction: column;
+  }
+}

@@ -25,7 +25,7 @@ const QuantityInput = ({ availableQuantity, selectedQuantity, setSelectedQuantit
 	};
 
 	return (
-		<InputGroup>
+		<InputGroup className='mb-2 w-75'>
 			<InputGroupAddon addonType='prepend'>
 				<Button onClick={() => onButtonClick('decrement')}>-</Button>
 			</InputGroupAddon>
