@@ -1,22 +1,12 @@
 import 'reflect-metadata';
-// #1 Import Express and Apollo Server
+import { createSchema } from './utils/createSchema';
 import express from 'express';
-import * as path from 'path';
-import { MerchantResolver } from './modules/resolvers/merchant.resolver';
 import { ApolloServer } from 'apollo-server-express';
-import { buildSchema } from 'type-graphql';
 import { intializeMongo } from './utils/typegoose.loader';
 import { seedDatabase } from './utils/seed.data';
-import { OrderResolver } from './modules/resolvers/order.resolver';
-import { AuthResolver } from './modules/resolvers/auth.resolver';
-import { authChecker } from './modules/middleware/auth-middleware';
 
 const init = async () => {
-  const schema = await buildSchema({
-    resolvers: [MerchantResolver, OrderResolver, AuthResolver],
-    emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
-    authChecker,
-  });
+  const schema = await createSchema();
 
   await intializeMongo();
   await seedDatabase();

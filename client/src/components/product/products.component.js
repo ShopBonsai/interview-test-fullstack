@@ -3,8 +3,8 @@ import { gql, useQuery } from '@apollo/client';
 import { ProductList } from './product-list.component';
 
 export const GET_PRODUCTS = gql`
-  query merchants($offset: Int, $limit: Int) {
-    merchants(offset: $offset, limit: $limit) {
+  query merchants {
+    merchants {
       guid
       merchant
       products {
@@ -21,16 +21,7 @@ export const GET_PRODUCTS = gql`
 `;
 
 const Products = () => {
-  const {
-    loading: productsLoading,
-    data: productsData,
-    fetchMore,
-  } = useQuery(GET_PRODUCTS, {
-    variables: {
-      offset: 0,
-      limit: 10,
-    },
-  });
+  const { loading: productsLoading, data: productsData, fetchMore } = useQuery(GET_PRODUCTS);
 
   const productList = () => {
     const { merchants = [] } = productsData || {};

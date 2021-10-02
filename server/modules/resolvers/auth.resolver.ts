@@ -4,14 +4,9 @@ import { User, UserModel } from './../entities/user';
 import { Resolver, Query, Mutation, AuthChecker, Arg, Ctx } from 'type-graphql';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
+import { v4 as uuid } from 'uuid';
 @Resolver()
 export class AuthResolver {
-  @Query(() => String)
-  async hello() {
-    return 'Hello World!';
-  }
-
   @Mutation(() => User)
   async register(
     @Arg('data')
@@ -23,7 +18,7 @@ export class AuthResolver {
       name,
       email,
       password: hashedPassword,
-      userId: '12345',
+      userId: uuid(),
     });
 
     await user.save();
@@ -37,7 +32,7 @@ export class AuthResolver {
 
   @Mutation(() => User, { nullable: true })
   async login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() ctx: AuthChecker): Promise<User> {
-    const user = await UserModel.findOne({ where: { email } });
+    const user = await UserModel.findOne({ email });
 
     if (!user) {
       return null;
@@ -51,6 +46,8 @@ export class AuthResolver {
 
     const token = jwt.sign({ userId: user.userId }, APP_SECRET);
 
-    return { ...user, token };
+    user.token = token;
+
+    return user;
   }
 }

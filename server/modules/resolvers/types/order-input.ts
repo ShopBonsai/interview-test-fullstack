@@ -1,5 +1,3 @@
-import { Order } from './order';
-import { Product } from './product';
 import { Field, InputType, Int } from 'type-graphql';
 
 @InputType({})
