@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { CartContext } from '../../CartContext';
-import { AUTH_TOKEN } from '../../consts';
+import { Button } from 'reactstrap';
+import { CartContext } from '../../contexts/CartContext';
+import { AUTH_TOKEN } from '../../utils/consts';
 
 import './header.css';
 
 const Header = (props) => {
   const history = useHistory();
 
-  const { toggleCart, items } = useContext(CartContext);
+  const { items } = useContext(CartContext);
   const authToken = localStorage.getItem(AUTH_TOKEN);
 
   return (
@@ -20,15 +21,15 @@ const Header = (props) => {
       <div className="options">
         <div className="option">
           {authToken ? (
-            <div
+            <Link
               className="option"
               onClick={() => {
                 localStorage.removeItem(AUTH_TOKEN);
-                history.push(`/`);
               }}
+              to="/"
             >
               SIGN OUT
-            </div>
+            </Link>
           ) : (
             <Link to="/login">SIGN IN</Link>
           )}
@@ -37,7 +38,16 @@ const Header = (props) => {
         <Link className="option" to="/checkout">
           CHECKOUT
         </Link>
-        <div>{items ? <button className="cart"> {items.length} </button> : ''}</div>
+        <div>
+          {items ? (
+            <Button color="primary" className="cart">
+              {' '}
+              {items.length}{' '}
+            </Button>
+          ) : (
+            ''
+          )}
+        </div>
       </div>
     </div>
   );

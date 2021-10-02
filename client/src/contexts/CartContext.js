@@ -1,4 +1,5 @@
 import React, { useState, createContext } from 'react';
+import { showInfoMessage } from '../utils/helper';
 
 export const CartContext = createContext();
 
@@ -9,10 +10,16 @@ const CartContextProvider = ({ children }) => {
     const exist = cartItems.find((x) => x.id === product.id);
 
     if (exist) {
-      setCartItems(cartItems.map((x) => (x.id === product.id ? { ...exist, quantity: exist.quantity + 1 } : x)));
+      setCartItems(cartItems.map((x) => (x.id === product.id ? { ...exist, quantity: exist.quantity + product.quantity } : x)));
     } else {
-      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+      if (product.quantity == 0) {
+        return;
+      }
+
+      setCartItems([...cartItems, product]);
     }
+
+    showInfoMessage('Product added', 'Product included to your cart');
   };
 
   return <CartContext.Provider value={{ items: cartItems, toggleCart: addToCart, setCartItems }}>{children}</CartContext.Provider>;

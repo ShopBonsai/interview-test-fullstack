@@ -1,9 +1,10 @@
 import { gql } from 'apollo-boost';
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { CardTitle, CardText, CardBody } from 'reactstrap';
+import { CardTitle, CardBody } from 'reactstrap';
 
 import './order.css';
+import Loader from '../loader/loader.component';
 
 export const GET_ORDERS = gql`
   query orders {
@@ -18,6 +19,8 @@ const Orders = () => {
   const { loading: ordersLoading, data } = useQuery(GET_ORDERS);
 
   const { orders = [] } = data || {};
+
+  if (ordersLoading) return <Loader />;
 
   if (!ordersLoading && orders.length > 0) {
     return data.orders.map((order) => {

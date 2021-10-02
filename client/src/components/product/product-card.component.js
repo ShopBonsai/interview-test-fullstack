@@ -1,13 +1,22 @@
-import React, { useContext } from 'react';
-import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
-import { CartContext } from '../../CartContext';
+import React, { useContext, useState } from 'react';
+import { CardTitle, CardSubtitle, CardText, Button, Row, Col, CardBody, Media, Container } from 'reactstrap';
+import { CartContext } from '../../contexts/CartContext';
 
 import './product-card.css';
 
 export const ProductCard = (props) => {
   const { toggleCart } = useContext(CartContext);
-
   const { id, color, description, image, name, price, size } = props.product || {};
+
+  const [quantity, setQuantity] = useState(1);
+
+  const decreaseQuantity = () => {
+    setQuantity(quantity - 1);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
 
   return (
     <Media key={id} className="product-card">
@@ -20,7 +29,33 @@ export const ProductCard = (props) => {
         <CardSubtitle>Color: {color}</CardSubtitle>
         <CardSubtitle>Size: {size}</CardSubtitle>
         <CardText>Details: {description}</CardText>
-        <Button color="primary" size="lg" block onClick={() => toggleCart(props.product)}>
+        <Row
+          style={{
+            padding: '10px',
+            width: '100%',
+            border: '2px solid rgba(136, 10, 142, 0.3)',
+            margin: '20px 0',
+            textAlign: 'center',
+            backgroundColor: 'white',
+          }}
+        >
+          <Col style={{ cursor: 'pointer' }} onClick={decreaseQuantity}>
+            -
+          </Col>
+          <Col>{quantity}</Col>
+          <Col style={{ cursor: 'pointer' }} onClick={increaseQuantity}>
+            +
+          </Col>
+        </Row>
+        <Button
+          color="primary"
+          size="lg"
+          block
+          onClick={() => {
+            toggleCart({ ...props.product, quantity });
+            setQuantity(1);
+          }}
+        >
           Add to Cart
         </Button>
       </CardBody>

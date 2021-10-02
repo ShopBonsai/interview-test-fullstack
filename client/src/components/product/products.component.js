@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { ProductList } from './product-list.component';
+import Loader from '../loader/loader.component';
 
 export const GET_PRODUCTS = gql`
   query merchants {
@@ -21,7 +22,9 @@ export const GET_PRODUCTS = gql`
 `;
 
 const Products = () => {
-  const { loading: productsLoading, data: productsData, fetchMore } = useQuery(GET_PRODUCTS);
+  const { loading: productsLoading = true, data: productsData, fetchMore } = useQuery(GET_PRODUCTS);
+
+  if (productsLoading) return <Loader />;
 
   const productList = () => {
     const { merchants = [] } = productsData || {};

@@ -60,10 +60,12 @@ Thank you and good luck for everyone who applied and submitted a PR.
 It should look like this initially:
 ![Shop Page Default Look and browse](https://raw.githubusercontent.com/ShopBonsai/react-interview-test/master/docs/shopPage.gif)
 
-## Loader Components
+## Adjust Sign out Option
 
-## Adjust Forms
+## Test github actions
 
-## Cart Quantity
+## IF TIME
 
-## Notifications Dispatch
+## Adjust test database
+
+## Improve Seed
