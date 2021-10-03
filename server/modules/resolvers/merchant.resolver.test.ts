@@ -1,7 +1,4 @@
-import { ProductInput } from './types/order-input';
 import { gCall } from '../../test-utils/gCall';
-import { UserModel } from '../entities/user';
-import faker from 'faker';
 import { intializeMongo } from '../../utils/typegoose.loader';
 
 const getMerchants = `
@@ -26,7 +23,7 @@ describe('Merchant Resolver', () => {
   let conn;
 
   beforeAll(async () => {
-    conn = await intializeMongo();
+    conn = await intializeMongo(process.env.DATABASE_TEST);
   });
 
   afterAll(async () => {

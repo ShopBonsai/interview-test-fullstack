@@ -3,7 +3,7 @@ import { Order, OrderModel } from '../entities/order';
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { v4 as uuid } from 'uuid';
 
-@Resolver((of) => Order)
+@Resolver()
 export class OrderResolver {
   @Query((returns) => [Order], { description: 'Get all the recipes from around the world ' })
   @Authorized()

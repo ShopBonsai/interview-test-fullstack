@@ -5,10 +5,12 @@ import { ApolloServer } from 'apollo-server-express';
 import { intializeMongo } from './utils/typegoose.loader';
 import { seedDatabase } from './utils/seed.data';
 
+require('dotenv').config();
+
 const init = async () => {
   const schema = await createSchema();
 
-  await intializeMongo();
+  await intializeMongo(process.env.DATABASE);
   await seedDatabase();
 
   const server = new ApolloServer({

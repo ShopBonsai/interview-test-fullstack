@@ -2,12 +2,12 @@ import { useMutation } from '@apollo/client';
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../qgl/auth';
-import { AppContext } from '../../contexts/AppContext';
-import { showErrorMessage, showSuccessMessage } from '../../utils/helper';
-import Loader from '../loader/loader.component';
+import { LOGIN_MUTATION, REGISTER_MUTATION } from '../qgl/auth';
+import { AppContext } from '../contexts/AppContext';
+import { showErrorMessage, showSuccessMessage } from '../utils/helper';
+import Loader from '../components/loader/loader.component';
 
-import './login.component.css';
+import './login.css';
 
 const Login = () => {
   const history = useHistory();

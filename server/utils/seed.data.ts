@@ -1,4 +1,5 @@
 import { Merchant, MerchantModel } from './../modules/entities/merchant';
+import faker from 'faker';
 
 const tempMerchants = [
   {
@@ -5368,9 +5369,18 @@ const merchants = [
 ];
 
 export async function seedDatabase() {
+  const merchants = await MerchantModel.find({}).estimatedDocumentCount();
+
+  if (merchants > 0) {
+    console.info('DB already populated');
+    return;
+  }
+
   await Promise.all(
     tempMerchants.map(async (merchant) => {
       const entity = new MerchantModel(merchant);
+
+      entity.publishedBy.email = faker.internet.email();
 
       await entity.save();
     }),

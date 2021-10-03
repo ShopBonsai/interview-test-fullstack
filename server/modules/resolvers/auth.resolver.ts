@@ -1,7 +1,6 @@
-import { APP_SECRET } from './../../utils/consts';
 import { RegisterInput } from './types/register-input';
 import { User, UserModel } from './../entities/user';
-import { Resolver, Query, Mutation, AuthChecker, Arg, Ctx } from 'type-graphql';
+import { Resolver, Mutation, AuthChecker, Arg, Ctx } from 'type-graphql';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
@@ -23,7 +22,7 @@ export class AuthResolver {
 
     await user.save();
 
-    const token = jwt.sign({ userId: user.userId }, APP_SECRET);
+    const token = jwt.sign({ userId: user.userId }, process.env.APP_SECRET);
 
     user.token = token;
 
@@ -35,16 +34,16 @@ export class AuthResolver {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-      return null;
+      throw new Error('Invalid User');
     }
 
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
-      return null;
+      throw new Error('Invalid PW');
     }
 
-    const token = jwt.sign({ userId: user.userId }, APP_SECRET);
+    const token = jwt.sign({ userId: user.userId }, process.env.APP_SECRET);
 
     user.token = token;
 

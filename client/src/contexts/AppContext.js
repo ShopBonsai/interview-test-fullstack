@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react';
 
 import { AUTH_TOKEN } from '../utils/consts';
-import { showInfoMessage } from '../utils/helper';
+import { showInfoMessage, showSuccessMessage } from '../utils/helper';
 
 export const AppContext = createContext();
 
@@ -37,6 +37,7 @@ const AppContextProvider = ({ children }) => {
   };
 
   const logout = () => {
+    showSuccessMessage('Bye!', 'See you later!');
     localStorage.removeItem(AUTH_TOKEN);
     setLoggedIn(false);
   };

@@ -30,7 +30,7 @@ describe('Auth Resolver', () => {
   let conn;
   let user;
   beforeAll(async () => {
-    conn = await intializeMongo();
+    conn = await intializeMongo(process.env.DATABASE_TEST);
   });
 
   afterAll(async () => {
@@ -83,5 +83,30 @@ describe('Auth Resolver', () => {
         },
       },
     });
+  });
+
+  it.only('should fail if invalid user', async () => {
+    const response = await gCall({
+      source: loginMutation,
+      variableValues: {
+        email: 'wronguser@teste.com',
+        password: user.password,
+      },
+    });
+
+    expect(response.errors).toHaveLength(1);
+    expect(response.errors[0].message).toEqual('Invalid User');
+  });
+  it.only('should fail if invalid pw', async () => {
+    const response = await gCall({
+      source: loginMutation,
+      variableValues: {
+        email: user.email,
+        password: 'invalidpw',
+      },
+    });
+
+    expect(response.errors).toHaveLength(1);
+    expect(response.errors[0].message).toEqual('Invalid PW');
   });
 });

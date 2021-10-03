@@ -59,7 +59,7 @@ export class Merchant {
 
   @Field((type) => User)
   @Property({ type: () => User, required: true })
-  publishedBy: string;
+  publishedBy: User;
 
   @Field()
   @Property({ required: true })

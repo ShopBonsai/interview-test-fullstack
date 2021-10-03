@@ -3,7 +3,6 @@ import { graphql, GraphQLSchema } from 'graphql';
 import { Maybe } from 'type-graphql';
 import { createSchema } from '../utils/createSchema';
 import jwt from 'jsonwebtoken';
-import { APP_SECRET } from '../utils/consts';
 
 interface Options {
   source: string;
@@ -16,8 +15,15 @@ interface Options {
 let schema: GraphQLSchema;
 
 const token = (userId) => {
+  // FORCING WRONG JWT TO TEST AUTH MIDDLEWARE
+  if (userId === 'force_error') {
+    return {
+      authorization: `Bearer ${jwt.sign({ userId }, 'wrong key')}`,
+    };
+  }
+
   return {
-    authorization: `Bearer ${jwt.sign({ userId }, APP_SECRET)}`,
+    authorization: `Bearer ${jwt.sign({ userId }, process.env.APP_SECRET)}`,
   };
 };
 

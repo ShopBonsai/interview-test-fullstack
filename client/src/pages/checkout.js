@@ -4,25 +4,13 @@ import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router';
 import { CardTitle, CardText, Button, CardBody, Media } from 'reactstrap';
 
-import { AppContext } from '../../contexts/AppContext';
-import Loader from '../loader/loader.component';
-import { showSuccessMessage, showErrorMessage } from '../../utils/helper';
+import { AppContext } from '../contexts/AppContext';
+import Loader from '../components/loader/loader.component';
+import { showSuccessMessage, showErrorMessage } from '../utils/helper';
+import { CREATE_ORDER } from '../qgl/order';
 
 import './checkout.css';
-
-const CREATE_ORDER = gql`
-  mutation createOrder($order: OrderInput!) {
-    createOrder(order: $order) {
-      products {
-        id
-        name
-        price
-        image
-        quantity
-      }
-    }
-  }
-`;
+import EmptyView from '../components/empty-view.component';
 
 const Checkout = () => {
   const history = useHistory();
@@ -77,7 +65,7 @@ const Checkout = () => {
           </Button>
         </div>
       ) : (
-        'Your cart is empty'
+        <EmptyView message={'Your cart is empty'} />
       )}
     </div>
   );

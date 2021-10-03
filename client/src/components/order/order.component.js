@@ -4,7 +4,7 @@ import { Row, Col } from 'reactstrap';
 import './order.css';
 
 const Order = ({ order }) => {
-  const { created, total, products } = order;
+  const { created, total, products } = order || {};
 
   return (
     <div className="order-item">

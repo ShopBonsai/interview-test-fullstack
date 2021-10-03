@@ -46,7 +46,7 @@ describe('Order Resolver', () => {
   let conn;
 
   beforeAll(async () => {
-    conn = await intializeMongo();
+    conn = await intializeMongo(process.env.DATABASE_TEST);
   });
 
   afterAll(async () => {
@@ -104,5 +104,14 @@ describe('Order Resolver', () => {
     });
 
     expect(response.data.orders).toHaveLength(0);
+  });
+
+  it.only('should fail if jwt is invalid', async () => {
+    const response = await gCall({
+      source: getOrderMutation,
+      userId: 'force_error',
+    });
+
+    expect(response.errors).toHaveLength(1);
   });
 });

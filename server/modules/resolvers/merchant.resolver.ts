@@ -1,7 +1,7 @@
 import { Merchant, MerchantModel } from '../entities/merchant';
 import { Query, Resolver } from 'type-graphql';
 
-@Resolver((of) => Merchant)
+@Resolver()
 export class MerchantResolver {
   @Query((returns) => [Merchant], { description: 'Get all the recipes from around the world ' })
   async merchants(): Promise<Merchant[]> {

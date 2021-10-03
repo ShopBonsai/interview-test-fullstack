@@ -1,1 +1,0 @@
-export const APP_SECRET = 'REACT_TEST_INTERVIEW';

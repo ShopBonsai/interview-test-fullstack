@@ -14,6 +14,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.3.1",
     "class-validator": "^0.13.1",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "graphql": "^15.6.0",
     "jsonwebtoken": "^8.5.1",
@@ -33,6 +34,7 @@
     "build": "tsc",
     "db:setup": "ts-node ./server/test-utils/setup.ts",
     "test": "jest",
+    "test:coverage": "npm test -- --coverage",
     "dev": "concurrently \"yarn client\" \"yarn server\""
   },
   "devDependencies": {

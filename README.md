@@ -59,17 +59,3 @@ Thank you and good luck for everyone who applied and submitted a PR.
 
 It should look like this initially:
 ![Shop Page Default Look and browse](https://raw.githubusercontent.com/ShopBonsai/react-interview-test/master/docs/shopPage.gif)
-
-## Improve Orders Text
-
-## Adjust Routes
-
-## Empty view
-
-## Test github actions
-
-## IF TIME
-
-## Adjust test database
-
-## Improve Seed

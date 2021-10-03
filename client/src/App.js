@@ -1,25 +1,35 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, HashRouter as Router } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import apolloClient from './graphql/createApolloClient';
 import Header from './components/header/header.component';
-import Checkout from './components/checkout/checkout.component';
 import AppContextProvider from './contexts/AppContext';
-import Login from './components/login/login.component';
-import Products from './components/product/products.component';
+import Checkout from './pages/checkout';
 import Orders from './pages/order';
+import Products from './pages/products';
+import Login from './pages/login';
 
 const App = () => {
   return (
     <ApolloProvider client={apolloClient}>
       <AppContextProvider>
-        <Header></Header>
-        <Switch>
-          <Route exact path="/" render={(props) => <Products {...props} />}></Route>
-          <Route exact path="/checkout" render={(props) => <Checkout {...props} />}></Route>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/orders" component={Orders} />
-        </Switch>
+        <Router>
+          <Header></Header>
+          <Switch>
+            <Route exact path="/">
+              <Products />
+            </Route>
+            <Route exact path="/checkout">
+              <Checkout />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/orders">
+              <Orders />
+            </Route>
+          </Switch>
+        </Router>
       </AppContextProvider>
     </ApolloProvider>
   );

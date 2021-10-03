@@ -1,4 +1,3 @@
-import { APP_SECRET } from './../../utils/consts';
 import { AuthChecker } from 'type-graphql';
 import jwt from 'jsonwebtoken';
 
@@ -16,7 +15,7 @@ export const authChecker: AuthChecker<Context> = ({ context: { req } }, roles) =
       return false;
     }
 
-    var decoded = jwt.verify(token, APP_SECRET);
+    var decoded = jwt.verify(token, process.env.APP_SECRET);
 
     req.user = decoded;
 

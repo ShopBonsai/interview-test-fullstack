@@ -1,25 +1,11 @@
-import { gql } from 'apollo-boost';
 import React from 'react';
 import { useQuery } from '@apollo/client';
-
-import './order.css';
-import Loader from '../components/loader/loader.component';
-import Order from '../components/order.component';
 import { Col, Container, Row } from 'reactstrap';
 
-export const GET_ORDERS = gql`
-  query orders {
-    orders {
-      guid
-      products {
-        id
-        name
-      }
-      total
-      created
-    }
-  }
-`;
+import { GET_ORDERS } from '../qgl/order';
+import Loader from '../components/loader/loader.component';
+import Order from '../components/order/order.component';
+import EmptyView from '../components/empty-view.component';
 
 const Orders = () => {
   const { loading: ordersLoading, data } = useQuery(GET_ORDERS, { fetchPolicy: 'network-only' });
@@ -42,11 +28,7 @@ const Orders = () => {
       </Container>
     );
   } else {
-    return (
-      <div>
-        <h3>No orders available</h3>
-      </div>
-    );
+    return <EmptyView message={'No orders available'} />;
   }
 };
 
