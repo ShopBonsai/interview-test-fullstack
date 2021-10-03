@@ -23,14 +23,16 @@ type Merchant {
 }
 
 type Mutation {
+  auth(email: String!, password: String!): User
+
   """Create a Order"""
   createOrder(order: OrderInput!): Order!
-  login(email: String!, password: String!): User
   register(data: RegisterInput!): User!
 }
 
 """Object representing a merchant"""
 type Order {
+  created: String!
   guid: String!
   products: [Product!]!
   total: String!

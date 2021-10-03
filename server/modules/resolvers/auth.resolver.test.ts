@@ -16,7 +16,7 @@ mutation Register($data: RegisterInput!) {
 
 const loginMutation = `
 mutation Login($email: String!, $password: String!) {
-  login(
+  auth(
     email: $email,
     password: $password
   ) {
@@ -77,7 +77,7 @@ describe('Auth Resolver', () => {
 
     expect(response).toMatchObject({
       data: {
-        login: {
+        auth: {
           name: user.name,
           email: user.email,
         },

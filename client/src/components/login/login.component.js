@@ -1,15 +1,18 @@
 import { useMutation } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AUTH_TOKEN } from '../../utils/consts';
-import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../qgl/auth';
 
-import './login.component.css';
+import { LOGIN_MUTATION, REGISTER_MUTATION } from '../../qgl/auth';
+import { AppContext } from '../../contexts/AppContext';
 import { showErrorMessage, showSuccessMessage } from '../../utils/helper';
 import Loader from '../loader/loader.component';
 
+import './login.component.css';
+
 const Login = () => {
   const history = useHistory();
+
+  const { login } = useContext(AppContext);
 
   const [formState, setFormState] = useState({
     login: true,
@@ -18,19 +21,17 @@ const Login = () => {
     name: '',
   });
 
-  const [login, { login: loginFailed }] = useMutation(LOGIN_MUTATION, {
+  const [auth, { login: loginLoading }] = useMutation(LOGIN_MUTATION, {
     variables: {
-      data: {
-        email: formState.email,
-        password: formState.password,
-      },
+      email: formState.email,
+      password: formState.password,
     },
-    onCompleted: ({ login }) => {
-      localStorage.setItem(AUTH_TOKEN, login.token);
+    onCompleted: ({ auth }) => {
+      login(auth.token);
       showSuccessMessage('Login Succesful', 'Welcome! Now you can buy products!');
       history.push('/');
     },
-    onError: ({}) => {
+    onError: (err) => {
       showErrorMessage('Login Failed', 'Something is wrong with your credentials');
     },
   });
@@ -44,7 +45,7 @@ const Login = () => {
       },
     },
     onCompleted: ({ register }) => {
-      localStorage.setItem(AUTH_TOKEN, register.token);
+      login(register.token);
       showSuccessMessage('Register Succesfull', 'Now you can buy products!');
       history.push('/');
     },
@@ -53,7 +54,7 @@ const Login = () => {
     },
   });
 
-  if (loginFailed || registerLoading) return <Loader />;
+  if (loginLoading || registerLoading) return <Loader />;
 
   return (
     <div className="login">
@@ -98,7 +99,7 @@ const Login = () => {
         />
       </div>
       <div>
-        <button className="login-button " onClick={formState.login ? login : register}>
+        <button className="login-button " onClick={formState.login ? auth : register}>
           {formState.login ? 'login' : 'create account'}
         </button>
         <button

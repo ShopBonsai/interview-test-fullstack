@@ -31,7 +31,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => User, { nullable: true })
-  async login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() ctx: AuthChecker): Promise<User> {
+  async auth(@Arg('email') email: string, @Arg('password') password: string, @Ctx() ctx: AuthChecker): Promise<User> {
     const user = await UserModel.findOne({ email });
 
     if (!user) {

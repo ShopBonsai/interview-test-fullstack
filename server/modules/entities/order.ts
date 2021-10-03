@@ -19,6 +19,10 @@ export class Order {
   @Field()
   @Property({ required: true })
   total: string;
+
+  @Field()
+  @Property({ default: new Date().toISOString() })
+  created: string;
 }
 
 export const OrderModel = getModelForClass(Order);

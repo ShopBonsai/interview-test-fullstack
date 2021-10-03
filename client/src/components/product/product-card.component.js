@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { CardTitle, CardSubtitle, CardText, Button, Row, Col, CardBody, Media, Container } from 'reactstrap';
-import { CartContext } from '../../contexts/CartContext';
+import { AppContext } from '../../contexts/AppContext';
 
 import './product-card.css';
 
 export const ProductCard = (props) => {
-  const { toggleCart } = useContext(CartContext);
+  const { toggleCart } = useContext(AppContext);
   const { id, color, description, image, name, price, size } = props.product || {};
 
   const [quantity, setQuantity] = useState(1);

@@ -2,16 +2,14 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import { CartContext } from '../../contexts/CartContext';
-import { AUTH_TOKEN } from '../../utils/consts';
+import { AppContext } from '../../contexts/AppContext';
 
 import './header.css';
 
 const Header = (props) => {
   const history = useHistory();
 
-  const { items } = useContext(CartContext);
-  const authToken = localStorage.getItem(AUTH_TOKEN);
+  const { items, isLoggedIn, logout } = useContext(AppContext);
 
   return (
     <div className="header">
@@ -20,21 +18,15 @@ const Header = (props) => {
       </Link>
       <div className="options">
         <div className="option">
-          {authToken ? (
-            <Link
-              className="option"
-              onClick={() => {
-                localStorage.removeItem(AUTH_TOKEN);
-              }}
-              to="/"
-            >
+          {isLoggedIn() ? (
+            <Link className="option" onClick={() => logout()} to="/">
               SIGN OUT
             </Link>
           ) : (
             <Link to="/login">SIGN IN</Link>
           )}
         </div>
-        {authToken ? <Link to="/orders">ORDERS</Link> : ''}
+        {isLoggedIn() ? <Link to="/orders">ORDERS</Link> : ''}
         <Link className="option" to="/checkout">
           CHECKOUT
         </Link>

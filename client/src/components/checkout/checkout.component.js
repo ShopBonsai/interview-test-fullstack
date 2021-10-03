@@ -2,9 +2,9 @@ import { gql } from 'apollo-boost';
 import React, { useContext } from 'react';
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router';
-import { CardTitle, CardSubtitle, CardText, Button, CardBody, Media } from 'reactstrap';
+import { CardTitle, CardText, Button, CardBody, Media } from 'reactstrap';
 
-import { CartContext } from '../../contexts/CartContext';
+import { AppContext } from '../../contexts/AppContext';
 import Loader from '../loader/loader.component';
 import { showSuccessMessage, showErrorMessage } from '../../utils/helper';
 
@@ -26,7 +26,7 @@ const CREATE_ORDER = gql`
 
 const Checkout = () => {
   const history = useHistory();
-  const { toggleCart, items, setCartItems } = useContext(CartContext);
+  const { items, setCartItems } = useContext(AppContext);
 
   const [createOrder, { loading: createLoading }] = useMutation(CREATE_ORDER, {
     onCompleted: ({}) => {
@@ -66,6 +66,8 @@ const Checkout = () => {
             ))}
           </div>
           <Button
+            color="primary"
+            size="lg"
             className="checkout-buy"
             onClick={() => {
               sendOrder();
