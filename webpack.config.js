@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
@@ -6,10 +7,18 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
   entry: './client/src/index.js',
+  devServer: {
+    historyApiFallback: true
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index_bundle.js',
+    publicPath: '/'
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
